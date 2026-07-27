@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Roboto',sans-serif}
+body{background:#f3f4f6;overflow:hidden}
+a{color:#374151;text-decoration:none}
+a:hover{color:#111827}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#16a34a !important;box-shadow:0 0 0 3px rgba(22,163,74,.12) !important}
+.tcell{position:relative;cursor:pointer;}
+.tcell:hover{background:#eff6ff !important;outline:2px solid #2563eb;outline-offset:-1px;z-index:2;}
+.tcell .ep{opacity:0;position:absolute;right:6px;top:50%;transform:translateY(-50%);width:24px;height:24px;background:#fff;border:1px solid #2563eb;border-radius:4px;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.tcell:hover .ep{opacity:1;}
+.col-resizer{position:absolute;right:0;top:0;bottom:0;width:5px;cursor:col-resize;z-index:20;background:transparent;}
+.col-resizer:hover{background:rgba(37,99,235,.5);}
+#col-drag-line{position:fixed;top:0;bottom:0;width:2px;background:#2563eb;z-index:9999;pointer-events:none;display:none;}
+.ftype-btn{width:34px;height:34px;border-radius:6px;border:1.5px solid #d1d5db;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .15s}
+.ftype-btn.active{border-color:#2563eb;background:#eff6ff}
+.cal-cell{min-height:40px;border-right:1px solid #e5e7eb;border-bottom:1px solid #f0f2f4;position:relative;}
+.cal-cell:hover{background:#f9fafb;}
+.type-pill{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:12px;font-size:11px;font-weight:600}
+</style>
+<template id="__bundler_thumbnail" data-bg-color="#f3f4f6"><svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"><rect width="56" height="800" fill="#1f2937"/><rect x="56" width="1144" height="52" fill="#fff"/><rect x="56" y="51" width="1144" height="1" fill="#e5e7eb"/><rect x="56" y="52" width="1144" height="40" fill="#fff"/><rect x="56" y="92" width="1144" height="1" fill="#e5e7eb"/><rect x="56" y="93" width="1144" height="707" fill="#fff"/><rect x="56" y="93" width="1144" height="38" fill="#f9fafb"/><circle cx="28" cy="26" r="14" fill="#16a34a"/></svg></template></helmet>
+
+<div id="col-drag-line"></div>
+<div style="display:flex;height:100vh;overflow:hidden">
+
+  <!-- LEFT NAV -->
+  <nav id="app-sidebar" style="width:56px;background:#1f2937;display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:6px;flex-shrink:0;z-index:30">
+    <div style="width:56px;height:58px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <img src="./logo-vooroo.png" style="width:36px;height:auto;object-fit:contain;filter:brightness(0) invert(1)" />
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Guide de configuration">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 010 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 010-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Statistiques">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Prospects">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"/></svg>
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Affaires">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+    </div>
+    <!-- Activités: active -->
+    <div style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;cursor:pointer" title="Activités">
+      <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Contacts">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Produits">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/></svg>
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Devis et Factures">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Documents">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
+    </div>
+  </nav>
+
+  <!-- MAIN COLUMN -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0">
+
+    <!-- GLOBAL HEADER -->
+    <header id="app-header" style="height:52px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex-shrink:0;z-index:20">
+      <div style="display:flex;align-items:center;gap:6px;min-width:140px">
+        <span style="font-size:14px;font-weight:700;color:#111827">Activités</span>
+        <svg width="13" height="13" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid #d1d5db;border-radius:24px;background:#fff;cursor:text;width:360px;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+          <svg width="15" height="15" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 0z"/></svg>
+          <span style="font-size:13px;color:#9ca3af">Rechercher dans Vooroo</span>
+        </div>
+        <button style="width:32px;height:32px;border-radius:50%;border:1.5px solid #d1d5db;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#f9fafb">
+          <svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+        </button>
+        <div style="width:34px;height:34px;border-radius:50%;overflow:hidden;cursor:pointer;border:2px solid #16a34a;box-shadow:0 2px 8px rgba(22,163,74,.3);flex-shrink:0">
+          <img src="./uploads/Gemini_Generated_Image_k2cip2k2cip2k2ci.png" style="width:100%;height:100%;object-fit:cover" />
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;min-width:140px;justify-content:flex-end">
+        <button style="background:transparent;border:none;cursor:pointer;color:#6b7280;display:flex;align-items:center" style-hover="color:#374151">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"/></svg>
+        </button>
+        <button style="background:transparent;border:none;cursor:pointer;color:#6b7280;display:flex;align-items:center;position:relative" style-hover="color:#374151">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>
+          <div style="position:absolute;top:0;right:0;width:7px;height:7px;border-radius:50%;background:#ef4444;border:1.5px solid #fff"></div>
+        </button>
+        <div style="width:30px;height:30px;border-radius:50%;background:#374151;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;cursor:pointer">MT</div>
+      </div>
+    </header>
+
+    <!-- SYNC BANNER -->
+    <sc-if value="{{ showBanner }}" hint-placeholder-val="{{ true }}">
+      <div style="background:#eff6ff;border-bottom:1px solid #bfdbfe;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0">
+        <div style="width:44px;height:44px;border-radius:10px;background:#fff;border:1px solid #bfdbfe;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="24" height="24" fill="none" stroke="#2563eb" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:700;color:#1e40af">Synchronisez vos calendriers en moins de 2 minutes</div>
+          <div style="font-size:12px;color:#3b82f6;margin-top:2px">Connectez vos calendriers Google, Outlook, Microsoft Exchange ou Microsoft Office 365 pour éviter des conflits de planification.</div>
+        </div>
+        <button style="height:34px;padding:0 16px;background:#fff;border:1px solid #3b82f6;border-radius:6px;font-size:13px;color:#2563eb;cursor:pointer;font-weight:500;white-space:nowrap" style-hover="background:#eff6ff">Ouvrir la synchronisation du calendrier</button>
+        <button onClick="{{ dismissBanner }}" style="background:transparent;border:none;cursor:pointer;color:#3b82f6;display:flex;align-items:center" style-hover="color:#1e40af">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </sc-if>
+
+    <!-- TOOLBAR -->
+    <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:8px 16px;display:flex;align-items:center;gap:8px;flex-shrink:0">
+      <!-- View toggles -->
+      <div style="display:flex;border:1px solid #d1d5db;border-radius:6px;overflow:hidden">
+        <button onClick="{{ setViewTable }}" style="width:34px;height:30px;border:none;background:{{ viewTableBg }};display:flex;align-items:center;justify-content:center;cursor:pointer;border-right:1px solid #d1d5db" style-hover="background:#f3f4f6" title="Vue tableau">
+          <svg width="15" height="15" fill="none" stroke="{{ viewTableCl }}" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+        </button>
+        <button onClick="{{ setViewCal }}" style="width:34px;height:30px;border:none;background:{{ viewCalBg }};display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#f3f4f6" title="Vue calendrier">
+          <svg width="15" height="15" fill="none" stroke="{{ viewCalCl }}" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008z"/></svg>
+        </button>
+      </div>
+
+      <!-- + Activité -->
+      <div style="display:flex;position:relative">
+        <button onClick="{{ openForm }}" style="height:32px;padding:0 14px;background:#16a34a;color:#fff;border:none;border-radius:5px 0 0 5px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;cursor:pointer" style-hover="background:#15803d">
+          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          Activité
+        </button>
+        <button onClick="{{ toggleActDrop }}" style="height:32px;width:26px;background:#16a34a;color:#fff;border:none;border-left:1px solid rgba(255,255,255,.3);border-radius:0 5px 5px 0;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#15803d">
+          <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+        </button>
+        <sc-if value="{{ showActDrop }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ toggleActDrop }}" style="position:fixed;inset:0;z-index:48"></div>
+          <div style="position:absolute;top:calc(100% + 4px);left:0;z-index:49;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.13);width:240px;padding:4px 0">
+            <div style="padding:9px 14px;cursor:pointer;font-size:13px;color:#374151;display:flex;align-items:center;gap:10px" style-hover="background:#f9fafb">
+              <svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+              Synchroniser les calendriers
+            </div>
+            <div style="height:1px;background:#f0f2f4;margin:2px 0"></div>
+            <div style="padding:9px 14px;cursor:pointer;font-size:13px;color:#374151;display:flex;align-items:center;gap:10px" style-hover="background:#f9fafb">
+              <svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+              Importer des données
+            </div>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- Planificateur de rendez-vous -->
+      <div style="position:relative">
+        <button onClick="{{ togglePlanDrop }}" style="height:32px;padding:0 12px;background:#fff;border:1px solid #d1d5db;border-radius:5px;font-size:13px;color:#374151;cursor:pointer;display:flex;align-items:center;gap:6px" style-hover="background:#f9fafb">
+          <svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008z"/></svg>
+          Planificateur de rendez-vous
+          <svg width="9" height="9" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+        </button>
+        <sc-if value="{{ showPlanDrop }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ togglePlanDrop }}" style="position:fixed;inset:0;z-index:48"></div>
+          <div style="position:absolute;top:calc(100% + 4px);left:0;z-index:49;background:#fff;border:1px solid #e5e7eb;border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.14);width:320px;padding:16px">
+            <div style="font-size:11px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px">DISPONIBILITÉ GÉNÉRALE</div>
+            <p style="font-size:13px;color:#6b7280;line-height:1.5;margin-bottom:10px">Partagez votre disponibilité pour certains types de rendez-vous, comme des appels téléphoniques et démonstrations de vente</p>
+            <div style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 12px;border-radius:6px" style-hover="background:#f9fafb">
+              <svg width="14" height="14" fill="none" stroke="#2563eb" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 010 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 010-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <span style="font-size:13px;color:#2563eb;font-weight:500">Gérer ma disponibilité</span>
+            </div>
+            <div style="height:1px;background:#e5e7eb;margin:10px 0"></div>
+            <div style="font-size:11px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px">CRÉNEAUX SPÉCIFIQUES</div>
+            <p style="font-size:13px;color:#6b7280;line-height:1.5;margin-bottom:10px">Choisissez des créneaux spécifiques pour un rendez-vous non récurrent</p>
+            <div style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 12px;border-radius:6px" style-hover="background:#f9fafb">
+              <svg width="14" height="14" fill="none" stroke="#2563eb" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span style="font-size:13px;color:#2563eb;font-weight:500">Choisir des créneaux</span>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="flex:1"></div>
+
+      <!-- Right: count + sync badge + filter + ··· -->
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:13px;color:#374151;font-weight:500;white-space:nowrap">{{ activityCount }} activités</span>
+        <svg width="13" height="13" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
+        <div style="padding:3px 10px;border:1.5px solid #ef4444;border-radius:12px;font-size:11px;font-weight:700;color:#ef4444;white-space:nowrap;letter-spacing:.4px">SYNCHRONISATION INACTIVE</div>
+
+        <!-- Filter -->
+        <div style="display:flex;position:relative">
+          <div onClick="{{ toggleFiltDrop }}" style="display:flex;align-items:center;gap:6px;height:30px;padding:0 10px;border:1.5px solid #2563eb;border-radius:5px 0 0 5px;cursor:pointer;background:#fff" style-hover="background:#eff6ff">
+            <svg width="12" height="12" fill="none" stroke="#2563eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"/></svg>
+            <span style="font-size:12px;font-weight:700;color:#2563eb">Nom du filtre</span>
+            <svg width="9" height="9" fill="none" stroke="#2563eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+          </div>
+          <button style="height:30px;width:26px;border:1.5px solid #2563eb;border-left:none;border-radius:0 5px 5px 0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#eff6ff">
+            <svg width="11" height="11" fill="none" stroke="#2563eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+          <!-- Filter dropdown -->
+          <sc-if value="{{ showFiltDrop }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ toggleFiltDrop }}" style="position:fixed;inset:0;z-index:48"></div>
+            <div style="position:absolute;top:calc(100% + 4px);right:0;z-index:49;background:#fff;border:1px solid #e5e7eb;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.16);width:420px;overflow:hidden">
+              <!-- Search bar -->
+              <div style="padding:12px 14px;border-bottom:1px solid #f0f2f4">
+                <div style="display:flex;align-items:center;gap:8px;border:1.5px solid #d1d5db;border-radius:8px;padding:8px 12px;background:#fff">
+                  <svg width="16" height="16" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 0z"/></svg>
+                  <input type="text" placeholder="Chercher un propriétaire ou un filtre" style="border:none;background:transparent;font-size:14px;color:#374151;outline:none;flex:1;min-width:0" />
+                </div>
+              </div>
+              <!-- 3 tabs -->
+              <div style="display:flex;border-bottom:1px solid #e5e7eb">
+                <div onClick="{{ setFiltTabFav }}" style="flex:1;padding:14px 8px 12px;text-align:center;cursor:pointer;border-bottom:2px solid {{ filtFavBd }};display:flex;flex-direction:column;align-items:center;gap:5px" style-hover="background:#f9fafb">
+                  <svg width="22" height="22" fill="none" stroke="{{ filtFavCl }}" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
+                  <span style="font-size:13px;color:{{ filtFavCl }};font-weight:500">Favoris</span>
+                </div>
+                <div onClick="{{ setFiltTabProp }}" style="flex:1;padding:14px 8px 12px;text-align:center;cursor:pointer;border-bottom:2px solid {{ filtPropBd }};display:flex;flex-direction:column;align-items:center;gap:5px" style-hover="background:#f9fafb">
+                  <svg width="22" height="22" fill="none" stroke="{{ filtPropCl }}" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+                  <span style="font-size:13px;color:{{ filtPropCl }};font-weight:500">Propriétaires</span>
+                </div>
+                <div onClick="{{ setFiltTabFil }}" style="flex:1;padding:14px 8px 12px;text-align:center;cursor:pointer;border-bottom:2px solid {{ filtFilBd }};display:flex;flex-direction:column;align-items:center;gap:5px" style-hover="background:#f9fafb">
+                  <svg width="22" height="22" fill="none" stroke="{{ filtFilCl }}" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M7.5 12h9m-5.25 5.25h1.5"/></svg>
+                  <span style="font-size:13px;color:{{ filtFilCl }};font-weight:500">Filtres</span>
+                </div>
+              </div>
+              <!-- Favoris -->
+              <sc-if value="{{ filtTabIsFav }}" hint-placeholder-val="{{ true }}">
+                <div style="padding:6px 0;max-height:300px;overflow-y:auto">
+                  <div style="padding:8px 18px 4px;font-size:11px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.6px">PROPRIÉTAIRES</div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;cursor:pointer" style-hover="background:#f9fafb">
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <svg width="20" height="20" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+                      <span style="font-size:14px;color:#374151;font-weight:500">MINING TECH (vous)</span>
+                    </div>
+                    <svg width="18" height="18" fill="#f59e0b" viewBox="0 0 24 24"><path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
+                  </div>
+                  <div style="height:1px;background:#f0f2f4;margin:6px 0"></div>
+                  <div style="display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;color:#2563eb" style-hover="background:#f9fafb">
+                    <span style="font-size:18px;font-weight:300;color:#2563eb">+</span>
+                    <span style="font-size:14px;font-weight:500">Ajouter un nouveau filtre</span>
+                  </div>
+                </div>
+              </sc-if>
+              <!-- Propriétaires -->
+              <sc-if value="{{ filtTabIsProp }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:6px 0;max-height:300px;overflow-y:auto">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;cursor:pointer" style-hover="background:#f9fafb">
+                    <span style="font-size:14px;color:#374151;font-weight:600">Tout le monde</span>
+                    <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                  </div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;cursor:pointer;background:#f0fdf4;border-left:3px solid #16a34a" style-hover="background:#dcfce7">
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <svg width="20" height="20" fill="none" stroke="#16a34a" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
+                      <span style="font-size:14px;color:#16a34a;font-weight:600">Mon équipe</span>
+                    </div>
+                    <span style="font-size:11px;font-weight:600;color:#16a34a;background:#dcfce7;padding:2px 8px;border-radius:10px">8</span>
+                  </div>
+                  <div style="padding:4px 18px 2px;font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.07em">Membres</div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;cursor:pointer" style-hover="background:#f9fafb">
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <svg width="20" height="20" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+                      <span style="font-size:14px;color:#374151">MINING TECH (vous)</span>
+                    </div>
+                    <svg width="18" height="18" fill="#f59e0b" viewBox="0 0 24 24"><path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer" style-hover="background:#f9fafb">
+                    <div style="width:24px;height:24px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700">SD</div>
+                    <span style="font-size:14px;color:#374151">Sarah Diallo</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer" style-hover="background:#f9fafb">
+                    <div style="width:24px;height:24px;border-radius:50%;background:#8b5cf6;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700">JK</div>
+                    <span style="font-size:14px;color:#374151">Jean Koné</span>
+                  </div>
+                  <div style="height:1px;background:#f0f2f4;margin:6px 0"></div>
+                  <div style="display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;color:#2563eb" style-hover="background:#f9fafb">
+                    <span style="font-size:18px;font-weight:300">+</span>
+                    <span style="font-size:14px;font-weight:500">Ajouter un nouveau filtre</span>
+                  </div>
+                </div>
+              </sc-if>
+              <!-- Filtres -->
+              <sc-if value="{{ filtTabIsFil }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:6px 0;max-height:300px;overflow-y:auto">
+                  <div style="padding:10px 18px;cursor:pointer;font-size:14px;color:#374151;line-height:1.5" style-hover="background:#f9fafb">Activités liées à aucun prospect, affaire, contact ou projet</div>
+                  <div style="padding:10px 18px;cursor:pointer;font-size:14px;color:#374151;line-height:1.5" style-hover="background:#f9fafb">Activités non terminées attribuées à des utilisateurs désactivés</div>
+                  <div style="padding:10px 18px;cursor:pointer;font-size:14px;color:#374151;line-height:1.5" style-hover="background:#f9fafb">Activités non terminées et en retard, liées à aucun élément</div>
+                  <div style="padding:10px 18px;cursor:pointer;font-size:14px;color:#374151;line-height:1.5" style-hover="background:#f9fafb">Activités non terminées et en retard, liées à des éléments</div>
+                  <div style="padding:10px 18px;cursor:pointer;font-size:14px;color:#374151;line-height:1.5" style-hover="background:#f9fafb">Activités non terminées et liées à des affaires gagnées ou perdues</div>
+                  <div style="height:1px;background:#f0f2f4;margin:6px 0"></div>
+                  <div style="display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;color:#2563eb" style-hover="background:#f9fafb">
+                    <span style="font-size:18px;font-weight:300">+</span>
+                    <span style="font-size:14px;font-weight:500">Ajouter un nouveau filtre</span>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+
+        <!-- ··· -->
+        <div style="position:relative">
+          <button onClick="{{ toggleMoreMenu }}" style="width:30px;height:30px;border:1px solid {{ moreBd }};border-radius:5px;background:{{ moreBg }};display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#f9fafb">
+            <svg width="13" height="13" fill="#6b7280" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M4.5 12a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm6 0a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm6 0a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" clip-rule="evenodd"/></svg>
+          </button>
+          <sc-if value="{{ showMoreMenu }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ closeMoreMenu }}" style="position:fixed;inset:0;z-index:48"></div>
+            <div style="position:absolute;top:calc(100% + 4px);right:0;z-index:49;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.13);width:300px;padding:4px 0">
+              <div style="padding:9px 14px;cursor:pointer;font-size:13px;color:#374151" style-hover="background:#f9fafb">Exportation des résultats du filtre...</div>
+              <div style="padding:9px 14px;cursor:pointer;font-size:13px;color:#374151" style-hover="background:#f9fafb">Importation des données...</div>
+              <div style="padding:9px 14px;cursor:pointer;font-size:13px;color:#374151" style-hover="background:#f9fafb">Ouvrir la page de nettoyage des données</div>
+              <div style="padding:9px 14px;cursor:pointer;font-size:13px;color:#374151" style-hover="background:#f9fafb">Paramètres des activités</div>
+              <div style="padding:9px 14px;cursor:pointer;font-size:13px;color:#374151" style-hover="background:#f9fafb">Restaurer les données</div>
+              <div style="height:1px;background:#f0f2f4;margin:4px 0"></div>
+              <div style="padding:9px 14px">
+                <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#374151;margin-bottom:8px;font-weight:500">
+                  Vue détaillée
+                  <svg width="13" height="13" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:6px" style-hover="color:#111827">
+                  <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid #d1d5db;background:#fff;display:flex;align-items:center;justify-content:center">
+                    <div style="width:8px;height:8px;border-radius:50%;background:transparent"></div>
+                  </div>
+                  <span style="font-size:13px;color:#374151">Ouvrir les informations dans une fenêtre modale</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;cursor:pointer">
+                  <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid #2563eb;background:#fff;display:flex;align-items:center;justify-content:center">
+                    <div style="width:8px;height:8px;border-radius:50%;background:#2563eb"></div>
+                  </div>
+                  <span style="font-size:13px;color:#374151">Ouvrir les détails en plein écran</span>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+
+    <!-- TYPE + PERIOD FILTER BAR -->
+    <div style="background:#fff;border-bottom:2px solid #e5e7eb;padding:0 14px;display:flex;align-items:stretch;flex-shrink:0;gap:0;min-height:40px">
+      <!-- Tout -->
+      <button onClick="{{ setTypeTabTout }}" style="padding:0 12px;border:none;background:transparent;font-size:13px;font-weight:700;color:#111827;cursor:pointer;border-bottom:2px solid {{ typeTabIsTout ? '#111827' : 'transparent' }};white-space:nowrap;display:flex;align-items:center" style-hover="color:#2563eb">Tout</button>
+      <div style="width:1px;height:18px;background:#e5e7eb;margin:auto 4px;flex-shrink:0"></div>
+      <!-- Appel -->
+      <button onClick="{{ setTypeTabAppel }}" style="padding:0 10px;border:none;background:transparent;cursor:pointer;border-bottom:2px solid {{ typeTabIsAppel ? '#2563eb' : 'transparent' }};white-space:nowrap;display:flex;align-items:center;gap:5px" style-hover="color:#2563eb">
+        <svg width="14" height="14" fill="none" stroke="#2563eb" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+        <span style="font-size:13px;color:#2563eb;font-weight:{{ typeTabIsAppel ? '700' : '400' }}">Appel</span>
+      </button>
+      <!-- Rendez-vous -->
+      <button onClick="{{ setTypeTabRdv }}" style="padding:0 10px;border:none;background:transparent;cursor:pointer;border-bottom:2px solid {{ typeTabIsRdv ? '#2563eb' : 'transparent' }};white-space:nowrap;display:flex;align-items:center;gap:5px" style-hover="color:#2563eb">
+        <svg width="14" height="14" fill="none" stroke="#2563eb" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+        <span style="font-size:13px;color:#2563eb;font-weight:{{ typeTabIsRdv ? '700' : '400' }}">Rendez-vous</span>
+      </button>
+      <!-- Tâche -->
+      <button onClick="{{ setTypeTabTache }}" style="padding:0 10px;border:none;background:transparent;cursor:pointer;border-bottom:2px solid {{ typeTabIsTache ? '#2563eb' : 'transparent' }};white-space:nowrap;display:flex;align-items:center;gap:5px" style-hover="color:#2563eb">
+        <svg width="14" height="14" fill="none" stroke="#2563eb" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span style="font-size:13px;color:#2563eb;font-weight:{{ typeTabIsTache ? '700' : '400' }}">Tâche</span>
+      </button>
+      <!-- Échéance -->
+      <button onClick="{{ setTypeTabEcheance }}" style="padding:0 10px;border:none;background:transparent;cursor:pointer;border-bottom:2px solid {{ typeTabIsEcheance ? '#2563eb' : 'transparent' }};white-space:nowrap;display:flex;align-items:center;gap:5px" style-hover="color:#2563eb">
+        <svg width="14" height="14" fill="none" stroke="#2563eb" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5"/></svg>
+        <span style="font-size:13px;color:#2563eb;font-weight:{{ typeTabIsEcheance ? '700' : '400' }}">Échéance</span>
+      </button>
+      <!-- Adresse mail -->
+      <button onClick="{{ setTypeTabMail }}" style="padding:0 10px;border:none;background:transparent;cursor:pointer;border-bottom:2px solid {{ typeTabIsMail ? '#2563eb' : 'transparent' }};white-space:nowrap;display:flex;align-items:center;gap:5px" style-hover="color:#2563eb">
+        <svg width="14" height="14" fill="none" stroke="#2563eb" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+        <span style="font-size:13px;color:#2563eb;font-weight:{{ typeTabIsMail ? '700' : '400' }}">Adresse mail</span>
+      </button>
+      <!-- Déjeuner -->
+      <button onClick="{{ setTypeTabDejeuner }}" style="padding:0 10px;border:none;background:transparent;cursor:pointer;border-bottom:2px solid {{ typeTabIsDejeuner ? '#2563eb' : 'transparent' }};white-space:nowrap;display:flex;align-items:center;gap:5px" style-hover="color:#2563eb">
+        <svg width="14" height="14" fill="none" stroke="#2563eb" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 2v5a3 3 0 003 3v12M15 2v20M18 2v20"/></svg>
+        <span style="font-size:13px;color:#2563eb;font-weight:{{ typeTabIsDejeuner ? '700' : '400' }}">Déjeuner</span>
+      </button>
+
+      <div style="flex:1"></div>
+
+      <!-- Period tabs (right side) -->
+      <sc-for list="{{ periodTabs }}" as="pt" hint-placeholder-count="4">
+        <button onClick="{{ pt.onClick }}" style="padding:0 10px;border:none;background:transparent;font-size:13px;font-weight:{{ pt.active ? '700' : '400' }};color:{{ pt.active ? '#111827' : '#374151' }};cursor:pointer;border-bottom:2px solid {{ pt.active ? '#111827' : 'transparent' }};white-space:nowrap;display:flex;align-items:center;gap:6px" style-hover="color:#111827">
+          {{ pt.label }}
+          <sc-if value="{{ pt.badge }}" hint-placeholder-val="{{ false }}">
+            <span style="background:#ef4444;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:10px;line-height:1.6">{{ pt.badge }}</span>
+          </sc-if>
+        </button>
+      </sc-for>
+      <!-- Sélectionner une période -->
+      <div style="position:relative">
+        <button id="period-btn" onClick="{{ togglePeriodDrop }}" style="height:38px;padding:0 10px;border:none;background:transparent;font-size:12px;color:#6b7280;cursor:pointer;display:flex;align-items:center;gap:4px;border-bottom:2px solid transparent;white-space:nowrap" style-hover="background:#f9fafb">
+          Sélectionner une période
+          <svg width="9" height="9" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+        </button>
+        <!-- Period picker redesigned -->
+        <sc-if value="{{ showPeriodDrop }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ togglePeriodDrop }}" style="position:fixed;inset:0;z-index:48"></div>
+          <div onClick="{{ stopProp }}" style="position:fixed;top:{{ periodDropTop }};right:{{ periodDropRight }};z-index:200;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,.2);padding:24px 28px;width:720px">
+            <!-- Nav + months -->
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:32px">
+              <button style="width:32px;height:32px;border-radius:6px;border:1px solid #d1d5db;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px" style-hover="background:#f9fafb">
+                <svg width="13" height="13" fill="none" stroke="#374151" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+              </button>
+              <div style="display:flex;gap:48px;flex:1">
+                <!-- July 2026 -->
+                <div style="flex:1">
+                  <div style="text-align:center;font-size:15px;font-weight:700;color:#2563eb;margin-bottom:14px">July 2026</div>
+                  <div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;margin-bottom:4px">
+                    <div style="font-size:12px;color:#9ca3af;font-weight:600;padding:4px 2px">Sun</div>
+                    <div style="font-size:12px;color:#9ca3af;font-weight:600;padding:4px 2px">Mon</div>
+                    <div style="font-size:12px;color:#9ca3af;font-weight:600;padding:4px 2px">Tue</div>
+                    <div style="font-size:12px;color:#9ca3af;font-weight:600;padding:4px 2px">Wed</div>
+                    <div style="font-size:12px;color:#9ca3af;font-weight:600;padding:4px 2px">Thu</div>
+                    <div style="font-size:12px;color:#9ca3af;font-weight:600;padding:4px 2px">Fri</div>
+                    <div style="font-size:12px;color:#9ca3af;font-weight:600;padding:4px 2px">Sat</div>
+                  </div>
+                  <div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;row-gap:2px">
+                    <div></div><div></div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">1</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">2</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">3</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">4</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">5</div>
+                    <div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">6</div><div style="font-size:13px;padding:7px 4px;background:#16a34a;border-radius:5px;color:#fff;font-weight:700">7</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">8</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">9</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">10</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">11</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">12</div>
+                    <div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">13</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">14</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">15</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">16</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">17</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">18</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">19</div>
+                    <div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">20</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">21</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">22</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">23</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">24</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">25</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">26</div>
+                    <div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">27</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">28</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">29</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">30</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">31</div><div></div><div></div>
+                  </div>
+                </div>
+                <!-- August 2026 -->
+                <div style="flex:1">
+                  <div style="text-align:center;font-size:15px;font-weight:700;color:#2563eb;margin-bottom:14px">August 2026</div>
+                  <div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;margin-bottom:4px">
+                    <div style="font-size:12px;color:#9ca3af;font-weight:600;padding:4px 2px">Sun</div>
+                    <div style="font-size:12px;color:#9ca3af;font-weight:600;padding:4px 2px">Mon</div>
+                    <div style="font-size:12px;color:#9ca3af;font-weight:600;padding:4px 2px">Tue</div>
+                    <div style="font-size:12px;color:#9ca3af;font-weight:600;padding:4px 2px">Wed</div>
+                    <div style="font-size:12px;color:#9ca3af;font-weight:600;padding:4px 2px">Thu</div>
+                    <div style="font-size:12px;color:#9ca3af;font-weight:600;padding:4px 2px">Fri</div>
+                    <div style="font-size:12px;color:#9ca3af;font-weight:600;padding:4px 2px">Sat</div>
+                  </div>
+                  <div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;row-gap:2px">
+                    <div></div><div></div><div></div><div></div><div></div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">1</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">2</div>
+                    <div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">3</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">4</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">5</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">6</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">7</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">8</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">9</div>
+                    <div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">10</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">11</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">12</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">13</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">14</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">15</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">16</div>
+                    <div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">17</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">18</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">19</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">20</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">21</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">22</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">23</div>
+                    <div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">24</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">25</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">26</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">27</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">28</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">29</div><div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">30</div>
+                    <div style="font-size:13px;padding:7px 4px;cursor:pointer;border-radius:5px" style-hover="background:#f0fdf4">31</div>
+                  </div>
+                </div>
+              </div>
+              <button style="width:32px;height:32px;border-radius:6px;border:1px solid #d1d5db;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px" style-hover="background:#f9fafb">
+                <svg width="13" height="13" fill="none" stroke="#374151" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+              </button>
+            </div>
+            <!-- Footer -->
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;border-top:1px solid #e5e7eb;padding-top:16px">
+              <button onClick="{{ togglePeriodDrop }}" style="height:36px;padding:0 20px;background:#fff;border:1px solid #d1d5db;border-radius:7px;font-size:13px;color:#374151;cursor:pointer;font-weight:500" style-hover="background:#f9fafb">Annuler</button>
+              <button onClick="{{ togglePeriodDrop }}" style="height:36px;padding:0 24px;background:#16a34a;border:none;border-radius:7px;font-size:13px;color:#fff;cursor:pointer;font-weight:700" style-hover="background:#15803d">Appliquer</button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- ===== VUE TABLEAU ===== -->
+    <sc-if value="{{ isTableView }}" hint-placeholder-val="{{ true }}">
+      <div style="flex:1;overflow:auto;background:#fff">
+        <table id="act-table" style="width:100%;border-collapse:collapse;min-width:900px;table-layout:fixed">
+          <colgroup id="act-cols">
+            <col style="width:36px" /><col style="width:50px" /><col style="width:220px" />
+            <col style="width:150px" /><col style="width:110px" /><col style="width:100px" />
+            <col style="width:160px" /><col style="width:200px" /><col style="width:140px" />
+            <col style="width:150px" /><col style="width:80px" /><col style="width:130px" /><col style="width:44px" />
+          </colgroup>
+          <thead>
+            <tr style="border-bottom:2px solid #e5e7eb;position:sticky;top:0;background:#fff;z-index:2">
+              <th style="padding:10px 12px;text-align:center;border-right:1px solid #e5e7eb;position:sticky;left:0;background:#fff;z-index:3"><input type="checkbox" checked="{{ checkAllAct }}" onChange="{{ onCheckAllAct }}" style="cursor:pointer" /></th>
+              <th style="padding:10px 6px;text-align:center;font-size:12px;font-weight:600;color:#374151;border-right:1px solid #e5e7eb">Terminé</th>
+              <th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;border-right:1px solid #e5e7eb;cursor:pointer;position:relative" style-hover="color:#111827">Sujet ↕<div onMouseDown="{{ resizeCol }}" style="position:absolute;right:0;top:0;bottom:0;width:5px;cursor:col-resize;z-index:10"></div></th>
+              <th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;border-right:1px solid #e5e7eb;position:relative">Affaire<div onMouseDown="{{ resizeCol }}" style="position:absolute;right:0;top:0;bottom:0;width:5px;cursor:col-resize;z-index:10"></div></th>
+              <th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;border-right:1px solid #e5e7eb;position:relative">Date d'échéance<div onMouseDown="{{ resizeCol }}" style="position:absolute;right:0;top:0;bottom:0;width:5px;cursor:col-resize;z-index:10"></div></th>
+              <th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;border-right:1px solid #e5e7eb;position:relative">Priorité<div onMouseDown="{{ resizeCol }}" style="position:absolute;right:0;top:0;bottom:0;width:5px;cursor:col-resize;z-index:10"></div></th>
+              <th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;border-right:1px solid #e5e7eb;position:relative">Personne à contacter<div onMouseDown="{{ resizeCol }}" style="position:absolute;right:0;top:0;bottom:0;width:5px;cursor:col-resize;z-index:10"></div></th>
+              <th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;border-right:1px solid #e5e7eb;position:relative">
+                <div style="display:flex;align-items:center;gap:4px"><svg width="12" height="12" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>Adresse e-mail</div>
+                <div onMouseDown="{{ resizeCol }}" style="position:absolute;right:0;top:0;bottom:0;width:5px;cursor:col-resize;z-index:10"></div>
+              </th>
+              <th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;border-right:1px solid #e5e7eb;position:relative">
+                <div style="display:flex;align-items:center;gap:4px"><svg width="12" height="12" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>Téléphone</div>
+                <div onMouseDown="{{ resizeCol }}" style="position:absolute;right:0;top:0;bottom:0;width:5px;cursor:col-resize;z-index:10"></div>
+              </th>
+              <th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;border-right:1px solid #e5e7eb;position:relative">Organisation<div onMouseDown="{{ resizeCol }}" style="position:absolute;right:0;top:0;bottom:0;width:5px;cursor:col-resize;z-index:10"></div></th>
+              <th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;border-right:1px solid #e5e7eb;position:relative">Durée<div onMouseDown="{{ resizeCol }}" style="position:absolute;right:0;top:0;bottom:0;width:5px;cursor:col-resize;z-index:10"></div></th>
+              <th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;border-right:1px solid #e5e7eb;position:relative">Attribuée à<div onMouseDown="{{ resizeCol }}" style="position:absolute;right:0;top:0;bottom:0;width:5px;cursor:col-resize;z-index:10"></div></th>
+              <th style="width:44px;padding:10px 8px;text-align:right;position:sticky;right:0;background:#fff;z-index:3;border-left:1px solid #e5e7eb">
+                <button onClick="{{ toggleColPanel }}" style="background:none;border:none;cursor:pointer;padding:4px;border-radius:4px;display:flex;align-items:center;justify-content:center" style-hover="background:#f3f4f6">
+                  <svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 010 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 010-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                </button>
+              </th>
+            </tr>
+          </thead>
+          {{ activityRows }}
+        </table>
+      </div>
+    </sc-if>
+
+    <!-- ===== VUE CALENDRIER ===== -->
+    <sc-if value="{{ isCalView }}" hint-placeholder-val="{{ false }}">
+      <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff">
+        <!-- Cal header controls -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid #e5e7eb;flex-shrink:0">
+          <div style="display:flex;align-items:center;gap:6px">
+            <button style="height:30px;padding:0 12px;background:#fff;border:1px solid #d1d5db;border-radius:5px;font-size:13px;color:#374151;cursor:pointer;display:flex;align-items:center;gap:5px" style-hover="background:#f9fafb">
+              Jul 5 – 11, 2026
+              <svg width="9" height="9" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+            </button>
+            <button style="width:28px;height:30px;border:1px solid #d1d5db;border-radius:5px;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#f9fafb">
+              <svg width="12" height="12" fill="none" stroke="#374151" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+            </button>
+            <button style="height:30px;padding:0 12px;border:1px solid #d1d5db;border-radius:5px;background:#fff;font-size:13px;color:#2563eb;font-weight:500;cursor:pointer" style-hover="background:#eff6ff">Aujourd'hui</button>
+            <button style="width:28px;height:30px;border:1px solid #d1d5db;border-radius:5px;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#f9fafb">
+              <svg width="12" height="12" fill="none" stroke="#374151" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+            </button>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <button style="height:30px;padding:0 12px;background:#fff;border:1px solid #d1d5db;border-radius:5px;font-size:13px;color:#374151;cursor:pointer;display:flex;align-items:center;gap:5px" style-hover="background:#f9fafb">
+              <svg width="12" height="12" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"/></svg>
+              MINING TECH
+              <svg width="9" height="9" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+            </button>
+            <div style="padding:3px 10px;border:1.5px solid #ef4444;border-radius:12px;font-size:11px;font-weight:700;color:#ef4444;white-space:nowrap">SYNCHRONISATION INACTIVE</div>
+          </div>
+        </div>
+        <!-- Cal grid -->
+        <div style="flex:1;overflow:auto;position:relative">
+          <!-- Day headers -->
+          <div style="display:grid;grid-template-columns:60px repeat(7,1fr);border-bottom:2px solid #e5e7eb;position:sticky;top:0;background:#fff;z-index:5">
+            <div style="padding:8px;font-size:11px;color:#9ca3af;text-align:right;border-right:1px solid #e5e7eb">JUL</div>
+            <div style="padding:8px 4px;text-align:center;border-right:1px solid #e5e7eb"><div style="font-size:11px;color:#9ca3af">Sun 5</div></div>
+            <div style="padding:8px 4px;text-align:center;border-right:1px solid #e5e7eb"><div style="font-size:11px;color:#9ca3af">Mon 6</div></div>
+            <div style="padding:6px 4px;text-align:center;border-right:1px solid #e5e7eb;background:#eff6ff;border-radius:6px 6px 0 0">
+              <div style="font-size:11px;color:#2563eb;font-weight:700">Tue 7</div>
+              <div style="width:28px;height:28px;border-radius:50%;background:#2563eb;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;margin:2px auto 0">7</div>
+            </div>
+            <div style="padding:8px 4px;text-align:center;border-right:1px solid #e5e7eb"><div style="font-size:11px;color:#9ca3af">Wed 8</div></div>
+            <div style="padding:8px 4px;text-align:center;border-right:1px solid #e5e7eb"><div style="font-size:11px;color:#9ca3af">Thu 9</div></div>
+            <div style="padding:8px 4px;text-align:center;border-right:1px solid #e5e7eb"><div style="font-size:11px;color:#9ca3af">Fri 10</div></div>
+            <div style="padding:8px 4px;text-align:center"><div style="font-size:11px;color:#9ca3af">Sat 11</div></div>
+          </div>
+          <!-- All-day events row -->
+          <div style="display:grid;grid-template-columns:60px repeat(7,1fr);border-bottom:1px solid #e5e7eb;min-height:28px">
+            <div style="border-right:1px solid #e5e7eb;font-size:10px;color:#9ca3af;padding:4px 6px;text-align:right">all-day</div>
+            <div style="border-right:1px solid #e5e7eb"></div>
+            <div style="border-right:1px solid #e5e7eb;padding:3px 4px">
+              <div style="background:#1f2937;color:#fff;font-size:11px;padding:2px 6px;border-radius:3px;display:flex;align-items:center;gap:4px;cursor:pointer">
+                <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+                DEJEUNER AV...
+              </div>
+            </div>
+            <div style="border-right:1px solid #e5e7eb"></div>
+            <div style="border-right:1px solid #e5e7eb"></div>
+            <div style="border-right:1px solid #e5e7eb"></div>
+            <div style="border-right:1px solid #e5e7eb"></div>
+            <div></div>
+          </div>
+          <!-- Time slots -->
+          <sc-for list="{{ timeSlots }}" as="slot" hint-placeholder-count="6">
+            <div style="display:grid;grid-template-columns:60px repeat(7,1fr);position:relative">
+              <div style="padding:0 6px;font-size:10px;color:#9ca3af;text-align:right;padding-top:4px;border-right:1px solid #e5e7eb;min-height:40px">{{ slot.label }}</div>
+              <div class="cal-cell"></div>
+              <div class="cal-cell"></div>
+              <div class="cal-cell" style="background:#f0f9ff"></div>
+              <div class="cal-cell"></div>
+              <div class="cal-cell"></div>
+              <div class="cal-cell"></div>
+              <div style="min-height:40px;border-bottom:1px solid #f0f2f4"></div>
+            </div>
+          </sc-for>
+          <!-- Current time line -->
+          <div style="position:absolute;left:60px;right:0;top:{{ currentTimePx }}px;z-index:4;display:flex;align-items:center;pointer-events:none">
+            <div style="background:#ef4444;color:#fff;font-size:9px;font-weight:700;padding:1px 4px;border-radius:3px;white-space:nowrap">{{ currentTimeLabel }}</div>
+            <div style="flex:1;height:1.5px;background:#ef4444"></div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+</div>
+
+<!-- ===== DEAL DETAIL FULL OVERLAY ===== -->
+<sc-if value="{{ showDealDetail }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:100;background:#f9fafb;display:flex;flex-direction:column;overflow:hidden">
+  <!-- Header -->
+  <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:14px 20px 0;flex-shrink:0">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:12px">
+      <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+        <button onClick="{{ closeDealDetail }}" style="display:flex;align-items:center;gap:5px;background:transparent;border:none;cursor:pointer;color:#6b7280;font-size:12px;padding:4px 8px;border-radius:5px" style-hover="background:#f3f4f6">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+          Activités
+        </button>
+        <h1 style="font-size:22px;font-weight:700;color:#111827">{{ selectedDeal.title }}</h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:6px;padding:4px 10px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px">
+          <div style="width:24px;height:24px;border-radius:50%;background:#374151;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700">MT</div>
+          <div><div style="font-size:11px;font-weight:600;color:#111827">MINING TECH</div><div style="font-size:10px;color:#9ca3af">Propriétaire</div></div>
+          <svg width="9" height="9" fill="none" stroke="#9ca3af" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+        </div>
+        <div style="display:flex">
+          <button style="display:flex;align-items:center;gap:4px;padding:5px 11px;border:none;border-radius:6px 0 0 6px;background:#374151;color:#fff;font-size:12px;font-weight:600;cursor:pointer;border-right:1px solid rgba(255,255,255,.2)" style-hover="background:#1f2937">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+            Devis / Facture
+          </button>
+          <button style="width:26px;height:30px;border:none;border-radius:0 6px 6px 0;background:#374151;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#1f2937"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
+        </div>
+        <div style="display:flex">
+          <button style="display:flex;align-items:center;gap:4px;padding:5px 12px;border:none;border-radius:6px 0 0 6px;background:#16a34a;color:#fff;font-size:12px;font-weight:700;cursor:pointer;border-right:1px solid rgba(255,255,255,.3)" style-hover="background:#15803d"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Gagnée</button>
+          <button style="width:26px;height:30px;border:none;border-radius:0 6px 6px 0;background:#16a34a;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#15803d"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
+        </div>
+        <button style="display:flex;align-items:center;gap:4px;padding:5px 12px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;color:#374151;font-size:12px;font-weight:500;cursor:pointer" style-hover="background:#f9fafb"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>Perdue</button>
+        <button onClick="{{ closeDealDetail }}" style="width:28px;height:28px;border:1px solid #e5e7eb;border-radius:5px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#f9fafb"><svg width="13" height="13" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+    <!-- Pipeline stepper -->
+    <div style="display:flex;gap:2px">
+      <sc-for list="{{ dealDetailStages }}" as="step" hint-placeholder-count="6">
+        <div style="flex:1;height:36px;position:relative;clip-path:{{ step.headerClip }};background:{{ step.bgColor }};cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 18px 0 {{ step.arrowPadL }}">
+          <div style="font-size:9px;font-weight:700;color:{{ step.textColor }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center">{{ step.shortLabel }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <!-- Breadcrumb -->
+    <div style="padding:5px 0 8px;font-size:11px;color:#9ca3af;display:flex;align-items:center;gap:4px">
+      <span style="color:#2563eb;cursor:pointer">Pipeline Principal</span>
+      <svg width="8" height="8" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+      <span style="color:#374151;font-weight:600">{{ selectedDeal.stage }}</span>
+    </div>
+  </div>
+
+  <!-- Body: sidebar + main -->
+  <div style="flex:1;display:flex;overflow:hidden;min-height:0">
+    <!-- Sidebar -->
+    <div style="width:310px;flex-shrink:0;border-right:1px solid #e5e7eb;overflow-y:auto;background:#fff">
+      <!-- RÉSUMÉ -->
+      <div style="border-bottom:1px solid #f0f2f4">
+        <div onClick="{{ toggleResume }}" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer" style-hover="background:#f9fafb">
+          <div style="display:flex;align-items:center;gap:6px"><svg width="13" height="13" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg><span style="font-size:12px;font-weight:700;color:#374151">Résumé</span></div>
+          <svg width="10" height="10" fill="none" stroke="#9ca3af" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ resumeChevron }}"/></svg>
+        </div>
+        <sc-if value="{{ resumeExp }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:0 14px 12px;display:flex;flex-direction:column;gap:0">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid #f0f2f4">
+              <div style="display:flex;align-items:center;gap:6px">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                <span style="font-size:13px;font-weight:700;color:#111827">{{ selectedDeal.value }}</span>
+              </div>
+              <button style="font-size:11px;color:#16a34a;border:none;background:transparent;cursor:pointer" style-hover="color:#15803d">+ Produits</button>
+            </div>
+            <div style="padding:5px 0;border-top:1px solid #f0f2f4"><div style="display:flex;align-items:center;gap:6px"><svg width="13" height="13" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg><span style="font-size:12px;color:#2563eb;cursor:pointer">{{ selectedDeal.contact }}</span></div></div>
+            <div style="padding:5px 0;border-top:1px solid #f0f2f4">
+              <div style="display:flex;align-items:center;gap:5px">
+                <svg width="12" height="12" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25"/></svg>
+                <span style="font-size:12px;color:#374151">28 juin 2026</span>
+              </div>
+            </div>
+            <div style="padding:5px 0;border-top:1px solid #f0f2f4">
+              <div style="display:flex;align-items:center;gap:5px">
+                <svg width="12" height="12" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/></svg>
+                <button style="font-size:11px;color:#9ca3af;border:none;background:transparent;cursor:pointer" style-hover="color:#6b7280">Ajouter des étiquettes</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- PERSONNE -->
+      <div style="border-bottom:1px solid #f0f2f4">
+        <div onClick="{{ togglePersonne }}" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer" style-hover="background:#f9fafb">
+          <div style="display:flex;align-items:center;gap:6px"><svg width="13" height="13" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg><span style="font-size:12px;font-weight:700;color:#374151">Personne</span></div>
+          <svg width="10" height="10" fill="none" stroke="#9ca3af" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ personneChevron }}"/></svg>
+        </div>
+        <sc-if value="{{ personneExp }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:0 14px 12px">
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 0;border-top:1px solid #f0f2f4">
+              <div style="width:30px;height:30px;border-radius:50%;background:#3b82f6;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0">{{ selectedDeal.contactInit }}</div>
+              <span style="font-size:13px;color:#2563eb;font-weight:600;cursor:pointer">{{ selectedDeal.contact }}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-top:1px solid #f0f2f4"><span style="font-size:11px;color:#6b7280">Téléphone</span><span style="font-size:11px;color:#2563eb;cursor:pointer">+225 07 12 34 567</span></div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-top:1px solid #f0f2f4;gap:6px"><span style="font-size:11px;color:#6b7280;flex-shrink:0">E-mail</span><span style="font-size:11px;color:#2563eb;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">contact@vooroo.com</span></div>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- ORGANISATION -->
+      <div style="border-bottom:1px solid #f0f2f4">
+        <div onClick="{{ toggleOrg }}" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer" style-hover="background:#f9fafb">
+          <div style="display:flex;align-items:center;gap:6px"><svg width="13" height="13" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg><span style="font-size:12px;font-weight:700;color:#374151">Organisation</span></div>
+          <svg width="10" height="10" fill="none" stroke="#9ca3af" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ orgChevron }}"/></svg>
+        </div>
+        <sc-if value="{{ orgExp }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:0 14px 12px">
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 0;border-top:1px solid #f0f2f4">
+              <div style="width:30px;height:30px;border-radius:6px;background:#111827;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" fill="none" stroke="#fff" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18"/></svg></div>
+              <span style="font-size:13px;color:#2563eb;font-weight:600;cursor:pointer">{{ selectedDeal.title }}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-top:1px solid #f0f2f4"><span style="font-size:11px;color:#6b7280">Secteur</span><span style="font-size:11px;color:#9ca3af">—</span></div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-top:1px solid #f0f2f4"><span style="font-size:11px;color:#6b7280">Site web</span><span style="font-size:11px;color:#9ca3af">—</span></div>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- VUE D'ENSEMBLE -->
+      <div style="border-bottom:1px solid #f0f2f4">
+        <div onClick="{{ toggleOverview }}" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer" style-hover="background:#f9fafb">
+          <div style="display:flex;align-items:center;gap:6px"><svg width="13" height="13" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75z"/></svg><span style="font-size:12px;font-weight:700;color:#374151">Vue d'ensemble</span></div>
+          <svg width="10" height="10" fill="none" stroke="#9ca3af" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ overviewChevron }}"/></svg>
+        </div>
+        <sc-if value="{{ overviewExp }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:0 14px 12px">
+            <div style="display:flex;justify-content:space-between;padding:5px 0;border-top:1px solid #f0f2f4"><span style="font-size:11px;color:#6b7280">Âge de l'affaire</span><span style="font-size:11px;color:#374151;font-weight:500">7 jours</span></div>
+            <div style="display:flex;justify-content:space-between;padding:5px 0;border-top:1px solid #f0f2f4"><span style="font-size:11px;color:#6b7280">Créé</span><span style="font-size:11px;color:#374151">27 juin 2026</span></div>
+            <div style="padding:8px 0 4px;border-top:1px solid #f0f2f4">
+              <div style="font-size:11px;color:#6b7280;margin-bottom:6px;font-weight:600">Principales activités</div>
+              <div style="height:6px;background:#f3f4f6;border-radius:3px;overflow:hidden;margin-bottom:5px"><div style="height:100%;width:100%;background:#f59e0b;border-radius:3px"></div></div>
+              <div style="display:flex;justify-content:space-between"><span style="font-size:11px;color:#374151">Appel</span><div style="display:flex;gap:8px"><span style="font-size:11px;color:#6b7280">1</span><span style="font-size:11px;color:#16a34a;font-weight:600">100%</span></div></div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+      <div style="padding:12px 14px;font-size:10px;color:#9ca3af;line-height:1.9">
+        <div>Mise à jour : 7 juil. 2026</div>
+        <div>Création : 27 juin 2026</div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div style="flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0">
+      <!-- Composer -->
+      <div style="background:#fff;border-radius:9px;border:1px solid #e5e7eb;overflow:hidden">
+        <div style="display:flex;border-bottom:1px solid #f3f4f6;overflow-x:auto">
+          <sc-for list="{{ dComposerTabs }}" as="tab" hint-placeholder-count="5">
+            <button onClick="{{ tab.onClick }}" style="display:flex;align-items:center;gap:5px;padding:9px 12px;border:none;border-bottom:2px solid {{ tab.activeBorder }};background:transparent;color:{{ tab.tabColor }};font-size:11px;font-weight:{{ tab.weight }};cursor:pointer;white-space:nowrap;flex-shrink:0">{{ tab.label }}</button>
+          </sc-for>
+        </div>
+        <div style="padding:10px 14px"><input type="text" placeholder="Cliquez ici pour ajouter une activité..." style="width:100%;border:none;font-size:13px;color:#374151;background:transparent;outline:none" /></div>
+      </div>
+      <!-- Points clés -->
+      <div style="background:#fff;border-radius:9px;border:1px solid #e5e7eb;overflow:hidden">
+        <div onClick="{{ togglePointsCles }}" style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;cursor:pointer" style-hover="background:#f9fafb">
+          <span style="font-size:13px;font-weight:700;color:#111827">Points clés</span>
+          <svg width="10" height="10" fill="none" stroke="#9ca3af" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ pointsClesChevron }}"/></svg>
+        </div>
+        <sc-if value="{{ pointsClesExp }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:0 14px 12px">
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:9px 12px;background:#fff;border-radius:8px;border:1px solid #e5e7eb">
+              <div style="width:28px;height:28px;border-radius:50%;background:#f3f4f6;border:1.5px solid #e5e7eb;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="12" height="12" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg></div>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;flex-wrap:wrap">
+                  <span style="font-size:12px;font-weight:600;color:#111827">Appel de suivi — {{ selectedDeal.title }}</span>
+                  <span style="background:#ef4444;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:2px">EN RETARD</span>
+                </div>
+                <div style="font-size:11px;color:#9ca3af;display:flex;align-items:center;gap:6px"><span style="color:#ef4444;font-weight:500">28 juin</span><span>· MINING TECH · {{ selectedDeal.title }}</span></div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+      <!-- Historique -->
+      <div style="background:#fff;border-radius:9px;border:1px solid #e5e7eb;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:5px;padding:11px 14px 0"><span style="font-size:13px;font-weight:700;color:#111827">Historique</span></div>
+        <div style="display:flex;border-bottom:1px solid #f3f4f6;overflow-x:auto;margin-top:6px">
+          <sc-for list="{{ dHistTabs }}" as="tab" hint-placeholder-count="4">
+            <button onClick="{{ tab.onClick }}" style="padding:7px 12px;border:none;border-bottom:2px solid {{ tab.activeBorder }};background:transparent;color:{{ tab.tabColor }};font-size:11px;font-weight:{{ tab.weight }};cursor:pointer;white-space:nowrap;flex-shrink:0">{{ tab.label }}</button>
+          </sc-for>
+        </div>
+        <div style="padding:14px">
+          <div style="display:flex;gap:10px;margin-bottom:12px">
+            <div style="flex-shrink:0"><div style="width:28px;height:28px;border-radius:50%;background:#fff7ed;border:1.5px solid #fed7aa;display:flex;align-items:center;justify-content:center"><svg width="12" height="12" fill="none" stroke="#f97316" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg></div></div>
+            <div style="flex:1;padding-bottom:12px">
+              <div style="font-size:11px;color:#9ca3af;margin-bottom:4px">1 juil. 2026 · MINING TECH</div>
+              <div style="font-size:12px;color:#374151;line-height:1.5;background:#fffbeb;padding:9px 10px;border-radius:6px;border:1px solid #fde68a">Affaire {{ selectedDeal.title }} créée. Premier contact établi. Prospect intéressé par {{ selectedDeal.product }}.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px">
+            <div style="flex-shrink:0"><div style="width:28px;height:28px;border-radius:50%;background:#f3f4f6;border:1.5px solid #e5e7eb;display:flex;align-items:center;justify-content:center"><svg width="12" height="12" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></div></div>
+            <div style="padding-top:4px"><div style="font-size:12px;font-weight:500;color:#374151">Affaire créée</div><div style="font-size:10px;color:#9ca3af">1 juil. 2026 · MINING TECH</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<!-- ===== FORMULAIRE CRÉATION ===== -->
+<sc-if value="{{ showForm }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeForm }}" style="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px">
+    <div onClick="{{ stopProp }}" style="background:#fff;border-radius:10px;width:960px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.28)">
+      <!-- Modal header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #e5e7eb;flex-shrink:0;background:#fff">
+        <span style="font-size:15px;font-weight:700;color:#111827">Planifier une activité</span>
+        <button onClick="{{ closeForm }}" style="background:transparent;border:none;cursor:pointer;color:#9ca3af;display:flex;align-items:center" style-hover="color:#374151">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <!-- Modal body: left form + right calendar -->
+      <div style="display:flex;flex:1;overflow:hidden;min-height:0">
+
+        <!-- LEFT FORM -->
+        <div style="flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:16px;border-right:1px solid #e5e7eb">
+
+          <!-- Title input -->
+          <input type="text" placeholder="{{ formTypeName }}" style="width:100%;height:46px;border:1.5px solid #d1d5db;border-radius:7px;font-size:20px;font-weight:500;padding:0 14px;color:#111827;background:#fff" />
+
+          <!-- Type buttons row -->
+          <div style="display:flex;gap:6px">
+            <!-- Appel -->
+            <button onClick="{{ setFormTypeAppel }}" style="width:40px;height:38px;border-radius:6px;border:2px solid {{ formTypeAppelBorder }};background:{{ formTypeAppelBg }};display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="border-color:#9ca3af" title="Appel">
+              <svg width="18" height="18" fill="none" stroke="{{ formTypeAppelStroke }}" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+            </button>
+            <!-- Rendez-vous -->
+            <button onClick="{{ setFormTypeRdv }}" style="width:40px;height:38px;border-radius:6px;border:2px solid {{ formTypeRdvBorder }};background:{{ formTypeRdvBg }};display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="border-color:#9ca3af" title="Rendez-vous">
+              <svg width="18" height="18" fill="none" stroke="{{ formTypeRdvStroke }}" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+            </button>
+            <!-- Tâche -->
+            <button onClick="{{ setFormTypeTache }}" style="width:40px;height:38px;border-radius:6px;border:2px solid {{ formTypeTacheBorder }};background:{{ formTypeTacheBg }};display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="border-color:#9ca3af" title="Tâche">
+              <svg width="18" height="18" fill="none" stroke="{{ formTypeTacheStroke }}" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </button>
+            <!-- Échéance -->
+            <button style="width:40px;height:38px;border-radius:6px;border:2px solid #d1d5db;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="border-color:#9ca3af" title="Échéance">
+              <svg width="18" height="18" fill="none" stroke="#374151" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5"/></svg>
+            </button>
+            <!-- Email -->
+            <button style="width:40px;height:38px;border-radius:6px;border:2px solid #d1d5db;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="border-color:#9ca3af" title="E-mail">
+              <svg width="18" height="18" fill="none" stroke="#374151" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+            </button>
+            <!-- Déjeuner -->
+            <button style="width:40px;height:38px;border-radius:6px;border:2px solid #d1d5db;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="border-color:#9ca3af" title="Déjeuner">
+              <svg width="18" height="18" fill="none" stroke="#374151" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 2v5a3 3 0 003 3v12M15 2v20M18 2v20"/></svg>
+            </button>
+          </div>
+
+          <!-- Date/heure row (with clock icon) -->
+          <div style="display:flex;align-items:center;gap:8px">
+            <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24" style="flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <input type="text" value="Jul 7, 2026" style="width:110px;height:34px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;padding:0 10px;color:#374151;background:#fff" />
+            <input type="text" placeholder="h:mm PM" style="width:90px;height:34px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;padding:0 10px;color:#374151;background:#fff" />
+            <span style="font-size:15px;color:#9ca3af">–</span>
+            <input type="text" placeholder="h:mm PM" style="width:90px;height:34px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;padding:0 10px;color:#374151;background:#fff" />
+            <input type="text" value="Jul 7, 2026" style="width:110px;height:34px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;padding:0 10px;color:#374151;background:#fff" />
+          </div>
+
+          <!-- Priorité row -->
+          <div style="display:flex;align-items:center;gap:8px">
+            <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24" style="flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5"/></svg>
+            <div style="position:relative">
+              <button onClick="{{ togglePrioDrop }}" style="height:34px;padding:0 14px;background:#fff;border:1px solid #d1d5db;border-radius:5px;font-size:13px;color:#374151;cursor:pointer;display:flex;align-items:center;gap:6px" style-hover="background:#f9fafb">
+                {{ formPrioLabel }}
+                <svg width="10" height="10" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+              </button>
+              <sc-if value="{{ showPrioDrop }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ togglePrioDrop }}" style="position:fixed;inset:0;z-index:148"></div>
+                <div style="position:absolute;top:calc(100% + 4px);left:0;z-index:149;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.13);width:170px;padding:8px 12px">
+                  <div onClick="{{ setPrioNone }}" style="display:flex;align-items:center;justify-content:space-between;padding:8px 4px;cursor:pointer;border-radius:4px" style-hover="background:#f9fafb">
+                    <span style="font-size:14px;font-weight:600;color:#374151">Aucun</span>
+                    <sc-if value="{{ prioIsNone }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" fill="none" stroke="#2563eb" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></sc-if>
+                  </div>
+                  <div onClick="{{ setPrioHigh }}" style="padding:6px 4px;cursor:pointer;border-radius:4px" style-hover="background:#f9fafb"><span style="display:inline-flex;align-items:center;gap:5px;background:#ef4444;color:#fff;padding:4px 12px;border-radius:10px;font-size:12px;font-weight:700"><svg width="11" height="11" fill="currentColor" viewBox="0 0 24 24"><path d="M11.47 2.47a.75.75 0 011.06 0l7.5 7.5a.75.75 0 11-1.06 1.06l-6.22-6.22V21a.75.75 0 01-1.5 0V4.81l-6.22 6.22a.75.75 0 11-1.06-1.06l7.5-7.5z"/></svg>HIGH</span></div>
+                  <div onClick="{{ setPrioMed }}" style="padding:6px 4px;cursor:pointer;border-radius:4px" style-hover="background:#f9fafb"><span style="display:inline-flex;align-items:center;gap:5px;background:#f59e0b;color:#fff;padding:4px 12px;border-radius:10px;font-size:12px;font-weight:700"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/></svg>MEDIUM</span></div>
+                  <div onClick="{{ setPrioLow }}" style="padding:6px 4px;cursor:pointer;border-radius:4px" style-hover="background:#f9fafb"><span style="display:inline-flex;align-items:center;gap:5px;background:#2563eb;color:#fff;padding:4px 12px;border-radius:10px;font-size:12px;font-weight:700"><svg width="11" height="11" fill="currentColor" viewBox="0 0 24 24"><path d="M12.53 21.53a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 111.06-1.06l6.22 6.22V3a.75.75 0 011.5 0v16.19l6.22-6.22a.75.75 0 111.06 1.06l-7.5 7.5z"/></svg>LOW</span></div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+
+          <!-- ··· Ajouter lieu / appel vidéo / description -->
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:14px;color:#9ca3af;font-weight:700;letter-spacing:2px">···</span>
+            <span style="font-size:13px;color:#374151">Ajouter un </span>
+            <span onClick="{{ toggleLieu }}" style="font-size:13px;color:#2563eb;cursor:pointer" style-hover="text-decoration:underline">lieu</span>
+            <span style="font-size:13px;color:#374151">, un </span>
+            <span onClick="{{ toggleVideo }}" style="font-size:13px;color:#2563eb;cursor:pointer" style-hover="text-decoration:underline">appel vidéo</span>
+            <span style="font-size:13px;color:#374151">, une </span>
+            <span onClick="{{ toggleDesc }}" style="font-size:13px;color:#2563eb;cursor:pointer" style-hover="text-decoration:underline">description</span>
+          </div>
+
+          <!-- Emplacement (déplié) -->
+          <sc-if value="{{ showLieu }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:8px">
+              <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24" style="flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+              <input type="text" placeholder="Emplacement" style="flex:1;height:36px;border:1.5px solid #2563eb;border-radius:6px;font-size:13px;padding:0 12px;color:#374151;background:#fff;outline:none" />
+            </div>
+          </sc-if>
+
+          <!-- Appel vidéo (déplié) -->
+          <sc-if value="{{ showVideo }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:flex-start;gap:8px">
+              <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:8px"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"/></svg>
+              <div style="flex:1;position:relative">
+                <button onClick="{{ toggleVideoDrop }}" style="width:100%;height:36px;border:1.5px solid #2563eb;border-radius:6px;font-size:13px;padding:0 12px;color:#374151;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:space-between" style-hover="background:#f9fafb">
+                  <span>{{ selectedVideo }}</span>
+                  <svg width="10" height="10" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                </button>
+                <sc-if value="{{ showVideoDrop }}" hint-placeholder-val="{{ false }}">
+                  <div onClick="{{ closeVideoDrop }}" style="position:fixed;inset:0;z-index:148"></div>
+                  <div style="position:absolute;top:calc(100% + 2px);left:0;right:0;z-index:149;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden">
+                    <div onClick="{{ setVideoTeams }}" style="display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer" style-hover="background:#f9fafb">
+                      <!-- Teams logo -->
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#5059C9"/><text x="5" y="17" font-size="13" font-weight="700" fill="#fff" font-family="sans-serif">T</text></svg>
+                      <span style="font-size:13px;color:#374151">Réunion Microsoft Teams</span>
+                    </div>
+                    <div onClick="{{ setVideoMeet }}" style="display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer" style-hover="background:#f9fafb">
+                      <!-- Meet logo -->
+                      <svg width="18" height="18" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#fff"/><path d="M3 8h11v8H3z" fill="#00832D"/><path d="M14 8l7-3v14l-7-3V8z" fill="#00832D"/><path d="M14 8l7-3v14l-7-3V8z" fill="#00AC47" opacity=".6"/><circle cx="8.5" cy="12" r="2.5" fill="#fff"/></svg>
+                      <span style="font-size:13px;color:#374151">Rendez-vous Google Meet</span>
+                    </div>
+                    <div onClick="{{ setVideoZoom }}" style="display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer" style-hover="background:#f9fafb">
+                      <!-- Zoom logo -->
+                      <svg width="18" height="18" viewBox="0 0 24 24"><rect width="24" height="24" rx="12" fill="#2D8CFF"/><path d="M5 9.5C5 8.67 5.67 8 6.5 8h7C14.33 8 15 8.67 15 9.5v5c0 .83-.67 1.5-1.5 1.5h-7C5.67 16 5 15.33 5 14.5v-5zm10 1.5l4-2.5v6L15 12z" fill="#fff"/></svg>
+                      <span style="font-size:13px;color:#374151">Réunion Zoom</span>
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- Description (dépliée) -->
+          <sc-if value="{{ showDesc }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:flex-start;gap:8px">
+              <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:6px"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"/></svg>
+              <div style="flex:1;border:1.5px solid #2563eb;border-radius:6px;overflow:hidden">
+                <textarea placeholder="" style="width:100%;min-height:80px;border:none;font-size:13px;padding:10px 12px;color:#374151;resize:none;background:#fff;font-family:'Roboto',sans-serif;outline:none;display:block"></textarea>
+                <div style="display:flex;align-items:center;gap:8px;padding:5px 12px;border-top:1px solid #e5e7eb;background:#f9fafb">
+                  <button style="font-size:13px;font-weight:700;color:#374151;background:none;border:none;cursor:pointer;width:24px;height:24px;border-radius:3px" style-hover="background:#e5e7eb">B</button>
+                  <button style="font-size:13px;font-style:italic;color:#374151;background:none;border:none;cursor:pointer;width:24px;height:24px;border-radius:3px" style-hover="background:#e5e7eb">I</button>
+                  <button style="font-size:13px;text-decoration:underline;color:#374151;background:none;border:none;cursor:pointer;width:24px;height:24px;border-radius:3px" style-hover="background:#e5e7eb">U</button>
+                  <div style="width:1px;height:16px;background:#e5e7eb"></div>
+                  <button style="background:none;border:none;cursor:pointer;color:#6b7280;width:24px;height:24px;border-radius:3px;display:flex;align-items:center;justify-content:center" style-hover="background:#e5e7eb">
+                    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+                  </button>
+                  <button style="background:none;border:none;cursor:pointer;color:#6b7280;width:24px;height:24px;border-radius:3px;display:flex;align-items:center;justify-content:center" style-hover="background:#e5e7eb">
+                    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
+                  </button>
+                </div>
+                <p style="font-size:11px;color:#9ca3af;padding:4px 12px 8px;margin:0">La description est synchronisée à votre calendrier et visible par tous les invités</p>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- Disponibilité -->
+          <div style="display:flex;align-items:center;gap:8px">
+            <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24" style="flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+            <select style="height:34px;padding:0 10px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;color:#374151;background:#fff;cursor:pointer">
+              <option>Libre</option>
+              <option>Occupé</option>
+            </select>
+            <svg width="16" height="16" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
+          </div>
+
+          <!-- Notes (fond jaune) -->
+          <div style="display:flex;align-items:flex-start;gap:8px">
+            <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:8px"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg>
+            <textarea placeholder="" style="flex:1;min-height:90px;border:1px solid #e5d58a;border-radius:7px;font-size:13px;padding:10px 12px;color:#374151;resize:none;background:#fefce8;font-family:'Roboto',sans-serif;line-height:1.5"></textarea>
+          </div>
+
+          <!-- Propriétaire -->
+          <div style="display:flex;align-items:center;gap:8px">
+            <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24" style="flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+            <select style="flex:1;height:38px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;padding:0 12px;color:#374151;background:#fff;cursor:pointer">
+              <option>MINING TECH (Vous)</option>
+              <option>Sarah Diallo</option>
+              <option>Jean Koné</option>
+            </select>
+          </div>
+
+          <!-- Liens -->
+          <div style="display:flex;align-items:flex-start;gap:8px">
+            <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:10px"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
+            <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;gap:10px;border:1px solid #d1d5db;border-radius:6px;padding:9px 12px;cursor:text;background:#fff" style-hover="border-color:#9ca3af">
+                <svg width="15" height="15" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+                <span style="font-size:13px;color:#9ca3af">Affaire, prospect ou projet</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;border:1px solid #d1d5db;border-radius:6px;padding:9px 12px;cursor:text;background:#fff" style-hover="border-color:#9ca3af">
+                <svg width="15" height="15" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+                <span style="font-size:13px;color:#9ca3af">Contacts</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;border:1px solid #d1d5db;border-radius:6px;padding:9px 12px;cursor:text;background:#fff" style-hover="border-color:#9ca3af">
+                <svg width="15" height="15" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
+                <span style="font-size:13px;color:#9ca3af">Organisation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT CALENDAR -->
+        <div style="width:260px;border-left:1px solid #e5e7eb;display:flex;flex-direction:column;background:#fff;flex-shrink:0">
+          <!-- Cal header -->
+          <div style="padding:12px 16px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+            <span style="font-size:14px;font-weight:700;color:#111827">Tuesday, July 7th</span>
+            <div style="display:flex;gap:2px">
+              <button style="width:24px;height:24px;border:none;background:transparent;cursor:pointer;color:#9ca3af;display:flex;align-items:center;justify-content:center;border-radius:4px" style-hover="background:#f3f4f6;color:#374151">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+              </button>
+              <button style="width:24px;height:24px;border:none;background:transparent;cursor:pointer;color:#9ca3af;display:flex;align-items:center;justify-content:center;border-radius:4px" style-hover="background:#f3f4f6;color:#374151">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+              </button>
+            </div>
+          </div>
+          <!-- Activity badge -->
+          <div style="padding:10px 12px;border-bottom:1px solid #e5e7eb;flex-shrink:0">
+            <div style="background:#2563eb;color:#fff;border-radius:6px;padding:7px 12px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+              {{ formTypeName }}
+            </div>
+          </div>
+          <!-- Scrollable time slots -->
+          <div style="flex:1;overflow-y:auto;position:relative" id="cal-preview-scroll">
+            <!-- Current time red line -->
+            <div style="position:absolute;left:0;right:0;top:{{ nowTop }};z-index:5;display:flex;align-items:center;pointer-events:none">
+              <span style="font-size:10px;font-weight:700;color:#ef4444;min-width:54px;text-align:right;padding-right:4px">{{ nowLabel }}</span>
+              <div style="width:6px;height:6px;border-radius:50%;background:#ef4444;flex-shrink:0"></div>
+              <div style="flex:1;height:1.5px;background:#ef4444"></div>
+            </div>
+            <sc-for list="{{ calPreviewSlots }}" as="cs" hint-placeholder-count="8">
+              <div style="display:flex;align-items:flex-start;min-height:60px;position:relative">
+                <span style="font-size:11px;color:#9ca3af;min-width:54px;text-align:right;padding-right:8px;flex-shrink:0;position:absolute;top:{{ cs.labelTop }};left:0">{{ cs.label }}</span>
+                <div style="position:absolute;top:{{ cs.lineTop }};left:54px;right:0;border-top:1px solid #e5e7eb"></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div style="display:flex;align-items:center;padding:12px 20px;border-top:1px solid #e5e7eb;gap:8px;flex-shrink:0;background:#fff">
+        <button style="width:34px;height:34px;border:1px solid #d1d5db;border-radius:5px;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#f9fafb" title="Paramètres">
+          <svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 010 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 010-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </button>
+        <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:13px;color:#374151">
+          <input type="checkbox" style="width:14px;height:14px;cursor:pointer;accent-color:#16a34a" />
+          Marquer comme terminé
+        </label>
+        <div style="flex:1"></div>
+        <button onClick="{{ closeForm }}" style="height:36px;padding:0 18px;background:#fff;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#374151;cursor:pointer;font-weight:500" style-hover="background:#f9fafb">Annuler</button>
+        <button style="height:36px;padding:0 20px;background:#16a34a;border:none;border-radius:6px;font-size:13px;color:#fff;cursor:pointer;font-weight:700" style-hover="background:#15803d">Enregistrer</button>
+        <button style="width:36px;height:36px;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#f9fafb" title="Dupliquer">
+          <svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<!-- ===== MODAL PERSONNALISER LES COLONNES ===== -->
+<sc-if value="{{ showColPanel }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeColPanel }}" style="position:fixed;inset:0;z-index:200"></div>
+  <div style="position:fixed;top:52px;right:0;width:380px;height:calc(100vh - 52px);background:#fff;border-left:1px solid #e5e7eb;box-shadow:-4px 0 20px rgba(0,0,0,.12);z-index:201;display:flex;flex-direction:column;overflow:hidden">
+    <div style="padding:20px 24px 0;flex-shrink:0">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <span style="font-size:18px;font-weight:700;color:#111827">Personnaliser les colonnes</span>
+        <button onClick="{{ closeColPanel }}" style="background:none;border:none;cursor:pointer;color:#9ca3af;padding:4px;border-radius:4px" style-hover="color:#374151;background:#f3f4f6">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;border:1px solid #d1d5db;border-radius:6px;padding:7px 12px;margin-bottom:16px">
+        <svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 0z"/></svg>
+        <input type="text" value="{{ colSearch }}" onChange="{{ setColSearch }}" placeholder="Chercher" style="border:none;outline:none;font-size:14px;color:#374151;flex:1;background:transparent" />
+      </div>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:0 24px">
+      <div style="font-size:11px;font-weight:700;color:#9ca3af;letter-spacing:.08em;margin-bottom:8px">VISIBLE</div>
+      <sc-for list="{{ visibleCols }}" as="vc" hint-placeholder-count="5">
+        <div style="display:flex;align-items:center;padding:8px 0;border-bottom:1px solid #f3f4f6">
+          <input type="checkbox" checked="{{ vc.checked }}" onChange="{{ vc.toggle }}" style="width:16px;height:16px;cursor:pointer;accent-color:#2563eb;margin-right:12px;flex-shrink:0" />
+          <span style="font-size:13px;color:#111827;flex:1">{{ vc.label }}</span>
+          <span style="font-size:12px;color:#9ca3af;margin-right:12px">{{ vc.category }}</span>
+          <div style="display:flex;gap:2px">
+            <button onClick="{{ vc.moveUp }}" style="background:none;border:none;cursor:pointer;color:#9ca3af;padding:2px 4px;border-radius:3px;font-size:10px" style-hover="background:#f3f4f6;color:#374151">▲</button>
+            <button onClick="{{ vc.moveDown }}" style="background:none;border:none;cursor:pointer;color:#9ca3af;padding:2px 4px;border-radius:3px;font-size:10px" style-hover="background:#f3f4f6;color:#374151">▼</button>
+          </div>
+        </div>
+      </sc-for>
+      <div style="font-size:11px;font-weight:700;color:#9ca3af;letter-spacing:.08em;margin-top:16px;margin-bottom:10px">DISPONIBLE</div>
+      <div style="display:flex;border-bottom:1px solid #e5e7eb;margin-bottom:12px">
+        <button onClick="{{ setColTab0 }}" style="padding:8px 16px;border:none;background:none;cursor:pointer;border-bottom:{{ colTab0Bd }};color:{{ colTab0C }}">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+        </button>
+        <button onClick="{{ setColTab1 }}" style="padding:8px 16px;border:none;background:none;cursor:pointer;border-bottom:{{ colTab1Bd }};color:{{ colTab1C }}">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+        <button onClick="{{ setColTab2 }}" style="padding:8px 16px;border:none;background:none;cursor:pointer;border-bottom:{{ colTab2Bd }};color:{{ colTab2C }}">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+        </button>
+        <button onClick="{{ setColTab3 }}" style="padding:8px 16px;border:none;background:none;cursor:pointer;border-bottom:{{ colTab3Bd }};color:{{ colTab3C }}">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
+        </button>
+        <button onClick="{{ setColTab4 }}" style="padding:8px 16px;border:none;background:none;cursor:pointer;border-bottom:{{ colTab4Bd }};color:{{ colTab4C }}">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/></svg>
+        </button>
+      </div>
+      <sc-for list="{{ availCols }}" as="ac" hint-placeholder-count="4">
+        <div style="display:flex;align-items:center;padding:8px 0;border-bottom:1px solid #f9fafb" onClick="{{ ac.toggle }}">
+          <input type="checkbox" checked="{{ ac.checked }}" onChange="{{ ac.toggle }}" style="width:16px;height:16px;cursor:pointer;accent-color:#2563eb;margin-right:12px;flex-shrink:0" />
+          <span style="font-size:13px;color:#111827">{{ ac.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="padding:14px 24px;border-top:1px solid #e5e7eb;display:flex;align-items:center;flex-shrink:0">
+      <button onClick="{{ colDefault }}" style="font-size:13px;color:#374151;background:none;border:none;cursor:pointer;font-weight:500;text-decoration:underline">Par défaut</button>
+      <div style="flex:1"></div>
+      <button onClick="{{ closeColPanel }}" style="height:34px;padding:0 16px;border:1px solid #d1d5db;border-radius:6px;background:#fff;font-size:13px;color:#374151;cursor:pointer;margin-right:8px" style-hover="background:#f9fafb">Annuler</button>
+      <button onClick="{{ saveColPanel }}" style="height:34px;padding:0 18px;border:none;border-radius:6px;background:#16a34a;font-size:13px;color:#fff;cursor:pointer;font-weight:600" style-hover="background:#15803d">Enregistrer</button>
+    </div>
+  </div>
+</sc-if>
+
+<!-- ===== MODAL MODIFIER EN BLOC (activités) ===== -->
+<sc-if value="{{ showBulkPanel }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;top:52px;right:0;width:380px;height:calc(100vh - 52px);background:#fff;border-left:1px solid #e5e7eb;box-shadow:-4px 0 20px rgba(0,0,0,.12);z-index:201;display:flex;flex-direction:column">
+    <div style="padding:20px 24px 16px;flex-shrink:0;border-bottom:1px solid #e5e7eb">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:18px;font-weight:700;color:#111827">Modifier en bloc</span>
+          <span style="font-size:11px;font-weight:700;color:#fff;background:#2563eb;padding:3px 8px;border-radius:12px;letter-spacing:.3px">{{ selCountAct }} SÉLECTIONNÉ</span>
+        </div>
+        <button onClick="{{ closeBulkPanel }}" style="background:none;border:none;cursor:pointer;color:#9ca3af;padding:4px;border-radius:4px" style-hover="color:#374151;background:#f3f4f6">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px;background:#f9fafb">
+      <div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:6px">Sujet</div>
+        <select style="width:100%;height:38px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#111827;padding:0 12px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+      </div>
+      <div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:6px">Attribuée à</div>
+        <select style="width:100%;height:38px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#111827;padding:0 12px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+      </div>
+      <div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:6px">Type</div>
+        <select style="width:100%;height:38px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#111827;padding:0 12px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option><option>Appel</option><option>Rendez-vous</option><option>E-mail</option><option>Tâche</option></select>
+      </div>
+      <div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:6px">Terminé</div>
+        <select style="width:100%;height:38px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#111827;padding:0 12px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option><option>Oui</option><option>Non</option></select>
+      </div>
+      <div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:6px">Organisation</div>
+        <select style="width:100%;height:38px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#111827;padding:0 12px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+      </div>
+      <div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:6px">Personne à contacter</div>
+        <select style="width:100%;height:38px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#111827;padding:0 12px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+      </div>
+      <div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:6px">Affaire</div>
+        <select style="width:100%;height:38px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#111827;padding:0 12px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+      </div>
+      <div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:6px">Date d'échéance</div>
+        <select style="width:100%;height:38px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#111827;padding:0 12px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+      </div>
+      <div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:6px">Heure d'échéance</div>
+        <select style="width:100%;height:38px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#111827;padding:0 12px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+      </div>
+      <div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:6px">Durée</div>
+        <select style="width:100%;height:38px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#111827;padding:0 12px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+      </div>
+      <div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:6px">Emplacement</div>
+        <select style="width:100%;height:38px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#111827;padding:0 12px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+      </div>
+      <div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:6px">Libre/occupé</div>
+        <select style="width:100%;height:38px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#111827;padding:0 12px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option><option>Libre</option><option>Occupé</option></select>
+      </div>
+      <div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:6px">Priorité</div>
+        <select style="width:100%;height:38px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#111827;padding:0 12px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option><option>Haute</option><option>Moyenne</option><option>Basse</option></select>
+      </div>
+    </div>
+    <div style="padding:14px 24px;border-top:1px solid #e5e7eb;background:#fff;flex-shrink:0">
+      <button onClick="{{ closeBulkPanel }}" style="width:100%;height:40px;border:none;border-radius:6px;background:#16a34a;color:#fff;font-size:14px;font-weight:600;cursor:pointer" style-hover="background:#15803d">Modifier {{ selCountAct }} activité</button>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  ACTIVITIES = [
+    { id:'a1', type:'appel', sujet:'Appel contextuel',            affaire:'Tony Turner',   contact:'Tony Turner',   email:'tony.turner@moveer.com (Travail)',          phone:'218-348-8528', org:'MoveEr',         dueDate:'27 juin',  duree:'', assignee:'MINING TECH', prio:null,   done:false, overdue:true  },
+    { id:'a3', type:'appel', sujet:'Dernière tentative de contact', affaire:'EmpowerMove', contact:'Gloria Quinn',  email:'gloria.quinn@empowermmove.com (T...)',       phone:'862-252-9773', org:'EmpowerMove',    dueDate:'27 juin',  duree:'', assignee:'MINING TECH', prio:null,   done:false, overdue:true  },
+    { id:'a4', type:'rdv',   sujet:'Nouvelle proposition de valeur',affaire:'SoRock',      contact:'Kanushi Barnes',email:'kanushi.barnes@gmial.com (Travail)',         phone:'',            org:'',               dueDate:'28 juin',  duree:'', assignee:'MINING TECH', prio:null,   done:false, overdue:true  },
+    { id:'a5', type:'mail',  sujet:'Envoyer la proposition commerciale', affaire:'Damone', contact:'Githa Watson',  email:'githa.watson@odamoneet.com (Trava...)',      phone:'260-414-1246', org:'',               dueDate:'29 juin',  duree:'', assignee:'MINING TECH', prio:null,   done:false, overdue:true  },
+    { id:'a6', type:'rdv',   sujet:'Réaction à la proposition',   affaire:'Phyllis & Cie', contact:'Phyllis Yang', email:'phyllis.yang@gmial.com (Travail)',           phone:'240-707-3884', org:'Phyllis & Cie',  dueDate:'30 juin',  duree:'', assignee:'MINING TECH', prio:null,   done:false, overdue:true  },
+    { id:'a7', type:'mail',  sujet:'Envoyer la proposition finalisée', affaire:'',         contact:'Peru Zitan',    email:'peru.zitan@loreannn.ee (Travail)',            phone:'110-123-1246', org:'Lorean',         dueDate:'30 juin',  duree:'', assignee:'MINING TECH', prio:null,   done:false, overdue:true  },
+    { id:'a8', type:'appel', sujet:'DEJEUNER AVEC PDG MTN ...',   affaire:'',             contact:'',             email:'',                                            phone:'',            org:'',               dueDate:'6 juil.',  duree:'', assignee:'MINING TECH', prio:'HIGH', done:false, overdue:true  },
+    { id:'a2', type:'appel', sujet:'Montre',                      affaire:'iTable',        contact:'Otto Miller',  email:'otto.miller@itablee.eu (Travail)',             phone:'601-906-7534', org:'iTable',         dueDate:'23 juil.', duree:'', assignee:'MINING TECH', prio:null,   done:false, overdue:false },
+  ];
+  TYPE_META = {
+    appel: { icon:'📞', color:'#ef4444', svgPhone:true },
+    rdv:   { icon:'👥', color:'#2563eb', svgPeople:true },
+    tache: { icon:'⏰', color:'#f59e0b' },
+    mail:  { icon:'✉️', color:'#2563eb' },
+    dejeuner:{ icon:'🍽️', color:'#0d9488' },
+  };
+  HOURS = ['12 AM','1 AM','2 AM','3 AM','4 AM','5 AM','6 AM','7 AM','8 AM','9 AM','10 AM','11 AM','12 PM','1 PM','2 PM','3 PM','4 PM','5 PM','6 PM','7 PM','8 PM','9 PM','10 PM','11 PM'];
+  state = {
+    view:'table', showBanner:true,
+    showDealDetail:false, selectedDealName:null,
+    expandedSections: new Set(['resume','source','personne','org','produits','overview','custom','projets','pointsCles']),
+    dComposerTab:'activite', dHistTab:'tous',
+    showActDrop:false, showPlanDrop:false,
+    showFiltDrop:false, showMoreMenu:false, showPeriodDrop:false, openRowMenu:null,
+    sel:[], showBulkPanel:false,
+    showColPanel:false, colSearch:'', colAvailTab:0,
+    visibleCols:[
+      {id:'termine',label:'Terminé',category:'Activité',checked:true},
+      {id:'sujet',label:'Sujet',category:'Activité',checked:true},
+      {id:'affaire',label:'Affaire',category:'Activité',checked:true},
+      {id:'priorite',label:'Priorité',category:'Activité',checked:true},
+      {id:'contact',label:'Personne à contacter',category:'Activité',checked:true},
+      {id:'email',label:'Adresse e-mail',category:'Personne',checked:true},
+      {id:'phone',label:'Téléphone',category:'Personne',checked:true},
+      {id:'org',label:'Organisation',category:'Activité',checked:true},
+      {id:'duedate',label:"Date d'échéance",category:'Activité',checked:true},
+      {id:'duree',label:'Durée',category:'Activité',checked:true},
+      {id:'assignee',label:'Attribuée à',category:'Activité',checked:true},
+    ],
+    availCols:[
+      [{id:'createur',label:'Créateur',checked:false},{id:'datecreation',label:'Date de création',checked:false},{id:'dateterminer',label:'Date du marquage comme terminé',checked:false},{id:'descpublique',label:'Description publique',checked:false},{id:'emplacement',label:'Emplacement',checked:false},{id:'heuredernotif',label:'Heure de la dernière notification',checked:false},{id:'heuremaj',label:'Heure de mise à jour',checked:false},{id:'id',label:'ID',checked:false},{id:'libreoccupe',label:'Libre/occupé',checked:false},{id:'note',label:'Note',checked:false},{id:'projet',label:'Projet',checked:false},{id:'prospect',label:'Prospect',checked:false},{id:'type',label:'Type',checked:false}],
+      [{id:'actafaire',label:'Activités à faire',checked:false},{id:'actterm',label:'Activités terminées',checked:false},{id:'acv',label:'ACV',checked:false},{id:'affcreee',label:'Affaire créée',checked:false},{id:'afffermee',label:'Affaire fermée le',checked:false},{id:'arr',label:'ARR',checked:false},{id:'canal',label:"Canal d'origine",checked:false},{id:'changetetape',label:"Changement d'étape le plus récent",checked:false},{id:'dategain',label:'Date de gain',checked:false},{id:'dategainat',label:'Date de gain attendue',checked:false},{id:'datedernact',label:'Date de la dernière activité',checked:false},{id:'dateprochact',label:'Date de la prochaine activité',checked:false},{id:'dateperte',label:'Date de perte',checked:false},{id:'dernmailenvoye',label:'Dernier e-mail envoyé',checked:false},{id:'dernmailrecu',label:'Dernier e-mail reçu',checked:false},{id:'etape',label:'Étape',checked:false},{id:'etiquette',label:'Étiquette',checked:false},{id:'heurearch',label:"Heure d'archivage",checked:false},{id:'mrr',label:'MRR',checked:false},{id:'nommontprod',label:'Montant du produit',checked:false},{id:'nombremails',label:'Nombre de messages e-mail',checked:false},{id:'pipeline',label:'Pipeline',checked:false},{id:'probabilite',label:'Probabilité',checked:false},{id:'proprietaire',label:'Propriétaire',checked:false},{id:'qttprod',label:'Quantité du produit',checked:false},{id:'raisonperte',label:'Raison de la perte',checked:false},{id:'statut',label:'Statut',checked:false},{id:'statutarch',label:"Statut d'archivage",checked:false},{id:'titre',label:'Titre',checked:false},{id:'totalact',label:'Total des activités',checked:false},{id:'valeur',label:'Valeur',checked:false}],
+      [{id:'pactafaire',label:'Activités à faire',checked:false},{id:'pactterm',label:'Activités terminées',checked:false},{id:'paffclotur',label:'Affaires clôturées',checked:false},{id:'paffencours',label:'Affaires en cours',checked:false},{id:'paffgagnees',label:'Affaires gagnées',checked:false},{id:'paffperdues',label:'Affaires perdues',checked:false},{id:'pdatedernact',label:'Date de la dernière activité',checked:false},{id:'pdateprochact',label:'Date de la prochaine activité',checked:false},{id:'pdernmailenvoye',label:'Dernier e-mail envoyé',checked:false},{id:'pdernmailrecu',label:'Dernier e-mail reçu',checked:false},{id:'petiquettes',label:'Étiquettes',checked:false},{id:'pheuremaj',label:'Heure de mise à jour',checked:false},{id:'pid',label:'ID',checked:false},{id:'pnom',label:'Nom',checked:false},{id:'pnomfamille',label:'Nom de famille',checked:false},{id:'pnombremails',label:'Nombre de messages e-mail',checked:false},{id:'porg',label:'Organisation',checked:false},{id:'pperscreee',label:'Personne créée',checked:false},{id:'pprenom',label:'Prénom',checked:false},{id:'pproprietaire',label:'Propriétaire',checked:false},{id:'ptotalact',label:'Total des activités',checked:false},{id:'pvisiblepar',label:'Visible par',checked:false}],
+      [{id:'oactafaire',label:'Activités à faire',checked:false},{id:'oactterm',label:'Activités terminées',checked:false},{id:'oadresse',label:'Adresse',checked:false},{id:'oaffclotur',label:'Affaires clôturées',checked:false},{id:'oaffencours',label:'Affaires en cours',checked:false},{id:'oaffgagnees',label:'Affaires gagnées',checked:false},{id:'oaffperdues',label:'Affaires perdues',checked:false},{id:'oca',label:"Chiffre d'affaires annuel",checked:false},{id:'odatedernact',label:'Date de la dernière activité',checked:false},{id:'odateprochact',label:'Date de la prochaine activité',checked:false},{id:'oetiquettes',label:'Étiquettes',checked:false},{id:'oheuremaj',label:'Heure de mise à jour',checked:false},{id:'oid',label:'ID',checked:false},{id:'onom',label:'Nom',checked:false},{id:'onbemployes',label:"Nombre d'employés",checked:false},{id:'onbmails',label:'Nombre de messages e-mail',checked:false},{id:'oorgcreee',label:'Organisation créée',checked:false},{id:'opersonnes',label:'Personnes',checked:false},{id:'olinkedin',label:'Profil LinkedIn',checked:false},{id:'oproprietaire',label:'Propriétaire',checked:false},{id:'osecteur',label:"Secteur d'activité",checked:false},{id:'ositeweb',label:'Site web',checked:false},{id:'ototact',label:'Total des activités',checked:false},{id:'ovisible',label:'Visible par',checked:false}],
+      [{id:'prjdebut',label:'Date de début',checked:false},{id:'prjfin',label:'Date de fin',checked:false},{id:'prjchangestatut',label:'Date du changement de statut',checked:false},{id:'prjdesc',label:'Description',checked:false},{id:'prjetiquettes',label:'Étiquettes',checked:false},{id:'prjheurearch',label:"Heure d'archivage",checked:false},{id:'prjheuremaj',label:'Heure de mise à jour',checked:false},{id:'prjid',label:'ID',checked:false},{id:'prjphase',label:'Phase',checked:false},{id:'prjcreee',label:'Projet créé',checked:false},{id:'prjproprietaire',label:'Propriétaire',checked:false},{id:'prjstatut',label:'Statut',checked:false},{id:'prjtitre',label:'Titre',checked:false}],
+    ],
+    filtTab:'favoris', typeTab:'tout', periodTab:'afaire',
+    showForm:false, formType:'appel', showLieu:false, showVideo:false, showDesc:false, showVideoDrop:false, selectedVideo:null,
+    showPrioDrop:false, formPrio:'none',
+  };
+
+  componentDidMount() {
+    const dealName = localStorage.getItem('vooroo_open_deal_name');
+    if (dealName) {
+      localStorage.removeItem('vooroo_open_deal_name');
+    }
+    // (resizeParentTh moved to renderVals)
+  }
+
+  renderVals() {
+    const s = this.state;
+
+    // Column resize handler
+    const resizeParentTh = (e) => {
+      e.preventDefault(); e.stopPropagation();
+      const th = e.currentTarget ? e.currentTarget.parentElement : null;
+      const dragLine = document.getElementById('col-drag-line');
+      if (!th || !dragLine) return;
+      // Lock all column widths first
+      const table = document.getElementById('act-table');
+      if (table && !table._locked) {
+        table._locked = true;
+        table.querySelectorAll('thead th').forEach(h => { h.style.width = h.getBoundingClientRect().width + 'px'; });
+        table.style.tableLayout = 'fixed';
+        table.style.width = table.getBoundingClientRect().width + 'px';
+      }
+      const startX = e.clientX;
+      const startW = th.getBoundingClientRect().width;
+      dragLine.style.cssText = 'display:block;position:fixed;top:0;bottom:0;width:2px;background:#2563eb;z-index:9999;pointer-events:none;left:' + e.clientX + 'px';
+      document.body.style.cursor = 'col-resize';
+      document.body.style.userSelect = 'none';
+      const onMove = ev => {
+        th.style.width = Math.max(50, startW + ev.clientX - startX) + 'px';
+        dragLine.style.left = ev.clientX + 'px';
+      };
+      const onUp = () => {
+        dragLine.style.display = 'none';
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    };
+
+    const typeColor = t => t==='appel'?'#ef4444':t==='rdv'?'#2563eb':t==='mail'?'#2563eb':'#f59e0b';
+
+    const rc = a => a.overdue ? '#ef4444' : '#111827';
+    const ic = a => a.overdue ? '#ef4444' : '#111827';
+    const activities = this.ACTIVITIES.map(a=>({
+      id: a.id,
+      sujet: a.sujet,
+      affaire: a.affaire,
+      contact: a.contact,
+      email: a.email,
+      phone: a.phone,
+      org: a.org,
+      dueDate: a.dueDate,
+      duree: a.duree,
+      assignee: a.assignee,
+      prio: a.prio,
+      done: a.done,
+      isAppel: a.type==='appel',
+      isRdv: a.type==='rdv',
+      isMail: a.type==='mail',
+      rowColor: rc(a),
+      textColor: rc(a),
+      iconColor: ic(a),
+      doneBorder: a.done ? '#16a34a' : '#d1d5db',
+      doneBg: a.done ? '#f0fdf4' : 'transparent',
+      hasPrio: !!a.prio,
+      prioBg: a.prio==='HIGH'?'#ef4444':a.prio==='MEDIUM'?'#f59e0b':'#2563eb',
+      hasContact: !!a.contact,
+      contactInit: a.contact ? a.contact.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase() : '',
+      hasAffaire: !!a.affaire,
+      openDeal: ()=> { if(a.affaire) this.setState({showDealDetail:true, selectedDealName:a.affaire}); },
+      showRowMenu: s.openRowMenu === a.id,
+      toggleRowMenu: (e)=>{ e.stopPropagation(); this.setState({openRowMenu: s.openRowMenu===a.id ? null : a.id}); },
+      closeRowMenu: ()=>this.setState({openRowMenu:null}),
+    }));
+
+    const PERIOD_TABS = [
+      {key:'afaire',label:'À faire'},{key:'retard',label:'En retard'},{key:'aujd',label:"Aujourd'hui"},
+      {key:'demain',label:'Demain'},{key:'semaine',label:'Cette semaine'},{key:'sprochaine',label:'La semaine prochaine'},
+    ];
+    const overdueCount = this.ACTIVITIES.filter(a=>a.overdue && !a.done).length;
+    const periodTabs = PERIOD_TABS.map(p=>({...p,active:s.periodTab===p.key,onClick:()=>this.setState({periodTab:p.key}),badge:p.key==='retard'?overdueCount:0}));
+    const tA = k => s.typeTab===k;
+    const tBd = k => tA(k) ? '#111827' : 'transparent';
+    const tFw = k => tA(k) ? '700' : '400';
+    const tCl = k => tA(k) ? '#111827' : '#374151';
+
+    // Time slots for calendar
+    const timeSlots = this.HOURS.map(h=>({label:h}));
+
+    // Current time
+    const now = new Date();
+    const hour = now.getHours(); const min = now.getMinutes();
+    const currentTimeLabel = `${hour%12||12}:${String(min).padStart(2,'0')} ${hour<12?'AM':'PM'}`;
+    const currentTimePx = 36 + (hour * 40) + (min / 60 * 40) + 28; // approx
+
+    // Form
+    const formTypeName = {appel:'Appel',rdv:'Rendez-vous',tache:'Tâche'}[s.formType]||'Appel';
+    const calPreviewSlots = ['12 AM','1 AM','2 AM','3 AM','4 AM','5 AM','6 AM','7 AM','8 AM','9 AM','10 AM','11 AM','12 PM','1 PM','2 PM','3 PM','4 PM','5 PM','6 PM','7 PM','8 PM','9 PM','10 PM','11 PM'].map((l,i)=>({label:l, labelTop: i===0 ? '6px' : '-7px', lineTop: i===0 ? '18px' : '0'}));
+    const nowD = new Date(); const nowH = nowD.getHours(); const nowMin = nowD.getMinutes();
+    const nowTop = (nowH * 60 + Math.round(nowMin/60*60)) + 'px';
+    const nowLabel = (nowH%12||12) + ':' + String(nowMin).padStart(2,'0') + ' ' + (nowH<12?'AM':'PM');
+
+    // Priority
+    const prioLabels = {none:'Priorité',high:'⬆ HIGH',med:'● MEDIUM',low:'⬇ LOW'};
+
+    const filt = t => ({
+      bd: s.filtTab===t ? '#16a34a' : 'transparent',
+      cl: s.filtTab===t ? '#16a34a' : '#6b7280',
+    });
+    const fav=filt('favoris'), prop=filt('proprietaires');
+
+    const pencilSvg = React.createElement('svg',{width:11,height:11,fill:'none',stroke:'#2563eb',strokeWidth:1.8,viewBox:'0 0 24 24',className:'ep'},React.createElement('path',{strokeLinecap:'round',strokeLinejoin:'round',d:'M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125'}));
+    const toggleActSel = id => { const ns = s.sel.includes(id) ? s.sel.filter(x=>x!==id) : [...s.sel, id]; this.setState({sel: ns, showBulkPanel: ns.length>0}); };
+    const activityRows = React.createElement('tbody', null, activities.map(a => React.createElement('tr',{key:a.id, className:'act-row', style:{borderBottom:'1px solid #e5e7eb'}},
+      React.createElement('td',{style:{padding:'10px 12px',textAlign:'center',borderRight:'1px solid #e5e7eb',position:'sticky',left:0,background:'#fff',zIndex:1}},
+        React.createElement('input',{type:'checkbox',checked:s.sel.includes(a.id),onChange:e=>{e.stopPropagation();toggleActSel(a.id);},style:{cursor:'pointer'}})),
+      React.createElement('td',{style:{padding:'10px 6px',textAlign:'center',borderRight:'1px solid #e5e7eb'}},
+        React.createElement('div',{style:{width:18,height:18,borderRadius:'50%',border:`1.5px solid ${a.doneBorder}`,background:a.doneBg,cursor:'pointer',margin:'0 auto',display:'flex',alignItems:'center',justifyContent:'center'}},
+          a.done ? React.createElement('svg',{width:10,height:10,fill:'none',stroke:'#16a34a',strokeWidth:2.5,viewBox:'0 0 24 24'},React.createElement('path',{strokeLinecap:'round',strokeLinejoin:'round',d:'M4.5 12.75l6 6 9-13.5'})) : null)),
+      React.createElement('td',{className:'tcell', style:{padding:'10px 12px',borderRight:'1px solid #e5e7eb',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},
+        React.createElement('div',{style:{display:'flex',alignItems:'center',gap:7}},
+          a.isAppel ? React.createElement('svg',{width:14,height:14,fill:'none',stroke:a.iconColor,strokeWidth:1.8,viewBox:'0 0 24 24',style:{flexShrink:0}},React.createElement('path',{strokeLinecap:'round',strokeLinejoin:'round',d:'M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z'})) : null,
+          a.isRdv ? React.createElement('svg',{width:14,height:14,fill:'none',stroke:a.iconColor,strokeWidth:1.8,viewBox:'0 0 24 24',style:{flexShrink:0}},React.createElement('path',{strokeLinecap:'round',strokeLinejoin:'round',d:'M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0'})) : null,
+          a.isMail ? React.createElement('svg',{width:14,height:14,fill:'none',stroke:a.iconColor,strokeWidth:1.8,viewBox:'0 0 24 24',style:{flexShrink:0}},React.createElement('path',{strokeLinecap:'round',strokeLinejoin:'round',d:'M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75'})) : null,
+          React.createElement('span',{style:{fontSize:13,color:a.textColor,fontWeight:500,cursor:'pointer'}}, a.sujet)),
+        pencilSvg),
+      React.createElement('td',{className:'tcell', onClick:a.openDeal, style:{padding:'10px 12px',fontSize:13,color:a.rowColor,cursor:'pointer',borderRight:'1px solid #e5e7eb',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}, a.affaire, pencilSvg),
+      React.createElement('td',{className:'tcell', style:{padding:'10px 12px',fontSize:13,color:a.rowColor,borderRight:'1px solid #e5e7eb'}}, a.dueDate, pencilSvg),
+      React.createElement('td',{className:'tcell', style:{padding:'10px 12px',borderRight:'1px solid #e5e7eb'}},
+        a.hasPrio ? React.createElement('span',{style:{fontSize:11,fontWeight:700,padding:'2px 8px',borderRadius:10,background:a.prioBg,color:'#fff'}}, a.prio) : null,
+        pencilSvg),
+      React.createElement('td',{className:'tcell', style:{padding:'10px 12px',borderRight:'1px solid #e5e7eb'}},
+        a.hasContact ? React.createElement('div',{style:{display:'inline-flex',alignItems:'center',border:`1px solid ${a.rowColor}`,borderRadius:4,padding:'3px 8px',cursor:'pointer',background:'transparent'}},
+          React.createElement('span',{style:{fontSize:12,color:a.rowColor}}, a.contact)) : null,
+        pencilSvg),
+      React.createElement('td',{className:'tcell', style:{padding:'10px 12px',fontSize:12,color:a.rowColor,borderRight:'1px solid #e5e7eb',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}, a.email, pencilSvg),
+      React.createElement('td',{className:'tcell', style:{padding:'10px 12px',fontSize:12,color:a.rowColor,borderRight:'1px solid #e5e7eb'}}, a.phone, pencilSvg),
+      React.createElement('td',{className:'tcell', style:{padding:'10px 12px',fontSize:13,color:a.rowColor,borderRight:'1px solid #e5e7eb'}}, a.org, pencilSvg),
+      React.createElement('td',{className:'tcell', style:{padding:'10px 12px',fontSize:13,color:a.rowColor,borderRight:'1px solid #e5e7eb'}}, a.duree, pencilSvg),
+      React.createElement('td',{className:'tcell', style:{padding:'10px 12px',fontSize:13,color:a.rowColor,fontWeight:500,borderRight:'1px solid #e5e7eb'}}, a.assignee, pencilSvg),
+      React.createElement('td',{style:{padding:'10px 8px',textAlign:'right',position:'sticky',right:0,background:'#fff',zIndex:5,borderLeft:'1px solid #e5e7eb'}},
+        React.createElement('div',{style:{position:'relative',display:'inline-block'}},
+          React.createElement('button',{onClick:a.toggleRowMenu, style:{background:'none',border:'none',cursor:'pointer',color:'#9ca3af',fontSize:15,letterSpacing:1,padding:'2px 6px',borderRadius:3}}, '···'),
+          a.showRowMenu ? React.createElement(React.Fragment,null,
+            React.createElement('div',{onClick:a.closeRowMenu, style:{position:'fixed',inset:0,zIndex:98}}),
+            React.createElement('div',{style:{position:'absolute',top:'calc(100% + 4px)',right:0,zIndex:99,background:'#fff',border:'1px solid #e5e7eb',borderRadius:8,boxShadow:'0 8px 24px rgba(0,0,0,.12)',width:200,padding:'4px 0',minWidth:180}},
+              React.createElement('div',{style:{padding:'9px 14px',cursor:'pointer',fontSize:13,color:'#374151',display:'flex',alignItems:'center',gap:10}}, 'Modifier l\'activité'),
+              React.createElement('div',{style:{padding:'9px 14px',cursor:'pointer',fontSize:13,color:'#ef4444',display:'flex',alignItems:'center',gap:10}}, 'Archiver l\'activité'))) : null))
+    )));
+
+    const closeBulkPanel = () => this.setState({showBulkPanel:false, sel:[]});
+    const hideBulkPanel = () => this.setState({showBulkPanel:false});
+    const onCheckAllAct = () => {
+      const allIds = activities.map(a=>a.id);
+      const allSel = allIds.every(id=>s.sel.includes(id)) && allIds.length>0;
+      this.setState({ sel: allSel ? [] : allIds, showBulkPanel: !allSel });
+    };
+    return {
+      activities,
+      activityRows,
+      checkAllAct: activities.length>0 && activities.every(a=>s.sel.includes(a.id)),
+      onCheckAllAct,
+      showBulkPanel: s.showBulkPanel && s.sel.length>0,
+      selCountAct: s.sel.length,
+      closeBulkPanel,
+      activityCount: activities.length,
+
+      // Deal detail overlay
+      showDealDetail: s.showDealDetail,
+      closeDealDetail: ()=>this.setState({showDealDetail:false, selectedDealName:null}),
+
+      // Computed deal info
+      selectedDeal: (()=>{
+        const DEAL_DATA = {
+          'Tony Turner':    { value:'F CFA 1 500 000', stage:'Proposition envoyée', prob:40, product:'AGENT IA', contact:'Tony Turner', contactInit:'TT' },
+          'iTable':         { value:'F CFA 800 000',   stage:'Opportunités',        prob:20, product:'Subscription Pro', contact:'Otto Miller', contactInit:'OM' },
+          'EmpowerMove':    { value:'F CFA 2 200 000', stage:'En Négociation',       prob:65, product:'Consulting Hourly', contact:'Gloria Quinn', contactInit:'GQ' },
+          'SoRock':         { value:'F CFA 600 000',   stage:'En Négociation',       prob:65, product:'Formation CRM', contact:'Kanushi Barnes', contactInit:'KB' },
+          'Damone':         { value:'F CFA 950 000',   stage:'Décision client',      prob:80, product:'Support Pack', contact:'Githa Watson', contactInit:'GW' },
+          'Phyllis & Cie':  { value:'F CFA 3 100 000', stage:'Proposition envoyée',  prob:40, product:'API Connect', contact:'Phyllis Yang', contactInit:'PY' },
+        };
+        const d = DEAL_DATA[s.selectedDealName] || {};
+        const prob = d.prob || 0;
+        const stageColors = {
+          'Opportunités':        { bg:'#9ca3af', text:'#fff' },
+          'Proposition envoyée': { bg:'#111827', text:'#fff' },
+          'En Négociation':      { bg:'#2563eb', text:'#fff' },
+          'Décision client':     { bg:'#7c3aed', text:'#fff' },
+        };
+        const sc = stageColors[d.stage] || { bg:'#e5e7eb', text:'#6b7280' };
+        return {
+          title: s.selectedDealName || '',
+          value: d.value || '—',
+          stage: d.stage || '',
+          stageBg: sc.bg, stageText: sc.text,
+          prob, probPct: prob + '%',
+          probBarW: prob + '%',
+          product: d.product || '—',
+          contact: d.contact || '',
+          contactInit: d.contactInit || '',
+        };
+      })(),
+
+      // Detail stepper
+      dealDetailStages: (()=>{
+        const STAGES_LIST = [
+          { id:'opps', label:'Opportunités',          short:'OPPS',   prob:20 },
+          { id:'prop', label:'Proposition envoyée',   short:'PROP',   prob:40 },
+          { id:'nego', label:'En Négociation',        short:'NÉGO',   prob:65 },
+          { id:'deci', label:'Décision client',       short:'DÉCI',   prob:80 },
+          { id:'gagn', label:'Affaires Gagnées',      short:'GAGNÉ',  prob:100 },
+          { id:'perd', label:'Affaires Perdues',      short:'PERDU',  prob:0 },
+        ];
+        const DEAL_STAGES = {
+          'Tony Turner':'prop', 'iTable':'opps', 'EmpowerMove':'nego',
+          'SoRock':'nego', 'Damone':'deci', 'Phyllis & Cie':'prop',
+        };
+        const cur = DEAL_STAGES[s.selectedDealName] || 'opps';
+        const ci = STAGES_LIST.findIndex(x=>x.id===cur);
+        const N = STAGES_LIST.length;
+        return STAGES_LIST.map((st,i)=>{
+          const isCur = i===ci, isPast = i<ci;
+          const clipFirst = 'polygon(0 0,calc(100% - 8px) 0,100% 50%,calc(100% - 8px) 100%,0 100%)';
+          const clipMid   = 'polygon(0 0,calc(100% - 8px) 0,100% 50%,calc(100% - 8px) 100%,8px 100%,0 50%)';
+          const clipLast  = 'polygon(8px 0,100% 0,100% 100%,8px 100%,0 50%)';
+          return {
+            label:st.label, shortLabel:st.short,
+            bgColor: isCur?'#111827':isPast?'#6b7280':'#e5e7eb',
+            textColor: (isCur||isPast)?'#fff':'#9ca3af',
+            headerClip: i===0?clipFirst:i===N-1?clipLast:clipMid,
+            arrowPadL: i===0?'12px':'10px',
+            timeLabel: isCur?'7 jours':'',
+          };
+        });
+      })(),
+
+      // Composer + history tabs
+      dComposerTabs: ['Activité','Note','E-mail','Appel','WhatsApp','Facture'].map((l,i)=>({
+        label:l,
+        activeBorder: (s.dComposerTab===l.toLowerCase()||i===0&&s.dComposerTab==='activite')?'#16a34a':'transparent',
+        tabColor: (s.dComposerTab===l.toLowerCase()||i===0&&s.dComposerTab==='activite')?'#16a34a':'#6b7280',
+        weight: (s.dComposerTab===l.toLowerCase()||i===0&&s.dComposerTab==='activite')?'700':'400',
+        onClick: ()=>this.setState({dComposerTab:l.toLowerCase()}),
+      })),
+      dHistTabs: ['Tous','Activité','E-mail','Note','Appel','Modification'].map((l,i)=>({
+        label:l,
+        activeBorder: (i===0&&s.dHistTab==='tous'||s.dHistTab===l.toLowerCase())?'#16a34a':'transparent',
+        tabColor: (i===0&&s.dHistTab==='tous'||s.dHistTab===l.toLowerCase())?'#16a34a':'#6b7280',
+        weight: (i===0&&s.dHistTab==='tous'||s.dHistTab===l.toLowerCase())?'700':'400',
+        onClick: ()=>this.setState({dHistTab:i===0?'tous':l.toLowerCase()}),
+      })),
+
+      // Expandable sections
+      resumeExp: s.expandedSections.has('resume'),
+      detailsExp: s.expandedSections.has('details'),
+      sourceExp: s.expandedSections.has('source'),
+      personneExp: s.expandedSections.has('personne'),
+      orgExp: s.expandedSections.has('org'),
+      pointsClesExp: s.expandedSections.has('pointsCles'),
+      overviewExp: s.expandedSections.has('overview'),
+      chevD: 'M19.5 8.25l-7.5 7.5-7.5-7.5',
+      chevR: 'M8.25 4.5l7.5 7.5-7.5 7.5',
+      resumeChevron: s.expandedSections.has('resume') ? 'M19.5 8.25l-7.5 7.5-7.5-7.5' : 'M8.25 4.5l7.5 7.5-7.5 7.5',
+      sourceChevron: s.expandedSections.has('source') ? 'M19.5 8.25l-7.5 7.5-7.5-7.5' : 'M8.25 4.5l7.5 7.5-7.5 7.5',
+      personneChevron: s.expandedSections.has('personne') ? 'M19.5 8.25l-7.5 7.5-7.5-7.5' : 'M8.25 4.5l7.5 7.5-7.5 7.5',
+      orgChevron: s.expandedSections.has('org') ? 'M19.5 8.25l-7.5 7.5-7.5-7.5' : 'M8.25 4.5l7.5 7.5-7.5 7.5',
+      pointsClesChevron: s.expandedSections.has('pointsCles') ? 'M19.5 8.25l-7.5 7.5-7.5-7.5' : 'M8.25 4.5l7.5 7.5-7.5 7.5',
+      overviewChevron: s.expandedSections.has('overview') ? 'M19.5 8.25l-7.5 7.5-7.5-7.5' : 'M8.25 4.5l7.5 7.5-7.5 7.5',
+      toggleResume: ()=>{ const n=new Set(s.expandedSections); n.has('resume')?n.delete('resume'):n.add('resume'); this.setState({expandedSections:n}); },
+      toggleDetails: ()=>{ const n=new Set(s.expandedSections); n.has('details')?n.delete('details'):n.add('details'); this.setState({expandedSections:n}); },
+      toggleSource: ()=>{ const n=new Set(s.expandedSections); n.has('source')?n.delete('source'):n.add('source'); this.setState({expandedSections:n}); },
+      togglePersonne: ()=>{ const n=new Set(s.expandedSections); n.has('personne')?n.delete('personne'):n.add('personne'); this.setState({expandedSections:n}); },
+      toggleOrg: ()=>{ const n=new Set(s.expandedSections); n.has('org')?n.delete('org'):n.add('org'); this.setState({expandedSections:n}); },
+      togglePointsCles: ()=>{ const n=new Set(s.expandedSections); n.has('pointsCles')?n.delete('pointsCles'):n.add('pointsCles'); this.setState({expandedSections:n}); },
+      toggleOverview: ()=>{ const n=new Set(s.expandedSections); n.has('overview')?n.delete('overview'):n.add('overview'); this.setState({expandedSections:n}); },
+
+
+      // Type tabs
+      typeTabIsTout: tA('tout'), typeTabIsAppel: tA('appel'), typeTabIsRdv: tA('rdv'),
+      typeTabIsTache: tA('tache'), typeTabIsEcheance: tA('echeance'), typeTabIsMail: tA('mail'), typeTabIsDejeuner: tA('dejeuner'),
+      setTypeTabTout:     ()=>this.setState({typeTab:'tout'}),
+      setTypeTabAppel:    ()=>this.setState({typeTab:'appel'}),
+      setTypeTabRdv:      ()=>this.setState({typeTab:'rdv'}),
+      setTypeTabTache:    ()=>this.setState({typeTab:'tache'}),
+      setTypeTabEcheance: ()=>this.setState({typeTab:'echeance'}),
+      setTypeTabMail:     ()=>this.setState({typeTab:'mail'}),
+      setTypeTabDejeuner: ()=>this.setState({typeTab:'dejeuner'}),
+
+      // View
+      isTableView: s.view==='table',
+      isCalView: s.view==='cal',
+      viewTableBg: s.view==='table'?'#f0fdf4':'transparent',
+      viewCalBg: s.view==='cal'?'#f0fdf4':'transparent',
+      viewTableCl: s.view==='table'?'#16a34a':'#6b7280',
+      viewCalCl: s.view==='cal'?'#16a34a':'#6b7280',
+      setViewTable: ()=>this.setState({view:'table'}),
+      setViewCal: ()=>this.setState({view:'cal'}),
+
+      // Banner
+      showBanner: s.showBanner,
+      dismissBanner: ()=>this.setState({showBanner:false}),
+
+      // Tabs
+      periodTabs,
+
+      // Dropdowns
+      showActDrop:s.showActDrop, toggleActDrop:()=>this.setState({showActDrop:!s.showActDrop, showPlanDrop:false, showFiltDrop:false, showMoreMenu:false}),
+      showPlanDrop:s.showPlanDrop, togglePlanDrop:()=>this.setState({showPlanDrop:!s.showPlanDrop, showActDrop:false, showFiltDrop:false, showMoreMenu:false}),
+      showFiltDrop:s.showFiltDrop, toggleFiltDrop:()=>this.setState({showFiltDrop:!s.showFiltDrop, showActDrop:false, showPlanDrop:false, showMoreMenu:false}),
+      showMoreMenu:s.showMoreMenu, toggleMoreMenu:()=>this.setState({showMoreMenu:!s.showMoreMenu, showFiltDrop:false, showPlanDrop:false, showActDrop:false}), closeMoreMenu:()=>this.setState({showMoreMenu:false}),
+      showPeriodDrop:s.showPeriodDrop,
+    togglePeriodDrop:()=>{
+      const next = !s.showPeriodDrop;
+      if(next){
+        const btn = document.getElementById('period-btn');
+        if(btn){
+          const r = btn.getBoundingClientRect();
+          this.setState({showPeriodDrop:true, periodDropTop: (r.bottom + 4) + 'px', periodDropRight: (window.innerWidth - r.right) + 'px'});
+        } else { this.setState({showPeriodDrop:true}); }
+      } else { this.setState({showPeriodDrop:false}); }
+    },
+    periodDropTop: s.periodDropTop || '120px',
+    periodDropRight: s.periodDropRight || '0px',
+      moreBg: s.showMoreMenu?'#f9fafb':'#fff', moreBd: s.showMoreMenu?'#9ca3af':'#d1d5db',
+
+      // Col panel
+      showColPanel: s.showColPanel,
+      toggleColPanel: ()=>this.setState({showColPanel:!s.showColPanel}),
+      closeColPanel: ()=>this.setState({showColPanel:false}),
+      saveColPanel: ()=>this.setState({showColPanel:false}),
+      colDefault: ()=>this.setState({colSearch:'',colAvailTab:0}),
+      colSearch: s.colSearch,
+      setColSearch: e=>this.setState({colSearch:e.target.value}),
+      colTab0Bd: s.colAvailTab===0?'2px solid #2563eb':'2px solid transparent',
+      colTab1Bd: s.colAvailTab===1?'2px solid #2563eb':'2px solid transparent',
+      colTab2Bd: s.colAvailTab===2?'2px solid #2563eb':'2px solid transparent',
+      colTab3Bd: s.colAvailTab===3?'2px solid #2563eb':'2px solid transparent',
+      colTab4Bd: s.colAvailTab===4?'2px solid #2563eb':'2px solid transparent',
+      colTab0C: s.colAvailTab===0?'#2563eb':'#9ca3af',
+      colTab1C: s.colAvailTab===1?'#2563eb':'#9ca3af',
+      colTab2C: s.colAvailTab===2?'#2563eb':'#9ca3af',
+      colTab3C: s.colAvailTab===3?'#2563eb':'#9ca3af',
+      colTab4C: s.colAvailTab===4?'#2563eb':'#9ca3af',
+      setColTab0: ()=>this.setState({colAvailTab:0}),
+      setColTab1: ()=>this.setState({colAvailTab:1}),
+      setColTab2: ()=>this.setState({colAvailTab:2}),
+      setColTab3: ()=>this.setState({colAvailTab:3}),
+      setColTab4: ()=>this.setState({colAvailTab:4}),
+      visibleCols: s.visibleCols
+        .filter(c=>!s.colSearch||c.label.toLowerCase().includes(s.colSearch.toLowerCase()))
+        .map((c,i,arr)=>({
+          ...c,
+          toggle: ()=>{const v=[...s.visibleCols];const idx=v.findIndex(x=>x.id===c.id);v[idx]={...v[idx],checked:!v[idx].checked};this.setState({visibleCols:v});},
+          moveUp: ()=>{if(i===0)return;const v=[...s.visibleCols];const idx=v.findIndex(x=>x.id===c.id);[v[idx-1],v[idx]]=[v[idx],v[idx-1]];this.setState({visibleCols:v});},
+          moveDown: ()=>{if(i===arr.length-1)return;const v=[...s.visibleCols];const idx=v.findIndex(x=>x.id===c.id);[v[idx],v[idx+1]]=[v[idx+1],v[idx]];this.setState({visibleCols:v});},
+        })),
+      availCols: (s.availCols[s.colAvailTab]||[])
+        .filter(c=>!s.colSearch||c.label.toLowerCase().includes(s.colSearch.toLowerCase()))
+        .map(c=>({
+          ...c,
+          toggle: ()=>{const tabs=[...s.availCols];const tab=[...tabs[s.colAvailTab]];const idx=tab.findIndex(x=>x.id===c.id);tab[idx]={...tab[idx],checked:!tab[idx].checked};tabs[s.colAvailTab]=tab;this.setState({availCols:tabs});},
+        })),
+
+      // Filter tabs
+      filtTabIsFav: s.filtTab==='favoris',
+      filtTabIsProp: s.filtTab==='proprietaires',
+      filtTabIsFil: s.filtTab==='filtres',
+      filtFavBd:fav.bd, filtFavCl:fav.cl,
+      filtPropBd:prop.bd, filtPropCl:prop.cl,
+      filtFilBd: s.filtTab==='filtres' ? '#16a34a' : 'transparent',
+      filtFilCl: s.filtTab==='filtres' ? '#16a34a' : '#6b7280',
+      setFiltTabFav:()=>this.setState({filtTab:'favoris'}),
+      setFiltTabProp:()=>this.setState({filtTab:'proprietaires'}),
+      setFiltTabFil:()=>this.setState({filtTab:'filtres'}),
+
+      // Form
+      showForm:s.showForm,
+      openForm:()=>{ this.setState({showForm:true, showActDrop:false, showLieu:false, showVideo:false, showDesc:false}); setTimeout(()=>{ const el=document.getElementById('cal-preview-scroll'); if(el) el.scrollTop=0; },100); },
+      closeForm:()=>this.setState({showForm:false}),
+      showLieu: s.showLieu, toggleLieu:()=>this.setState({showLieu:!s.showLieu}),
+      showVideo: s.showVideo, toggleVideo:()=>this.setState({showVideo:!s.showVideo, showVideoDrop:false}),
+      showDesc: s.showDesc, toggleDesc:()=>this.setState({showDesc:!s.showDesc}),
+      showVideoDrop: s.showVideoDrop, toggleVideoDrop:()=>this.setState({showVideoDrop:!s.showVideoDrop}),
+      closeVideoDrop:()=>this.setState({showVideoDrop:false}),
+      selectedVideo: s.selectedVideo||'Installer l\'intégration d\'appel vidéo',
+      setVideoTeams:()=>this.setState({selectedVideo:'Réunion Microsoft Teams', showVideoDrop:false}),
+      setVideoMeet:()=>this.setState({selectedVideo:'Rendez-vous Google Meet', showVideoDrop:false}),
+      setVideoZoom:()=>this.setState({selectedVideo:'Réunion Zoom', showVideoDrop:false}),
+      stopProp: e=>e.stopPropagation(),
+      formTypeName,
+      formTypeAppel: s.formType==='appel',
+      formTypeRdv: s.formType==='rdv',
+      formTypeTache: s.formType==='tache',
+      formTypeAppelBorder:  s.formType==='appel' ? '#2563eb' : '#d1d5db',
+      formTypeAppelBg:      s.formType==='appel' ? '#eff6ff' : '#fff',
+      formTypeAppelStroke:  s.formType==='appel' ? '#2563eb' : '#374151',
+      formTypeRdvBorder:    s.formType==='rdv'   ? '#2563eb' : '#d1d5db',
+      formTypeRdvBg:        s.formType==='rdv'   ? '#eff6ff' : '#fff',
+      formTypeRdvStroke:    s.formType==='rdv'   ? '#2563eb' : '#374151',
+      formTypeTacheBorder:  s.formType==='tache' ? '#2563eb' : '#d1d5db',
+      formTypeTacheBg:      s.formType==='tache' ? '#eff6ff' : '#fff',
+      formTypeTacheStroke:  s.formType==='tache' ? '#2563eb' : '#374151',
+      setFormTypeAppel:()=>this.setState({formType:'appel'}),
+      setFormTypeRdv:()=>this.setState({formType:'rdv'}),
+      setFormTypeTache:()=>this.setState({formType:'tache'}),
+      calPreviewSlots, nowTop, nowLabel,
+      resizeCol: resizeParentTh,
+
+      // Priority
+      showPrioDrop:s.showPrioDrop,
+      togglePrioDrop:()=>this.setState({showPrioDrop:!s.showPrioDrop}),
+      formPrioLabel: prioLabels[s.formPrio]||'Priorité',
+      prioIsNone: s.formPrio==='none',
+      setPrioNone:()=>this.setState({formPrio:'none',showPrioDrop:false}),
+      setPrioHigh:()=>this.setState({formPrio:'high',showPrioDrop:false}),
+      setPrioMed:()=>this.setState({formPrio:'med',showPrioDrop:false}),
+      setPrioLow:()=>this.setState({formPrio:'low',showPrioDrop:false}),
+
+      // Calendar
+      timeSlots,
+      currentTimeLabel,
+      currentTimePx,
+    };
+  }
+}
+</script>
+</body>
+</html>

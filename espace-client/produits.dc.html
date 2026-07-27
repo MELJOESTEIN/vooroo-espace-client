@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Roboto',sans-serif}
+body{background:#f3f4f6;overflow:hidden}
+a{color:#374151;text-decoration:none}
+a:hover{color:#111827;text-decoration:underline}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#16a34a !important;box-shadow:0 0 0 3px rgba(22,163,74,.12) !important}
+#produits-table th{border-right:2px solid #d1d5db;border-bottom:2px solid #d1d5db;position:relative;}
+#produits-table td{border-right:2px solid #d1d5db;border-bottom:1px solid #e5e7eb;}
+#produits-table th:last-child,#produits-table td:last-child{border-right:none;}
+#produits-table th::after{content:'';position:absolute;top:0;right:-3px;width:6px;height:100%;cursor:col-resize;z-index:5;}
+#produits-table th:hover{background:#f0f7ff;}
+#produits-table th:hover::before{content:'';position:absolute;top:0;right:0;width:3px;height:100%;background:#2563eb;border-radius:1px;pointer-events:none;z-index:4;}
+.tcell{position:relative;cursor:pointer;}
+.tcell:hover{background:#eff6ff !important;outline:2px solid #2563eb;outline-offset:-1px;z-index:2;}
+.tcell .ep{opacity:0;position:absolute;right:6px;top:50%;transform:translateY(-50%);width:24px;height:24px;background:#fff;border:1px solid #2563eb;border-radius:4px;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.1);}
+.tcell:hover .ep{opacity:1;}
+</style>
+<template id="__bundler_thumbnail" data-bg-color="#f3f4f6"><svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"><rect width="56" height="800" fill="#1f2937"/><rect x="56" width="1144" height="52" fill="#fff"/><rect x="56" y="51" width="1144" height="1" fill="#e5e7eb"/><circle cx="28" cy="26" r="14" fill="#16a34a"/></svg></template></helmet>
+
+<!-- ROOT LAYOUT -->
+<div style="display:flex;height:100vh;overflow:hidden">
+
+  <!-- LEFT NAV -->
+  <nav id="app-sidebar" style="width:56px;background:#1f2937;display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:6px;flex-shrink:0;z-index:30">
+    <!-- Logo Vooroo -->
+    <div style="width:56px;height:58px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <img src="./logo-vooroo.png" style="width:36px;height:auto;object-fit:contain;filter:brightness(0) invert(1)" />
+    </div>
+    <!-- Nav icons -->
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Guide de configuration">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 010 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 010-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Statistiques">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Prospects">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"/></svg>
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Affaires">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Activités">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Contacts">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+    </div>
+    <!-- Produits: icône active -->
+    <div style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;cursor:pointer" title="Produits">
+      <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/></svg>
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Devis et Factures">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+    </div>
+    <div style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(255,255,255,.1)" title="Documents">
+      <svg width="20" height="20" fill="none" stroke="#e5e7eb" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
+    </div>
+  </nav>
+
+  <!-- MAIN COLUMN -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0">
+
+    <!-- GLOBAL HEADER -->
+    <header id="app-header" style="height:52px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex-shrink:0;z-index:20">
+      <div style="display:flex;align-items:center;gap:6px;min-width:140px">
+        <span style="font-size:14px;font-weight:700;color:#111827">Produits</span>
+        <svg width="13" height="13" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid #d1d5db;border-radius:24px;background:#fff;cursor:text;width:360px;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+          <svg width="15" height="15" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 0z"/></svg>
+          <span style="font-size:13px;color:#9ca3af">Rechercher dans Vooroo</span>
+        </div>
+        <button style="width:32px;height:32px;border-radius:50%;border:1.5px solid #d1d5db;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#f9fafb">
+          <svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+        </button>
+        <div style="width:34px;height:34px;border-radius:50%;overflow:hidden;cursor:pointer;border:2px solid #16a34a;box-shadow:0 2px 8px rgba(22,163,74,.3);flex-shrink:0">
+          <img src="./uploads/Gemini_Generated_Image_k2cip2k2cip2k2ci.png" style="width:100%;height:100%;object-fit:cover" />
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;min-width:140px;justify-content:flex-end">
+        <button style="background:transparent;border:none;cursor:pointer;color:#6b7280;display:flex;align-items:center" style-hover="color:#374151">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"/></svg>
+        </button>
+        <button style="background:transparent;border:none;cursor:pointer;color:#6b7280;display:flex;align-items:center;position:relative" style-hover="color:#374151">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>
+          <div style="position:absolute;top:0;right:0;width:7px;height:7px;border-radius:50%;background:#ef4444;border:1.5px solid #fff"></div>
+        </button>
+        <div style="width:30px;height:30px;border-radius:50%;background:#374151;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;cursor:pointer">MT</div>
+      </div>
+    </header>
+
+    <!-- TOOLBAR -->
+    <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:10px 16px;display:flex;align-items:center;gap:8px;flex-shrink:0">
+      <!-- + Produit button -->
+      <div style="display:flex;position:relative">
+        <button onClick="{{ openForm }}" style="height:32px;padding:0 14px;background:#16a34a;color:#fff;border:none;border-radius:5px 0 0 5px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;cursor:pointer" style-hover="background:#15803d">
+          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          Produit
+        </button>
+        <button onClick="{{ toggleAddDrop }}" style="height:32px;width:28px;background:#16a34a;color:#fff;border:none;border-left:1px solid rgba(255,255,255,.25);border-radius:0 5px 5px 0;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#15803d">
+          <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+        </button>
+        <sc-if value="{{ showAddDrop }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ toggleAddDrop }}" style="position:fixed;inset:0;z-index:48"></div>
+          <div style="position:absolute;top:calc(100% + 4px);left:0;z-index:49;background:#fff;border:1px solid #e5e7eb;border-radius:7px;box-shadow:0 6px 20px rgba(0,0,0,.12);width:200px;padding:4px 0">
+            <div style="padding:8px 14px;cursor:pointer;font-size:13px;color:#374151;display:flex;align-items:center;gap:8px" style-hover="background:#f9fafb">
+              <svg width="13" height="13" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+              Ajouter un produit
+            </div>
+            <div style="padding:8px 14px;cursor:pointer;font-size:13px;color:#374151;display:flex;align-items:center;gap:8px" style-hover="background:#f9fafb">
+              <svg width="13" height="13" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+              Importer des produits
+            </div>
+            <div style="height:1px;background:#f0f2f4;margin:2px 0"></div>
+            <div style="padding:8px 14px;cursor:pointer;font-size:13px;color:#374151;display:flex;align-items:center;gap:8px" style-hover="background:#f9fafb">
+              <svg width="13" height="13" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+              Importer des données
+            </div>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="flex:1"></div>
+
+      <!-- Product count -->
+      <span style="font-size:13px;color:#6b7280;font-weight:500;white-space:nowrap">{{ productCount }} produit{{ productCountS }}</span>
+
+      <!-- Filter button (default: Nom du filtre) -->
+      <div style="display:flex;align-items:center;gap:0;position:relative">
+        <div onClick="{{ toggleFiltDrop }}" style="display:flex;align-items:center;gap:6px;height:30px;padding:0 10px;border:1px solid #e5e7eb;border-radius:6px;cursor:pointer;background:#fff" style-hover="background:#f9fafb">
+          <svg width="12" height="12" fill="none" stroke="#374151" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"/></svg>
+          <span style="font-size:13px;font-weight:700;color:#111827">{{ filterLabel }}</span>
+          <svg width="9" height="9" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+        </div>
+        <!-- Filter dropdown -->
+        <sc-if value="{{ showFiltDrop }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ toggleFiltDrop }}" style="position:fixed;inset:0;z-index:48"></div>
+          <div style="position:absolute;top:calc(100% + 4px);right:0;z-index:49;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.14);width:340px;overflow:hidden">
+            <!-- Search -->
+            <div style="padding:10px 12px;border-bottom:1px solid #f0f2f4">
+              <div style="display:flex;align-items:center;gap:7px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:6px 10px">
+                <svg width="13" height="13" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 0z"/></svg>
+                <span style="font-size:12px;color:#9ca3af">Chercher un propriétaire ou un filtre</span>
+              </div>
+            </div>
+            <!-- Tabs -->
+            <div style="display:flex;border-bottom:1px solid #e5e7eb">
+              <div onClick="{{ setFiltTabFav }}" style="flex:1;padding:10px 6px;text-align:center;cursor:pointer;border-bottom:2px solid {{ filtTabFavBd }};display:flex;flex-direction:column;align-items:center;gap:4px" style-hover="background:#f9fafb">
+                <svg width="15" height="15" fill="none" stroke="{{ filtTabFavCl }}" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
+                <span style="font-size:11px;color:{{ filtTabFavCl }};font-weight:500">Favoris</span>
+              </div>
+              <div onClick="{{ setFiltTabProp }}" style="flex:1;padding:10px 6px;text-align:center;cursor:pointer;border-bottom:2px solid {{ filtTabPropBd }};display:flex;flex-direction:column;align-items:center;gap:4px" style-hover="background:#f9fafb">
+                <svg width="15" height="15" fill="none" stroke="{{ filtTabPropCl }}" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+                <span style="font-size:11px;color:{{ filtTabPropCl }};font-weight:500">Propriétaires</span>
+              </div>
+              <div onClick="{{ setFiltTabFil }}" style="flex:1;padding:10px 6px;text-align:center;cursor:pointer;border-bottom:2px solid {{ filtTabFilBd }};display:flex;flex-direction:column;align-items:center;gap:4px" style-hover="background:#f9fafb">
+                <svg width="15" height="15" fill="none" stroke="{{ filtTabFilCl }}" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"/></svg>
+                <span style="font-size:11px;color:{{ filtTabFilCl }};font-weight:500">Filtres</span>
+              </div>
+            </div>
+            <!-- Tab: Favoris -->
+            <sc-if value="{{ filtTabIsFav }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:8px 0;max-height:280px;overflow-y:auto">
+                <div style="padding:5px 14px 4px;font-size:10px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.6px">PROPRIÉTAIRES</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;cursor:pointer" style-hover="background:#f9fafb">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <div style="width:22px;height:22px;border-radius:50%;background:#374151;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700">MT</div>
+                    <span style="font-size:13px;color:#374151">MINING TECH (vous)</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:4px">
+                    <svg width="14" height="14" fill="#f59e0b" viewBox="0 0 24 24"><path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
+                    <svg width="14" height="14" fill="none" stroke="#16a34a" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                  </div>
+                </div>
+                <div style="height:1px;background:#f0f2f4;margin:4px 0"></div>
+                <div style="padding:8px 14px;cursor:pointer;display:flex;align-items:center;gap:6px;color:#16a34a" style-hover="background:#f9fafb">
+                  <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                  <span style="font-size:13px;font-weight:500">Ajouter un nouveau filtre</span>
+                </div>
+              </div>
+            </sc-if>
+            <!-- Tab: Propriétaires -->
+            <sc-if value="{{ filtTabIsProp }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:8px 0;max-height:280px;overflow-y:auto">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;cursor:pointer" style-hover="background:#f9fafb">
+                  <span style="font-size:13px;color:#374151;font-weight:500">Tout le monde</span>
+                  <svg width="14" height="14" fill="none" stroke="#16a34a" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;cursor:pointer" style-hover="background:#f9fafb">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <div style="width:22px;height:22px;border-radius:50%;background:#374151;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700">MT</div>
+                    <span style="font-size:13px;color:#374151">MINING TECH (vous)</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:4px">
+                    <svg width="14" height="14" fill="#f59e0b" viewBox="0 0 24 24"><path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
+                    <svg width="14" height="14" fill="none" stroke="#16a34a" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 14px;cursor:pointer" style-hover="background:#f9fafb">
+                  <div style="width:22px;height:22px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700">SD</div>
+                  <span style="font-size:13px;color:#374151">Sarah Diallo</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 14px;cursor:pointer" style-hover="background:#f9fafb">
+                  <div style="width:22px;height:22px;border-radius:50%;background:#8b5cf6;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700">JK</div>
+                  <span style="font-size:13px;color:#374151">Jean Koné</span>
+                </div>
+                <div style="height:1px;background:#f0f2f4;margin:4px 0"></div>
+                <div style="padding:8px 14px;cursor:pointer;display:flex;align-items:center;gap:6px;color:#16a34a" style-hover="background:#f9fafb">
+                  <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                  <span style="font-size:13px;font-weight:500">Ajouter un nouveau filtre</span>
+                </div>
+              </div>
+            </sc-if>
+            <!-- Tab: Filtres -->
+            <sc-if value="{{ filtTabIsFil }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:40px 20px;text-align:center;max-height:280px;overflow-y:auto">
+                <svg width="36" height="36" fill="none" stroke="#d1d5db" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 12px"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"/></svg>
+                <p style="font-size:14px;font-weight:600;color:#374151;margin-bottom:6px">Vous n'avez aucun filtre</p>
+                <p style="font-size:12px;color:#6b7280;margin-bottom:16px;line-height:1.5">Vos filtres peuvent être privés ou partagés avec l'ensemble de la société</p>
+                <div style="padding:8px 14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;color:#16a34a" style-hover="color:#15803d">
+                  <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                  <span style="font-size:13px;font-weight:500">Ajouter un nouveau filtre</span>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- "..." more menu -->
+      <div style="position:relative">
+        <button onClick="{{ toggleMoreMenu }}" style="width:30px;height:30px;border:1px solid {{ moreMenuBd }};border-radius:5px;background:{{ moreMenuBg }};display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#f9fafb">
+          <svg width="13" height="13" fill="#6b7280" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M4.5 12a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm6 0a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm6 0a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" clip-rule="evenodd"/></svg>
+        </button>
+        <sc-if value="{{ showMoreMenu }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ closeMoreMenu }}" style="position:fixed;inset:0;z-index:48"></div>
+          <div style="position:absolute;top:calc(100% + 4px);right:0;z-index:49;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.13);width:290px;padding:4px 0">
+            <div style="padding:9px 14px;cursor:pointer;display:flex;align-items:flex-start;gap:10px" style-hover="background:#f9fafb">
+              <svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+              <span style="font-size:13px;color:#374151">Exporter les résultats du filtre</span>
+            </div>
+            <div style="height:1px;background:#f0f2f4;margin:2px 0"></div>
+            <div style="padding:9px 14px;cursor:pointer;display:flex;align-items:flex-start;gap:10px" style-hover="background:#f9fafb">
+              <svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+              <span style="font-size:13px;color:#374151">Importation de données</span>
+            </div>
+            <div style="padding:9px 14px;cursor:pointer;display:flex;align-items:flex-start;gap:10px" style-hover="background:#f9fafb">
+              <svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+              <div>
+                <div style="font-size:13px;color:#374151;font-weight:500">Exportation de données</div>
+                <div style="font-size:11px;color:#9ca3af;margin-top:2px;line-height:1.4">Exportez le catalogue de produits ou les produits ajoutés aux affaires</div>
+              </div>
+            </div>
+            <div style="height:1px;background:#f0f2f4;margin:2px 0"></div>
+            <div style="padding:9px 14px;cursor:pointer;display:flex;align-items:center;gap:10px" style-hover="background:#f9fafb">
+              <svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+              <span style="font-size:13px;color:#374151">Restaurer les données</span>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- ALPHA TABS -->
+    <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:6px 16px;display:flex;align-items:center;gap:4px;flex-shrink:0;flex-wrap:wrap">
+      <sc-if value="{{ isMain }}" hint-placeholder-val="{{ true }}">
+        <sc-for list="{{ alphaTabs }}" as="tab" hint-placeholder-count="5">
+          <button onClick="{{ tab.onClick }}" style="height:26px;padding:0 10px;border-radius:4px;border:none;font-size:12px;font-weight:{{ tab.active ? '700' : '400' }};color:{{ tab.active ? '#2563eb' : '#6b7280' }};background:{{ tab.active ? '#eff6ff' : 'transparent' }};cursor:pointer" style-hover="background:#f9fafb">{{ tab.label }}</button>
+        </sc-for>
+        <div style="width:1px;height:18px;background:#e5e7eb;margin:0 4px"></div>
+        <button onClick="{{ goArchived }}" style="height:26px;padding:0 10px;border-radius:4px;border:none;font-size:12px;font-weight:400;color:#6b7280;background:transparent;cursor:pointer;display:flex;align-items:center;gap:5px" style-hover="background:#f9fafb">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/></svg>
+          Archivés
+          <span style="font-size:10px;background:#f3f4f6;color:#6b7280;padding:1px 6px;border-radius:10px;font-weight:600">{{ archivedCount }}</span>
+        </button>
+      </sc-if>
+      <sc-if value="{{ isArchived }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ goMain }}" style="height:26px;padding:0 10px;border-radius:4px;border:none;font-size:12px;color:#6b7280;background:transparent;cursor:pointer;display:flex;align-items:center;gap:5px" style-hover="background:#f9fafb">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+          Produits actifs
+        </button>
+        <div style="width:1px;height:18px;background:#e5e7eb;margin:0 4px"></div>
+        <button style="height:26px;padding:0 10px;border-radius:4px;border:none;font-size:12px;font-weight:700;color:#2563eb;background:#eff6ff;cursor:default">Archivés ({{ archivedCount }})</button>
+      </sc-if>
+    </div>
+
+    <!-- VUE ARCHIVÉS -->
+    <sc-if value="{{ isArchived }}" hint-placeholder-val="{{ false }}">
+      <div style="flex:1;overflow:auto;background:#fff">
+        <table style="width:100%;border-collapse:collapse;min-width:700px">
+          <thead>
+            <tr style="border-bottom:2px solid #e5e7eb;position:sticky;top:0;background:#fff;z-index:2">
+              <th style="padding:10px 16px;text-align:left;font-size:12px;font-weight:600;color:#374151;min-width:200px">Nom</th>
+              <th style="padding:10px 16px;text-align:left;font-size:12px;font-weight:600;color:#374151;min-width:150px">Code du produit</th>
+              <th style="padding:10px 16px;text-align:left;font-size:12px;font-weight:600;color:#374151;min-width:140px">Catégorie</th>
+              <th style="padding:10px 16px;text-align:right;font-size:12px;font-weight:600;color:#374151;min-width:160px">Prix</th>
+              <th style="padding:10px 16px;text-align:left;font-size:12px;font-weight:600;color:#374151;min-width:120px">Propriétaire</th>
+              <th style="width:130px;padding:10px 16px;text-align:right;position:sticky;right:0;background:#fff;z-index:3;border-left:1px solid #e5e7eb"></th>
+            </tr>
+          </thead>
+          {{ archivedProductRows }}
+        </table>
+      </div>
+    </sc-if>
+
+    <!-- TABLE -->
+    <sc-if value="{{ isMain }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;display:flex;overflow:hidden;background:#fff">
+    <div style="flex:1;overflow:auto;background:#fff">
+      <!-- Barre sélection -->
+      <div style="display:{{ selActive }};align-items:center;gap:8px;padding:8px 14px;background:#fff;border-bottom:1px solid #e5e7eb;flex-shrink:0" onClick="{{ openBulkPanel }}">
+        <button style="height:30px;padding:0 12px;background:#fff;border:1px solid #d1d5db;border-radius:5px;font-size:12px;color:#374151;cursor:pointer;display:flex;align-items:center;gap:6px" style-hover="background:#f9fafb">
+          <svg width="12" height="12" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg>
+          Modifier en bloc
+        </button>
+        <button style="height:30px;width:30px;background:#fff;border:1px solid #d1d5db;border-radius:5px;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#fff5f5;border-color:#ef4444">
+          <svg width="13" height="13" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+        </button>
+      </div>
+      <div style="display:flex;width:100%;align-items:flex-start">
+      <div style="flex:1;overflow-x:auto;min-width:0;position:relative">
+      <div id="cdl-produits" style="display:none"></div>
+      <table id="produits-table" style="width:100%;border-collapse:collapse;min-width:520px">
+        <thead>
+          <tr style="border-bottom:2px solid #d1d5db;position:sticky;top:0;background:#fff;z-index:2">
+            <th style="width:36px;padding:10px 12px;text-align:center;position:sticky;left:0;background:#fff;z-index:3"><input type="checkbox" checked="{{ checkAll }}" onChange="{{ onCheckAll }}" style="cursor:pointer" /></th>
+            <sc-if value="{{ colNom }}" hint-placeholder-val="{{ true }}"><th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;white-space:nowrap;cursor:pointer" style-hover="color:#111827">Nom ↕</th></sc-if>
+            <sc-if value="{{ colCode }}" hint-placeholder-val="{{ true }}"><th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;white-space:nowrap">Code du produit</th></sc-if>
+            <sc-if value="{{ colCategorie }}" hint-placeholder-val="{{ false }}"><th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;white-space:nowrap">Catégorie</th></sc-if>
+            <sc-if value="{{ colPrix }}" hint-placeholder-val="{{ false }}"><th style="padding:10px 12px;text-align:right;font-size:12px;font-weight:600;color:#374151;white-space:nowrap">Prix</th></sc-if>
+            <sc-if value="{{ colUnite }}" hint-placeholder-val="{{ false }}"><th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;white-space:nowrap">Unité</th></sc-if>
+            <sc-if value="{{ colTaxe }}" hint-placeholder-val="{{ false }}"><th style="padding:10px 12px;text-align:right;font-size:12px;font-weight:600;color:#374151;white-space:nowrap">% Taxe</th></sc-if>
+            <sc-if value="{{ colActif }}" hint-placeholder-val="{{ false }}"><th style="padding:10px 12px;text-align:center;font-size:12px;font-weight:600;color:#374151;white-space:nowrap">Actif</th></sc-if>
+            <sc-if value="{{ colOwner }}" hint-placeholder-val="{{ false }}"><th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:#374151;white-space:nowrap">Propriétaire</th></sc-if>
+          </tr>
+        </thead>
+        {{ filteredProductRows }}
+      </table>
+      </div>
+      <div style="width:44px;flex-shrink:0;border-left:1px solid #e5e7eb;background:#fff">
+        <div onClick="{{ toggleColPanel }}" style="height:41px;border-bottom:2px solid #d1d5db;display:flex;align-items:center;justify-content:center;cursor:pointer;position:sticky;top:0;background:#fff;z-index:3" style-hover="background:#f9fafb">
+          <svg width="13" height="13" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 010 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 010-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        {{ productActionCol }}
+      </div>
+      </div>
+    </div>
+
+    <!-- BULK EDIT PANEL -->
+    <sc-if value="{{ showBulkPanel }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ closeBulkPanel }}" style="position:fixed;inset:0;z-index:50"></div>
+      <div style="position:fixed;top:52px;right:0;bottom:0;z-index:51;width:340px;background:#fff;border-left:1px solid #e5e7eb;display:flex;flex-direction:column;box-shadow:-4px 0 20px rgba(0,0,0,.1)">
+        <!-- Header -->
+        <div style="padding:14px 16px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:10px;flex-shrink:0">
+          <span style="font-size:15px;font-weight:700;color:#111827">Modifier en bloc</span>
+          <span style="font-size:11px;font-weight:700;color:#fff;background:#2563eb;padding:3px 8px;border-radius:12px;letter-spacing:.3px">{{ selCount }} SÉLECTIONNÉ</span>
+          <div style="flex:1"></div>
+          <button onClick="{{ closeBulkPanel }}" style="background:transparent;border:none;cursor:pointer;color:#9ca3af;display:flex;align-items:center" style-hover="color:#374151">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <!-- Fields -->
+        <div style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px">
+          <div>
+            <div style="font-size:12px;color:#6b7280;margin-bottom:5px">Nom</div>
+            <select style="width:100%;height:34px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#374151;padding:0 10px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#6b7280;margin-bottom:5px">Propriétaire</div>
+            <select style="width:100%;height:34px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#374151;padding:0 10px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#6b7280;margin-bottom:5px">Code du produit</div>
+            <select style="width:100%;height:34px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#374151;padding:0 10px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#6b7280;margin-bottom:5px">Actif</div>
+            <select style="width:100%;height:34px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#374151;padding:0 10px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option><option>Oui</option><option>Non</option></select>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#6b7280;margin-bottom:5px">Visible par</div>
+            <select style="width:100%;height:34px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#374151;padding:0 10px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#6b7280;margin-bottom:5px">Unité</div>
+            <select style="width:100%;height:34px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#374151;padding:0 10px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#6b7280;margin-bottom:5px">Taxe</div>
+            <select style="width:100%;height:34px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#374151;padding:0 10px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#6b7280;margin-bottom:5px">Catégorie</div>
+            <select style="width:100%;height:34px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#374151;padding:0 10px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#6b7280;margin-bottom:5px">Description</div>
+            <select style="width:100%;height:34px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#374151;padding:0 10px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option></select>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#6b7280;margin-bottom:5px">Fréquence de facturation</div>
+            <select style="width:100%;height:34px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#374151;padding:0 10px;background:#fff;outline:none"><option>Conserver la valeur actuelle</option><option>Mensuelle</option><option>Annuelle</option><option>Hebdomadaire</option></select>
+          </div>
+        </div>
+        <!-- Footer -->
+        <div style="padding:12px 16px;border-top:1px solid #e5e7eb;background:#fff;flex-shrink:0">
+          <button style="width:100%;height:38px;border:none;border-radius:6px;background:#16a34a;color:#fff;font-size:14px;font-weight:600;cursor:pointer" style-hover="background:#15803d">Modifier {{ selCount }} produit</button>
+        </div>
+      </div>
+    </sc-if>
+
+    </div>
+    </sc-if>
+
+    <!-- ====== DETAIL VIEW ====== -->
+    <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+      <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;background:#f3f4f6">
+        <!-- Detail top bar -->
+        <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:0 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;height:56px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <button onClick="{{ closeDetail }}" style="display:flex;align-items:center;gap:5px;background:transparent;border:none;cursor:pointer;color:#6b7280;font-size:12px;padding:4px 8px;border-radius:5px" style-hover="background:#f3f4f6">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+              Produits
+            </button>
+            <svg width="12" height="12" fill="none" stroke="#d1d5db" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+            <h1 style="font-size:20px;font-weight:700;color:#111827">{{ selectedProduct.nom }}</h1>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <!-- Propriétaire -->
+            <div style="position:relative">
+              <div onClick="{{ toggleAbonneDrop }}" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:5px 10px;border:1px solid #e5e7eb;border-radius:6px;background:#fff" style-hover="background:#f9fafb">
+                <div style="width:26px;height:26px;border-radius:50%;background:#374151;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700">MT</div>
+                <div><div style="font-size:12px;font-weight:700;color:#111827">MINING TECH</div><div style="font-size:10px;color:#9ca3af">Propriétaire</div></div>
+                <svg width="9" height="9" fill="none" stroke="#9ca3af" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+              </div>
+              <sc-if value="{{ showAbonneDrop }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ toggleAbonneDrop }}" style="position:fixed;inset:0;z-index:48"></div>
+                <div style="position:absolute;top:calc(100% + 4px);left:0;z-index:49;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.12);width:220px;padding:8px 0">
+                  <div style="padding:8px 14px;font-size:13px;font-weight:600;color:#374151">MINING TECH</div>
+                  <div style="height:1px;background:#f0f2f4;margin:2px 0"></div>
+                  <div style="padding:8px 14px;cursor:pointer;font-size:13px;color:#374151;display:flex;align-items:center;gap:8px" style-hover="background:#f9fafb"><svg width="13" height="13" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>Ajouter un abonné</div>
+                  <div style="padding:8px 14px;cursor:pointer;font-size:13px;color:#374151;display:flex;align-items:center;gap:8px" style-hover="background:#f9fafb"><svg width="13" height="13" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"/></svg>Se désabonner</div>
+                </div>
+              </sc-if>
+            </div>
+            <!-- 1 abonné -->
+            <button style="height:32px;padding:0 12px;background:#fff;border:1px solid #d1d5db;border-radius:6px;font-size:12px;color:#374151;cursor:pointer;display:flex;align-items:center;gap:5px" style-hover="background:#f9fafb">1 abonné <svg width="9" height="9" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
+            <!-- Visibility -->
+            <div style="position:relative">
+              <button onClick="{{ toggleVisibilityDrop }}" style="height:32px;padding:0 10px;background:#fff;border:1px solid #d1d5db;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:5px" style-hover="background:#f9fafb">
+                <svg width="14" height="14" viewBox="0 0 20 20" fill="#374151"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M16 8a1 1 0 011 1v6a1 1 0 01-1 1h-4a1 1 0 01-1-1V9a1 1 0 011-1h4z" clip-rule="evenodd"/></svg>
+                <svg width="9" height="9" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+              </button>
+              <sc-if value="{{ showVisibilityDrop }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ toggleVisibilityDrop }}" style="position:fixed;inset:0;z-index:48"></div>
+                <div style="position:absolute;top:calc(100% + 4px);right:0;z-index:49;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.12);width:280px;padding:4px 0">
+                  <div style="padding:12px 16px;cursor:pointer;display:flex;align-items:flex-start;gap:12px" style-hover="background:#f9fafb">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="#374151" style="flex-shrink:0;margin-top:1px"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M16 8a1 1 0 011 1v6a1 1 0 01-1 1h-4a1 1 0 01-1-1V9a1 1 0 011-1h4z" clip-rule="evenodd"/></svg>
+                    <div><div style="font-size:13px;font-weight:600;color:#111827">Propriétaire de l'élément</div><div style="font-size:12px;color:#6b7280;margin-top:2px">Visible par le propriétaire et les abonnés</div></div>
+                  </div>
+                  <div style="padding:12px 16px;cursor:pointer;display:flex;align-items:flex-start;gap:12px" style-hover="background:#f9fafb">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="#374151" style="flex-shrink:0;margin-top:1px"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M16 8a1 1 0 011 1v6a1 1 0 01-1 1h-4a1 1 0 01-1-1V9a1 1 0 011-1h4z" clip-rule="evenodd"/></svg>
+                    <div style="flex:1"><div style="font-size:13px;font-weight:600;color:#111827">Tous les utilisateurs</div><div style="font-size:12px;color:#6b7280;margin-top:2px">Visible par tous les membres de l'entreprise</div></div>
+                    <svg width="14" height="14" fill="none" stroke="#16a34a" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+            <!-- More ··· -->
+            <div style="position:relative">
+              <button onClick="{{ toggleDetailMoreMenu }}" style="width:32px;height:32px;background:#fff;border:1px solid #d1d5db;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#f9fafb">
+                <svg width="13" height="13" fill="#6b7280" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M4.5 12a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm6 0a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm6 0a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" clip-rule="evenodd"/></svg>
+              </button>
+              <sc-if value="{{ showDetailMoreMenu }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ toggleDetailMoreMenu }}" style="position:fixed;inset:0;z-index:48"></div>
+                <div style="position:absolute;top:calc(100% + 4px);right:0;z-index:49;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.12);width:240px;padding:4px 0">
+                  <div style="padding:9px 14px;cursor:pointer;font-size:13px;color:#374151" style-hover="background:#f9fafb">Dupliquer</div>
+                  <div style="padding:9px 14px;cursor:pointer;font-size:13px;color:#374151" style-hover="background:#f9fafb">Désactiver</div>
+                  <div style="padding:9px 14px;cursor:pointer;font-size:13px;color:#374151" style-hover="background:#f9fafb">Supprimer</div>
+                  <div style="height:1px;background:#f0f2f4;margin:2px 0"></div>
+                  <div onClick="{{ toggleGererSections }}" style="padding:9px 14px;cursor:pointer;font-size:13px;color:#374151" style-hover="background:#f9fafb">Gérer les sections de la barre latérale</div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+
+        <!-- Body -->
+        <div style="flex:1;display:flex;overflow:hidden">
+          <!-- Left sidebar -->
+          <div style="width:360px;flex-shrink:0;background:#fff;border-right:1px solid #e5e7eb;overflow-y:auto">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #e5e7eb">
+              <span style="font-size:13px;font-weight:600;color:#374151">Barre latérale</span>
+              <button onClick="{{ toggleGererSections }}" style="background:transparent;border:none;cursor:pointer;color:#9ca3af;display:flex;align-items:center" style-hover="color:#374151">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 010 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 010-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </button>
+            </div>
+            <!-- Gérer sections -->
+            <sc-if value="{{ showGererSections }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:16px;background:#fafafa;border-bottom:1px solid #e5e7eb">
+                <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:8px">Gérer les sections de la barre latérale</div>
+                <p style="font-size:12px;color:#6b7280;line-height:1.5;margin-bottom:8px">Basculez le curseur pour afficher ou masquer une section. Utilisez la poignée de glissement pour réorganiser les sections.</p>
+                <ul style="font-size:12px;color:#6b7280;padding-left:16px;margin-bottom:12px;line-height:1.8"><li>Masquer une section ne supprimera aucune donnée.</li><li>Ces paramètres de section ne s'appliquent qu'à vous.</li></ul>
+                <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#fff;border:1px solid #e5e7eb;border-radius:6px"><span style="font-size:13px;color:#374151">Image</span><div style="display:flex;align-items:center;gap:8px"><div style="width:36px;height:20px;background:#16a34a;border-radius:10px;position:relative;cursor:pointer"><div style="width:16px;height:16px;background:#fff;border-radius:50%;position:absolute;top:2px;left:18px;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div><svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5"/></svg></div></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#fff;border:1px solid #e5e7eb;border-radius:6px"><span style="font-size:13px;color:#374151">Détails</span><div style="display:flex;align-items:center;gap:8px"><div style="width:36px;height:20px;background:#16a34a;border-radius:10px;position:relative;cursor:pointer"><div style="width:16px;height:16px;background:#fff;border-radius:50%;position:absolute;top:2px;left:18px;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div><svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5"/></svg></div></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#fff;border:1px solid #e5e7eb;border-radius:6px"><span style="font-size:13px;color:#374151">Participants</span><div style="display:flex;align-items:center;gap:8px"><div style="width:36px;height:20px;background:#16a34a;border-radius:10px;position:relative;cursor:pointer"><div style="width:16px;height:16px;background:#fff;border-radius:50%;position:absolute;top:2px;left:18px;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div><svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5"/></svg></div></div>
+                </div>
+                <button onClick="{{ toggleGererSections }}" style="height:32px;padding:0 16px;background:#16a34a;border:none;border-radius:6px;font-size:13px;color:#fff;font-weight:600;cursor:pointer" style-hover="background:#15803d">Terminé</button>
+              </div>
+            </sc-if>
+            <!-- Image -->
+            <div style="border-bottom:1px solid #e5e7eb;padding:10px 16px 14px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div style="display:flex;align-items:center;gap:6px"><svg width="11" height="11" fill="none" stroke="#374151" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg><span style="font-size:13px;font-weight:600;color:#111827">Image</span></div><svg width="13" height="13" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg></div>
+              <div style="border:2px dashed #d1d5db;border-radius:8px;height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;background:#fafafa" style-hover="border-color:#9ca3af">
+                <svg width="22" height="22" fill="none" stroke="#16a34a" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg>
+                <span style="font-size:13px;color:#16a34a;font-weight:500">Téléverser</span>
+              </div>
+            </div>
+            <!-- Détails -->
+            <div style="border-bottom:1px solid #e5e7eb">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px">
+                <div style="display:flex;align-items:center;gap:6px"><svg width="11" height="11" fill="none" stroke="#374151" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg><span style="font-size:13px;font-weight:600;color:#111827">Détails</span></div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <button onClick="{{ startEditDetails }}" style="background:transparent;border:none;cursor:pointer;color:#9ca3af;display:flex;align-items:center" style-hover="color:#374151"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg></button>
+                  <svg width="13" height="13" fill="#9ca3af" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M4.5 12a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm6 0a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm6 0a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" clip-rule="evenodd"/></svg>
+                </div>
+              </div>
+              <!-- View mode -->
+              <sc-if value="{{ viewDetails }}" hint-placeholder-val="{{ true }}">
+                <div style="padding:0 16px 14px">
+                  <div style="display:grid;grid-template-columns:140px 1fr;gap:4px;align-items:center;padding:5px 0;border-bottom:1px solid #f3f4f6"><span style="font-size:12px;color:#9ca3af;text-align:right;padding-right:12px">Code du produit</span><span style="font-size:13px;color:#374151">{{ selectedProduct.code }}</span></div>
+                  <div style="display:grid;grid-template-columns:140px 1fr;gap:4px;align-items:center;padding:5px 0;border-bottom:1px solid #f3f4f6"><span style="font-size:12px;color:#9ca3af;text-align:right;padding-right:12px">Unité</span><span style="font-size:13px;color:#374151">{{ selectedProduct.unite }}</span></div>
+                  <div style="display:grid;grid-template-columns:140px 1fr;gap:4px;align-items:center;padding:5px 0;border-bottom:1px solid #f3f4f6"><span style="font-size:12px;color:#9ca3af;text-align:right;padding-right:12px">Taxe %</span><span style="font-size:13px;color:#374151">{{ selectedProduct.taxe }}</span></div>
+                  <div style="display:grid;grid-template-columns:140px 1fr;gap:4px;align-items:center;padding:5px 0;border-bottom:1px solid #f3f4f6"><span style="font-size:12px;color:#9ca3af;text-align:right;padding-right:12px">Catégorie</span><span style="font-size:13px;color:#374151">{{ selectedProduct.categorie }}</span></div>
+                  <div style="display:grid;grid-template-columns:140px 1fr;gap:4px;align-items:center;padding:5px 0;border-bottom:1px solid #f3f4f6"><span style="font-size:12px;color:#9ca3af;text-align:right;padding-right:12px">Description</span><span style="font-size:13px;color:#9ca3af">—</span></div>
+                  <div style="display:grid;grid-template-columns:140px 1fr;gap:4px;align-items:center;padding:5px 0"><span style="font-size:12px;color:#9ca3af;text-align:right;padding-right:12px">Fréquence de facturation</span><span style="font-size:13px;color:#374151">{{ selectedProduct.freq }}</span></div>
+                </div>
+              </sc-if>
+              <!-- Edit mode -->
+              <sc-if value="{{ editDetails }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:0 16px 14px">
+                  <div style="display:grid;grid-template-columns:140px 1fr;gap:4px;align-items:center;padding:5px 0;border-bottom:1px solid #f3f4f6"><span style="font-size:12px;color:#9ca3af;text-align:right;padding-right:12px">Code du produit</span><input type="text" style="width:100%;height:30px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;padding:0 8px;color:#374151" /></div>
+                  <div style="display:grid;grid-template-columns:140px 1fr;gap:4px;align-items:center;padding:5px 0;border-bottom:1px solid #f3f4f6"><span style="font-size:12px;color:#9ca3af;text-align:right;padding-right:12px">Unité</span><input type="text" style="width:100%;height:30px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;padding:0 8px;color:#374151" /></div>
+                  <div style="display:grid;grid-template-columns:140px 1fr;gap:4px;align-items:center;padding:5px 0;border-bottom:1px solid #f3f4f6"><span style="font-size:12px;color:#9ca3af;text-align:right;padding-right:12px">Taxe %</span><input type="text" style="width:100%;height:30px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;padding:0 8px;color:#374151" /></div>
+                  <div style="display:grid;grid-template-columns:140px 1fr;gap:4px;align-items:center;padding:5px 0;border-bottom:1px solid #f3f4f6"><span style="font-size:12px;color:#9ca3af;text-align:right;padding-right:12px">Catégorie</span><select style="width:100%;height:30px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;padding:0 8px;color:#374151;background:#fff"><option>Sélectionner une catégorie...</option><option>Logiciel</option><option>Abonnement</option><option>Formation</option><option>Service</option></select></div>
+                  <div style="display:grid;grid-template-columns:140px 1fr;gap:4px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #f3f4f6"><span style="font-size:12px;color:#9ca3af;text-align:right;padding-right:12px;padding-top:6px">Description</span><textarea style="width:100%;height:60px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;padding:6px 8px;color:#374151;resize:none;font-family:'Roboto',sans-serif"></textarea></div>
+                  <div style="display:grid;grid-template-columns:140px 1fr;gap:4px;align-items:center;padding:5px 0"><span style="font-size:12px;color:#9ca3af;text-align:right;padding-right:12px">Fréquence de facturation</span><select style="width:100%;height:30px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;padding:0 8px;color:#374151;background:#fff"><option>Une fois</option><option>Mensuel</option><option>Trimestriel</option><option>Annuel</option></select></div>
+                  <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:10px">
+                    <button onClick="{{ cancelEditDetails }}" style="height:30px;padding:0 12px;background:#fff;border:1px solid #d1d5db;border-radius:5px;font-size:12px;color:#374151;cursor:pointer" style-hover="background:#f9fafb">Annuler</button>
+                    <button onClick="{{ cancelEditDetails }}" style="height:30px;padding:0 12px;background:#16a34a;border:none;border-radius:5px;font-size:12px;color:#fff;cursor:pointer;font-weight:600" style-hover="background:#15803d">Enregistrer</button>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+            <!-- Participants -->
+            <div style="padding:10px 16px 14px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="display:flex;align-items:center;gap:6px"><svg width="11" height="11" fill="none" stroke="#374151" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg><span style="font-size:13px;font-weight:600;color:#111827">Participants</span></div><svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg></div>
+              <p style="font-size:12px;color:#9ca3af;margin-bottom:8px">Il n'y a aucun participant associé à ce produit.</p>
+              <span style="font-size:13px;color:#16a34a;cursor:pointer" style-hover="text-decoration:underline">+ Participant</span>
+            </div>
+          </div>
+
+          <!-- Right: tabs -->
+          <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+            <div style="display:flex;border-bottom:1px solid #e5e7eb;background:#fff;flex-shrink:0;padding:0 20px">
+              <button onClick="{{ setDetailTabPrix }}" style="padding:14px 16px;font-size:13px;color:{{ dtClPrix }};background:transparent;border:none;border-bottom:2px solid {{ dtBdPrix }};margin-bottom:-1px;cursor:pointer;font-weight:{{ detailTabPrix ? '600' : '400' }}">Prix</button>
+              <button onClick="{{ setDetailTabAffaires }}" style="padding:14px 16px;font-size:13px;color:{{ dtClAff }};background:transparent;border:none;border-bottom:2px solid {{ dtBdAff }};margin-bottom:-1px;cursor:pointer">Affaires</button>
+              <button onClick="{{ setDetailTabVariations }}" style="padding:14px 16px;font-size:13px;color:{{ dtClVar }};background:transparent;border:none;border-bottom:2px solid {{ dtBdVar }};margin-bottom:-1px;cursor:pointer">Variations</button>
+              <button onClick="{{ setDetailTabFichiers }}" style="padding:14px 16px;font-size:13px;color:{{ dtClFic }};background:transparent;border:none;border-bottom:2px solid {{ dtBdFic }};margin-bottom:-1px;cursor:pointer">Fichiers</button>
+            </div>
+            <!-- Prix -->
+            <sc-if value="{{ detailTabPrix }}" hint-placeholder-val="{{ true }}">
+              <div style="flex:1;overflow-y:auto;padding:20px;background:#f3f4f6">
+                <button style="height:32px;padding:0 14px;background:#fff;border:1px solid #d1d5db;border-radius:5px;font-size:13px;color:#374151;cursor:pointer;display:flex;align-items:center;gap:6px;margin-bottom:14px" style-hover="background:#f9fafb"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>Prix</button>
+                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden">
+                  <table style="width:100%;border-collapse:collapse">
+                    <thead><tr style="border-bottom:1px solid #e5e7eb;background:#f9fafb">
+                      <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:700;color:#6b7280;letter-spacing:.6px;text-transform:uppercase">DEVISE</th>
+                      <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:700;color:#6b7280;letter-spacing:.6px;text-transform:uppercase">PRIX UNITAIRE</th>
+                      <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:700;color:#6b7280;letter-spacing:.6px;text-transform:uppercase">COÛT</th>
+                      <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:700;color:#6b7280;letter-spacing:.6px;text-transform:uppercase">COÛT DIRECT</th>
+                      <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:700;color:#6b7280;letter-spacing:.6px;text-transform:uppercase">COMMENTAIRE</th>
+                    </tr></thead>
+                    <tbody><tr style="background:#eff6ff"><td style="padding:10px 16px;font-size:13px;color:#374151">CFA Franc BCEAO</td><td style="padding:10px 16px;font-size:13px;color:#374151">{{ selectedProduct.prix }}</td><td style="padding:10px 16px;font-size:13px;color:#374151">F CFA 0</td><td style="padding:10px 16px;font-size:13px;color:#374151">F CFA 0</td><td style="padding:10px 16px;font-size:13px;color:#9ca3af">—</td></tr></tbody>
+                  </table>
+                </div>
+              </div>
+            </sc-if>
+            <!-- Affaires -->
+            <sc-if value="{{ detailTabAffaires }}" hint-placeholder-val="{{ false }}">
+              <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#f3f4f6">
+                <div style="text-align:center"><p style="font-size:16px;font-weight:500;color:#374151;margin-bottom:8px">Ce produit n'est encore lié à aucune affaire</p><span style="font-size:13px;color:#2563eb;cursor:pointer" style-hover="text-decoration:underline">Découvrez comment lier des produits à des affaires ↗</span></div>
+              </div>
+            </sc-if>
+            <!-- Variations -->
+            <sc-if value="{{ detailTabVariations }}" hint-placeholder-val="{{ false }}">
+              <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#f3f4f6">
+                <div style="text-align:center;max-width:480px;padding:20px">
+                  <p style="font-size:16px;font-weight:500;color:#374151;margin-bottom:10px">Aucune variation ajoutée pour le moment</p>
+                  <p style="font-size:13px;color:#6b7280;margin-bottom:20px;line-height:1.6">Vous pouvez créer plusieurs points de prix et leur donner des noms appropriés. Par exemple : vous pouvez avoir des versions de base, standard et de luxe du même produit, avec un prix différent pour chaque version.</p>
+                  <button style="height:36px;padding:0 18px;background:#fff;border:1.5px solid #374151;border-radius:6px;font-size:13px;color:#374151;cursor:pointer;display:inline-flex;align-items:center;gap:6px" style-hover="background:#f9fafb"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>Variation</button>
+                </div>
+              </div>
+            </sc-if>
+            <!-- Fichiers -->
+            <sc-if value="{{ detailTabFichiers }}" hint-placeholder-val="{{ false }}">
+              <div style="flex:1;display:flex;flex-direction:column;background:#f3f4f6;padding:20px">
+                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:16px">
+                  <div style="display:flex;border-bottom:1px solid #e5e7eb;padding:0 16px"><div style="display:flex;align-items:center;gap:6px;padding:12px 0;border-bottom:2px solid #16a34a;margin-bottom:-1px"><svg width="14" height="14" fill="none" stroke="#16a34a" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13"/></svg><span style="font-size:13px;color:#16a34a;font-weight:600">Fichiers</span></div></div>
+                  <div style="padding:16px"><div style="border:2px dashed #d1d5db;border-radius:6px;padding:16px;display:flex;align-items:center;gap:10px"><button style="height:32px;padding:0 14px;background:#16a34a;border:none;border-radius:5px;font-size:13px;color:#fff;cursor:pointer;font-weight:500" style-hover="background:#15803d">Téléverser des fichiers</button><span style="font-size:13px;color:#6b7280">ou faire glisser les fichiers ici.</span></div></div>
+                </div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px">
+                  <div style="width:64px;height:64px;border:2px solid #d1d5db;border-radius:8px;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" fill="none" stroke="#d1d5db" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg></div>
+                  <p style="font-size:14px;font-weight:500;color:#374151">Aucun fichier ajouté pour le moment</p>
+                  <p style="font-size:12px;color:#9ca3af">Drag a file or select from your computer</p>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+
+  <!-- PANEL: PERSONNALISER LES COLONNES -->
+  <sc-if value="{{ showColPanel }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeColPanel }}" style="position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.15)"></div>
+    <div style="position:fixed;top:52px;right:0;bottom:0;z-index:51;width:380px;background:#fff;border-left:1px solid #e5e7eb;display:flex;flex-direction:column;box-shadow:-4px 0 20px rgba(0,0,0,.1)">
+      <div style="padding:14px 16px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <span style="font-size:14px;font-weight:700;color:#111827">Personnaliser les colonnes</span>
+        <button style="height:28px;padding:0 10px;background:#f9fafb;border:1px solid #d1d5db;border-radius:5px;font-size:12px;color:#374151;cursor:pointer" style-hover="background:#f3f4f6">+ Champ personnalisé</button>
+      </div>
+      <div style="padding:10px 14px;border-bottom:1px solid #f0f2f4;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:7px;border:1px solid #d1d5db;border-radius:6px;padding:6px 10px;background:#fff">
+          <svg width="13" height="13" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 0z"/></svg>
+          <input type="text" value="{{ colSearch }}" onChange="{{ setColSearch }}" placeholder="Chercher..." style="border:none;background:transparent;font-size:12px;color:#374151;outline:none;flex:1;min-width:0" />
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto">
+        <div style="padding:8px 14px 4px;display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.6px">VISIBLE ({{ visibleCount }}/200)</span>
+        </div>
+        <sc-for list="{{ visibleColItems }}" as="vc" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:10px;padding:7px 14px;cursor:pointer" style-hover="background:#f9fafb">
+            <input type="checkbox" checked="{{ vc.checked }}" onChange="{{ vc.onToggle }}" style="width:14px;height:14px;accent-color:#16a34a;cursor:pointer;flex-shrink:0" />
+            <span style="font-size:13px;color:#374151;flex:1">{{ vc.label }}</span>
+            <span style="font-size:11px;color:#9ca3af">Produit</span>
+          </div>
+        </sc-for>
+        <div style="padding:10px 14px 4px;border-top:1px solid #f0f2f4;margin-top:4px">
+          <span style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.6px">NON VISIBLE</span>
+        </div>
+        <sc-for list="{{ hiddenColItems }}" as="hc" hint-placeholder-count="5">
+          <div style="display:flex;align-items:center;gap:10px;padding:7px 14px;cursor:pointer" style-hover="background:#f9fafb">
+            <input type="checkbox" checked="{{ hc.checked }}" onChange="{{ hc.onToggle }}" style="width:14px;height:14px;accent-color:#16a34a;cursor:pointer;flex-shrink:0" />
+            <span style="font-size:13px;color:#374151;flex:1">{{ hc.label }}</span>
+            <span style="font-size:11px;color:#9ca3af">Produit</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="padding:12px 16px;border-top:1px solid #e5e7eb;display:flex;align-items:center;gap:8px;flex-shrink:0;background:#f9fafb">
+        <button onClick="{{ resetCols }}" style="font-size:12px;color:#374151;background:transparent;border:none;cursor:pointer;padding:0;text-decoration:underline" style-hover="color:#111827">Colonnes par défaut</button>
+        <div style="flex:1"></div>
+        <button onClick="{{ closeColPanel }}" style="height:32px;padding:0 14px;background:#fff;border:1px solid #d1d5db;border-radius:6px;font-size:13px;color:#374151;cursor:pointer" style-hover="background:#f9fafb">Annuler</button>
+        <button onClick="{{ closeColPanel }}" style="height:32px;padding:0 14px;background:#16a34a;border:none;border-radius:6px;font-size:13px;color:#fff;cursor:pointer;font-weight:600" style-hover="background:#15803d">Enregistrer</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+<!-- MODAL: AJOUTER UN PRODUIT -->
+<sc-if value="{{ showForm }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeForm }}" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:flex;align-items:center;justify-content:center">
+    <div onClick="{{ stopProp }}" style="background:#fff;border-radius:10px;width:420px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25)">
+      <!-- Header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #e5e7eb;flex-shrink:0">
+        <span style="font-size:16px;font-weight:700;color:#111827">Ajouter un produit</span>
+        <button onClick="{{ closeForm }}" style="background:transparent;border:none;cursor:pointer;color:#9ca3af;display:flex;align-items:center" style-hover="color:#374151">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <!-- Body -->
+      <div style="padding:20px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;flex:1">
+        <div>
+          <label style="display:block;font-size:12px;color:#6b7280;margin-bottom:5px">Nom</label>
+          <input type="text" placeholder="" style="width:100%;height:36px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;padding:0 10px;color:#111827" />
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;color:#6b7280;margin-bottom:5px">Code du produit</label>
+          <input type="text" placeholder="" style="width:100%;height:36px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;padding:0 10px;color:#111827" />
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;color:#6b7280;margin-bottom:5px">Catégorie</label>
+          <select style="width:100%;height:36px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;padding:0 10px;color:#6b7280;background:#fff;cursor:pointer">
+            <option value="">Sélectionner une catégorie</option>
+            <option>Logiciel</option>
+            <option>Abonnement</option>
+            <option>Formation</option>
+            <option>Service</option>
+            <option>Matériel</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;color:#6b7280;margin-bottom:5px;display:flex;align-items:center;gap:4px">
+            Unité
+            <svg width="13" height="13" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
+          </label>
+          <input type="text" placeholder="" style="width:100%;height:36px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;padding:0 10px;color:#111827" />
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;color:#6b7280;margin-bottom:5px">Fréquence de facturation</label>
+          <select style="width:100%;height:36px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;padding:0 10px;color:#374151;background:#fff;cursor:pointer">
+            <option selected="selected">Une fois</option>
+            <option>Mensuel</option>
+            <option>Trimestriel</option>
+            <option>Semestriel</option>
+            <option>Annuel</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;color:#6b7280;margin-bottom:5px">Prix unitaires</label>
+          <div style="display:flex;gap:8px">
+            <input type="text" placeholder="" style="flex:1;height:36px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;padding:0 10px;color:#111827" />
+            <select style="width:140px;height:36px;border:1px solid #d1d5db;border-radius:5px;font-size:12px;padding:0 8px;color:#374151;background:#fff;cursor:pointer">
+              <option>CFA Franc B...</option>
+              <option>EUR €</option>
+              <option>USD $</option>
+            </select>
+          </div>
+          <div style="margin-top:8px">
+            <span style="font-size:13px;color:#16a34a;cursor:pointer;font-weight:500" style-hover="text-decoration:underline">+ Ajouter un prix</span>
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;color:#6b7280;margin-bottom:5px">% Taxes</label>
+          <input type="text" placeholder="" style="width:100%;height:36px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;padding:0 10px;color:#111827" />
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;color:#6b7280;margin-bottom:5px">Visible par</label>
+          <div style="display:flex;align-items:center;border:1px solid #d1d5db;border-radius:5px;height:36px;padding:0 10px;cursor:pointer;background:#fff;justify-content:space-between" style-hover="border-color:#9ca3af">
+            <div style="display:flex;align-items:center;gap:8px">
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="#374151"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M16 8a1 1 0 011 1v6a1 1 0 01-1 1h-4a1 1 0 01-1-1V9a1 1 0 011-1h4z" clip-rule="evenodd"/></svg>
+              <span style="font-size:13px;color:#374151">Tous les utilisateurs</span>
+            </div>
+            <svg width="10" height="10" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;color:#6b7280;margin-bottom:5px">Description</label>
+          <textarea placeholder="" style="width:100%;height:72px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;padding:8px 10px;color:#111827;resize:none;font-family:'Roboto',sans-serif"></textarea>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div style="display:flex;align-items:center;padding:12px 20px;border-top:1px solid #e5e7eb;gap:10px;flex-shrink:0">
+        <button style="height:34px;padding:0 14px;background:#fff;border:1px solid #d1d5db;border-radius:5px;font-size:13px;color:#374151;cursor:pointer;display:flex;align-items:center;gap:6px" style-hover="background:#f9fafb">
+          <svg width="13" height="13" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+          Importation
+        </button>
+        <div style="flex:1"></div>
+        <button onClick="{{ closeForm }}" style="height:34px;padding:0 16px;background:#fff;border:1px solid #d1d5db;border-radius:5px;font-size:13px;color:#374151;cursor:pointer;font-weight:500" style-hover="background:#f9fafb">Annuler</button>
+        <button style="height:34px;padding:0 16px;background:#16a34a;border:none;border-radius:5px;font-size:13px;color:#fff;cursor:pointer;font-weight:600" style-hover="background:#15803d">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  PRODUCTS = [
+    { id:'pr1', nom:'AGENT IA',          code:'AGT-001', categorie:'Logiciel',    prix:'F CFA 150 000', unite:'Licence',    freq:'Mensuel',    taxe:'18', actif:true,  owner:'MT', ownerName:'MINING TECH' },
+    { id:'pr2', nom:'Subscription Pro',  code:'SUB-PRO', categorie:'Abonnement', prix:'F CFA 75 000',  unite:'Mois',       freq:'Mensuel',    taxe:'18', actif:true,  owner:'MT', ownerName:'MINING TECH' },
+    { id:'pr3', nom:'Formation CRM',     code:'FRM-CRM', categorie:'Formation',  prix:'F CFA 500 000', unite:'Session',    freq:'Une fois',   taxe:'0',  actif:true,  owner:'SD', ownerName:'Sarah Diallo' },
+    { id:'pr4', nom:'Consulting Hourly', code:'CSL-HRS', categorie:'Service',    prix:'F CFA 45 000',  unite:'Heure',      freq:'Une fois',   taxe:'18', actif:false, owner:'MT', ownerName:'MINING TECH' },
+    { id:'pr5', nom:'Support Pack',      code:'SUP-PKG', categorie:'Service',    prix:'F CFA 200 000', unite:'Trimestre',  freq:'Trimestriel',taxe:'18', actif:true,  owner:'JK', ownerName:'Jean Koné' },
+    { id:'pr6', nom:'API Connect',       code:'API-CON', categorie:'Logiciel',   prix:'F CFA 90 000',  unite:'Appel/mois', freq:'Mensuel',    taxe:'18', actif:true,  owner:'MT', ownerName:'MINING TECH' },
+    { id:'pr7', nom:'Audit Conseil',     code:'AUD-CSL', categorie:'Service',    prix:'F CFA 350 000', unite:'Journée',    freq:'Une fois',   taxe:'18', actif:true,  owner:'SD', ownerName:'Sarah Diallo' },
+  ];
+  ALL_COLS = ['Nom','Code du produit','ID','Propriétaire','Actif','Visible par','Prix','Unité','Taxe','Catégorie','Description','Prix unitaires','Cycles de facturation','Fréquence de facturation'];
+  state = {
+    sel: [], rowMenuId: null, archived: ['pr4'], page: 'main', showBulkPanel: false,
+    selectedProductId: null, detailTab: 'prix',
+    showAbonneDrop: false, showVisibilityDrop: false, showDetailMoreMenu: false,
+    showGererSections: false, editDetails: false,
+    showForm: false, showFiltDrop: false, showMoreMenu: false, showAddDrop: false, showColPanel: false,
+    filtTab: 'filtres', alphaTab: 'Tous',
+    visibleCols: ['Nom','Code du produit'],
+    colSearch: '',
+  };
+
+  componentDidMount() { this._rzInit('produits-table','cdl-produits'); }
+  _rzInit(tableId, dlId) {
+    setTimeout(() => {
+      const table = document.getElementById(tableId), dl = document.getElementById(dlId);
+      if (!table || !dl || table._rz) return; table._rz = true;
+      const EDGE = 8, thead = table.querySelector('thead'); if (!thead) return;
+      const lock = () => { thead.querySelectorAll('th').forEach(th => { th.style.width = th.getBoundingClientRect().width+'px'; }); table.style.tableLayout='fixed'; table.style.width=table.getBoundingClientRect().width+'px'; };
+      thead.addEventListener('mousemove', e => { const th=e.target.closest('th'); if(!th){thead.style.cursor='';return;} thead.style.cursor=e.clientX>=th.getBoundingClientRect().right-EDGE?'col-resize':''; });
+      thead.addEventListener('mouseleave', ()=>{thead.style.cursor='';});
+      thead.addEventListener('mousedown', e => {
+        const th=e.target.closest('th'); if(!th) return;
+        const r=th.getBoundingClientRect(); if(e.clientX<r.right-EDGE) return;
+        lock(); e.preventDefault(); e.stopPropagation();
+        const startX=e.clientX, startW=th.getBoundingClientRect().width;
+        dl.style.cssText=`display:block;position:fixed;top:0;bottom:0;width:2px;background:#2563eb;z-index:9999;pointer-events:none;left:${e.clientX}px`;
+        document.body.style.cursor='col-resize'; document.body.style.userSelect='none';
+        let prevW = startW;
+        const onMove=ev=>{
+          const newW=Math.max(50,startW+ev.clientX-startX);
+          const diff=newW-prevW;
+          table.style.width=(parseFloat(table.style.width)+diff)+'px';
+          th.style.width=newW+'px';
+          prevW=newW;
+          dl.style.left=ev.clientX+'px';
+        };
+        const onUp=()=>{dl.style.display='none';document.body.style.cursor='';document.body.style.userSelect='';document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);};
+        document.addEventListener('mousemove',onMove); document.addEventListener('mouseup',onUp);
+      });
+    }, 600);
+  }
+
+  renderVals() {
+    const s = this.state;
+    const sel = new Set(s.sel);
+
+    const arch = new Set(s.archived||[]);
+    const archiveProduct = id => this.setState({ archived:[...(s.archived||[]),id], rowMenuId:null });
+    const unarchiveProduct = id => this.setState({ archived:(s.archived||[]).filter(x=>x!==id) });
+
+    // Filter by alpha (exclude archived)
+    const filtered = (s.alphaTab === 'Tous'
+      ? this.PRODUCTS
+      : this.PRODUCTS.filter(p => p.nom.toUpperCase().startsWith(s.alphaTab))
+    ).filter(p => !arch.has(p.id));
+
+    const archivedProducts = this.PRODUCTS.filter(p => arch.has(p.id)).map(p=>({...p, onUnarchive:()=>unarchiveProduct(p.id)}));
+
+    // Col flags
+    const vc = s.visibleCols || [];
+    const colSearch = (s.colSearch||'').toLowerCase();
+    const ALL_COLS_STR = this.ALL_COLS;
+    const visibleColItems = vc.filter(c=>!colSearch||c.toLowerCase().includes(colSearch)).map(c=>({ label:c, checked:true, onToggle:()=>this.setState({visibleCols:vc.filter(x=>x!==c)}) }));
+    const hiddenColItems = ALL_COLS_STR.filter(c=>!vc.includes(c)&&(!colSearch||c.toLowerCase().includes(colSearch))).map(c=>({ label:c, checked:false, onToggle:()=>this.setState({visibleCols:[...vc,c]}) }));
+
+    // Filt tab
+    const tab = t => ({
+      bd: s.filtTab===t ? '#16a34a' : 'transparent',
+      cl: s.filtTab===t ? '#16a34a' : '#6b7280',
+    });
+    const fav = tab('favoris'); const prop = tab('proprietaires'); const fil = tab('filtres');
+
+    // Alpha tabs
+    const usedLetters = new Set(this.PRODUCTS.map(p => p.nom[0].toUpperCase()));
+    const ALPHAS = ['Tous','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+    const alphaTabs = ALPHAS.filter(a => a === 'Tous' || usedLetters.has(a)).map(a=>({ label:a, active:s.alphaTab===a, onClick:()=>this.setState({alphaTab:a}) }));
+
+    const toggleRowMenu = id => this.setState({ rowMenuId: s.rowMenuId===id ? null : id });
+
+    const ROW_H = 39;
+    const productActionCol = React.createElement('div', null, filtered.map(p => React.createElement('div', {
+      key: p.id, style: { height: ROW_H+'px', borderBottom:'1px solid #f3f4f6', display:'flex', alignItems:'center', justifyContent:'center', position:'relative' }
+    },
+      React.createElement('button', {
+        onClick: e => { e.stopPropagation(); toggleRowMenu(p.id); },
+        style: { background:'none', border:'none', cursor:'pointer', color:'#9ca3af', fontSize:'15px', borderRadius:'3px', padding:'2px 6px', letterSpacing:'1px' }
+      }, '···'),
+      s.rowMenuId === p.id ? React.createElement(React.Fragment, null,
+        React.createElement('div', { onClick:()=>this.setState({rowMenuId:null}), style:{position:'fixed',inset:0,zIndex:48} }),
+        React.createElement('div', { style:{ position:'absolute', top:'100%', right:'8px', zIndex:49, background:'#fff', border:'1px solid #e5e7eb', borderRadius:'8px', boxShadow:'0 6px 20px rgba(0,0,0,.12)', width:'180px', padding:'6px 0', textAlign:'left' } },
+          React.createElement('div', { onClick:()=>{ this.setState({selectedProductId:p.id, page:'detail', rowMenuId:null}); }, style:{ padding:'8px 14px', cursor:'pointer', fontSize:'13px', color:'#374151' } }, 'Modifier le produit'),
+          React.createElement('div', { onClick:()=>archiveProduct(p.id), style:{ padding:'8px 14px', cursor:'pointer', fontSize:'13px', color:'#374151' } }, 'Archiver le produit')
+        )
+      ) : null
+    )));
+
+    return {
+      productActionCol,
+      // Products
+      filteredProductRows: React.createElement('tbody', null, filtered.map(p=>{
+        const pSel=sel.has(p.id),pArch=arch.has(p.id);
+        const vc=s.visibleCols||[];
+        const td=(key,content,style)=>React.createElement('td',{key,style:Object.assign({padding:'9px 12px',fontSize:'13px',color:'#374151'},style)},content);
+        const cells=[];
+        cells.push(React.createElement('td',{key:'chk',style:{padding:'9px 12px',textAlign:'center',position:'sticky',left:0,background:'#fff',zIndex:1}},React.createElement('input',{type:'checkbox',checked:pSel,onChange:()=>{const ns=new Set(sel);ns.has(p.id)?ns.delete(p.id):ns.add(p.id);this.setState({sel:[...ns],showBulkPanel:ns.size>0});},style:{cursor:'pointer'}})));
+        if(vc.includes('Nom')||vc.length===0||true) cells.push(td('nom',p.nom,{fontWeight:'600',color:'#111827',cursor:'pointer',display:vc.includes('Nom')||vc.length===0?'table-cell':'none'}));
+        if(vc.includes('Code du produit')||true) cells.push(td('code',p.code,{fontFamily:'monospace',color:'#6b7280',display:vc.includes('Code du produit')?'table-cell':'none'}));
+        if(vc.includes('Catégorie')||true) cells.push(td('cat',p.categorie,{display:vc.includes('Catégorie')?'table-cell':'none'}));
+        if(vc.includes('Prix')||true) cells.push(td('prix',p.prix,{textAlign:'right',fontWeight:'500',display:vc.includes('Prix')?'table-cell':'none'}));
+        if(vc.includes('Unité')||true) cells.push(td('unite',p.unite,{display:vc.includes('Unité')?'table-cell':'none'}));
+        if(vc.includes('Taxe')||true) cells.push(td('taxe',(p.taxe||'0')+' %',{textAlign:'right',display:vc.includes('Taxe')?'table-cell':'none'}));
+        if(vc.includes('Actif')||true) cells.push(React.createElement('td',{key:'actif',style:{padding:'9px 12px',textAlign:'center',display:vc.includes('Actif')?'table-cell':'none'}},React.createElement('div',{style:{width:'32px',height:'18px',borderRadius:'9px',background:p.actif?'#16a34a':'#d1d5db',position:'relative',display:'inline-block'}},React.createElement('div',{style:{width:'14px',height:'14px',borderRadius:'50%',background:'#fff',position:'absolute',top:'2px',left:p.actif?'16px':'2px',boxShadow:'0 1px 3px rgba(0,0,0,.2)'}}))));
+        if(vc.includes('Propriétaire')||true) cells.push(td('owner',p.ownerName,{display:vc.includes('Propriétaire')?'table-cell':'none'}));
+        return React.createElement('tr',{key:p.id,style:{borderBottom:'1px solid #f3f4f6',height:'39px',cursor:'pointer'},onClick:()=>this.setState({page:'detail',selectedProductId:p.id,detailTab:'prix',editDetails:false,showGererSections:false})}, ...cells);
+      })),
+      archivedProductRows: React.createElement('tbody', null, this.PRODUCTS.filter(p=>arch.has(p.id)).map(ap=>
+        React.createElement('tr',{key:ap.id,style:{borderBottom:'1px solid #f3f4f6',background:'#fafafa'}},
+          React.createElement('td',{style:{padding:'10px 16px',fontSize:'13px',fontWeight:'600',color:'#6b7280'}},ap.nom),
+          React.createElement('td',{style:{padding:'10px 16px',fontSize:'13px',color:'#9ca3af',fontFamily:'monospace'}},ap.code),
+          React.createElement('td',{style:{padding:'10px 16px',fontSize:'13px',color:'#9ca3af'}},ap.categorie),
+          React.createElement('td',{style:{padding:'10px 16px',fontSize:'13px',color:'#9ca3af',textAlign:'right'}},ap.prix),
+          React.createElement('td',{style:{padding:'10px 16px',fontSize:'13px',color:'#9ca3af'}},ap.ownerName),
+          React.createElement('td',{style:{padding:'10px 16px',textAlign:'right',position:'sticky',right:0,background:'#fafafa',borderLeft:'1px solid #e5e7eb'}},React.createElement('button',{onClick:()=>unarchiveProduct(ap.id),style:{height:'28px',padding:'0 12px',background:'#fff',border:'1px solid #d1d5db',borderRadius:'5px',fontSize:'12px',color:'#374151',cursor:'pointer',whiteSpace:'nowrap'}},'Désarchiver'))
+        )
+      )),
+      filteredProducts: filtered.map(p=>({
+        ...p,
+        selected: sel.has(p.id),
+        menuOpen: s.rowMenuId===p.id,
+        actifBg: p.actif ? '#16a34a' : '#d1d5db',
+        actifLeft: p.actif ? '16px' : '2px',
+        onToggle: ()=>{ const ns=new Set(sel); ns.has(p.id)?ns.delete(p.id):ns.add(p.id); this.setState({sel:[...ns]}); },
+        toggleMenu: ()=>toggleRowMenu(p.id),
+        onArchive: ()=>archiveProduct(p.id),
+        onOpen: ()=>this.setState({page:'detail', selectedProductId:p.id, detailTab:'prix', editDetails:false, showGererSections:false}),
+      })),
+      archivedProducts,
+      hasArchived: archivedProducts.length > 0,
+      archivedCount: archivedProducts.length,
+      page: s.page,
+      isMain: s.page === 'main',
+      isArchived: s.page === 'archived',
+      isDetail: s.page === 'detail',
+      goArchived: ()=>this.setState({page:'archived'}),
+      goMain: ()=>this.setState({page:'main'}),
+      openDetail: id => this.setState({page:'detail', selectedProductId:id, detailTab:'prix', showDetailMoreMenu:false, showAbonneDrop:false, showVisibilityDrop:false, editDetails:false, showGererSections:false}),
+      closeDetail: ()=>this.setState({page:'main', selectedProductId:null}),
+      selectedProduct: this.PRODUCTS.find(p=>p.id===s.selectedProductId)||this.PRODUCTS[0],
+      detailTab: s.detailTab,
+      setDetailTab: t=>this.setState({detailTab:t, showAbonneDrop:false, showVisibilityDrop:false, showDetailMoreMenu:false}),
+      setDetailTabPrix:      ()=>this.setState({detailTab:'prix'}),
+      setDetailTabAffaires:  ()=>this.setState({detailTab:'affaires'}),
+      setDetailTabVariations:()=>this.setState({detailTab:'variations'}),
+      setDetailTabFichiers:  ()=>this.setState({detailTab:'fichiers'}),
+      detailTabPrix: s.detailTab==='prix',
+      detailTabAffaires: s.detailTab==='affaires',
+      detailTabVariations: s.detailTab==='variations',
+      detailTabFichiers: s.detailTab==='fichiers',
+      dtBdPrix: s.detailTab==='prix' ? '#16a34a' : 'transparent',
+      dtBdAff:  s.detailTab==='affaires' ? '#16a34a' : 'transparent',
+      dtBdVar:  s.detailTab==='variations' ? '#16a34a' : 'transparent',
+      dtBdFic:  s.detailTab==='fichiers' ? '#16a34a' : 'transparent',
+      dtClPrix: s.detailTab==='prix' ? '#16a34a' : '#6b7280',
+      dtClAff:  s.detailTab==='affaires' ? '#16a34a' : '#6b7280',
+      dtClVar:  s.detailTab==='variations' ? '#16a34a' : '#6b7280',
+      dtClFic:  s.detailTab==='fichiers' ? '#16a34a' : '#6b7280',
+      showAbonneDrop: s.showAbonneDrop, toggleAbonneDrop: ()=>this.setState({showAbonneDrop:!s.showAbonneDrop, showVisibilityDrop:false, showDetailMoreMenu:false}),
+      showVisibilityDrop: s.showVisibilityDrop, toggleVisibilityDrop: ()=>this.setState({showVisibilityDrop:!s.showVisibilityDrop, showAbonneDrop:false, showDetailMoreMenu:false}),
+      showDetailMoreMenu: s.showDetailMoreMenu, toggleDetailMoreMenu: ()=>this.setState({showDetailMoreMenu:!s.showDetailMoreMenu, showAbonneDrop:false, showVisibilityDrop:false}),
+      showGererSections: s.showGererSections, toggleGererSections: ()=>this.setState({showGererSections:!s.showGererSections, showDetailMoreMenu:false}),
+      editDetails: s.editDetails,
+      viewDetails: !s.editDetails,
+      startEditDetails: ()=>this.setState({editDetails:true}),
+      cancelEditDetails: ()=>this.setState({editDetails:false}),
+      productCount: filtered.length,
+      productCountS: filtered.length > 1 ? 's' : '',
+
+      // Selection + bulk panel
+      selActive: sel.size > 0 ? 'flex' : 'none',
+      selCount: sel.size,
+      showBulkPanel: sel.size > 0,
+      openBulkPanel: ()=>{},
+      closeBulkPanel: ()=>this.setState({showBulkPanel:false}),
+      checkAll: sel.size === this.PRODUCTS.length,
+      onCheckAll: ()=>{ if(sel.size===this.PRODUCTS.length){ this.setState({sel:[]}); } else { this.setState({sel:this.PRODUCTS.map(p=>p.id)}); } },
+      closeRowMenu: ()=>this.setState({rowMenuId:null}),
+
+      // Alpha
+      alphaTabs,
+
+      // Col flags (boolean for headers)
+      colNom:      vc.includes('Nom'),
+      colCode:     vc.includes('Code du produit'),
+      colCategorie:vc.includes('Catégorie'),
+      colPrix:     vc.includes('Prix'),
+      colUnite:    vc.includes('Unité'),
+      colTaxe:     vc.includes('Taxe'),
+      colActif:    vc.includes('Actif'),
+      colOwner:    vc.includes('Propriétaire'),
+      // Col display strings for td cells inside sc-for
+      colNomD:      vc.includes('Nom')               ? 'table-cell' : 'none',
+      colCodeD:     vc.includes('Code du produit')   ? 'table-cell' : 'none',
+      colCategorieD:vc.includes('Catégorie')         ? 'table-cell' : 'none',
+      colPrixD:     vc.includes('Prix')              ? 'table-cell' : 'none',
+      colUniteD:    vc.includes('Unité')             ? 'table-cell' : 'none',
+      colTaxeD:     vc.includes('Taxe')              ? 'table-cell' : 'none',
+      colActifD:    vc.includes('Actif')             ? 'table-cell' : 'none',
+      colOwnerD:    vc.includes('Propriétaire')      ? 'table-cell' : 'none',
+
+      // Colpanel
+      showColPanel: s.showColPanel,
+      toggleColPanel: ()=>this.setState({showColPanel:!s.showColPanel}),
+      closeColPanel: ()=>this.setState({showColPanel:false}),
+      colSearch: s.colSearch,
+      setColSearch: e=>this.setState({colSearch:e.target.value}),
+      visibleColItems, hiddenColItems,
+      visibleCount: vc.length,
+      resetCols: ()=>this.setState({visibleCols:['Nom','Code du produit']}),
+
+      // Filter dropdown
+      filterLabel: 'Nom du filtre',
+      clearFilter: ()=>{},
+      showFiltDrop: s.showFiltDrop,
+      toggleFiltDrop: ()=>this.setState({showFiltDrop:!s.showFiltDrop, showMoreMenu:false}),
+      filtTabIsFav:  s.filtTab==='favoris',
+      filtTabIsProp: s.filtTab==='proprietaires',
+      filtTabIsFil:  s.filtTab==='filtres',
+      filtTabFavBd:  fav.bd, filtTabFavCl:  fav.cl,
+      filtTabPropBd: prop.bd, filtTabPropCl: prop.cl,
+      filtTabFilBd:  fil.bd, filtTabFilCl:  fil.cl,
+      setFiltTabFav:  ()=>this.setState({filtTab:'favoris'}),
+      setFiltTabProp: ()=>this.setState({filtTab:'proprietaires'}),
+      setFiltTabFil:  ()=>this.setState({filtTab:'filtres'}),
+
+      // More menu
+      showMoreMenu: s.showMoreMenu,
+      toggleMoreMenu: ()=>this.setState({showMoreMenu:!s.showMoreMenu, showFiltDrop:false}),
+      closeMoreMenu: ()=>this.setState({showMoreMenu:false}),
+      moreMenuBg: s.showMoreMenu ? '#f9fafb' : '#fff',
+      moreMenuBd: s.showMoreMenu ? '#9ca3af' : '#d1d5db',
+
+      // Add drop
+      showAddDrop: s.showAddDrop,
+      toggleAddDrop: ()=>this.setState({showAddDrop:!s.showAddDrop}),
+
+      // Form
+      showForm: s.showForm,
+      openForm: ()=>this.setState({showForm:true, showAddDrop:false}),
+      closeForm: ()=>this.setState({showForm:false}),
+      stopProp: e=>e.stopPropagation(),
+    };
+  }
+}
+</script>
+</body>
+</html>
