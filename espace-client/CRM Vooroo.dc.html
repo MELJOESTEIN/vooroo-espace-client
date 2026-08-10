@@ -369,8 +369,13 @@ h1,h2,h3{font-family:var(--font-body)!important;letter-spacing:normal;font-size:
           </div>
           <div style="text-align:center">
             <div style="font-size:20px;font-weight:700;color:var(--color-text);margin-bottom:8px">{{ activeMenuLabel }}</div>
-            <div style="font-size:14px;color:var(--color-text-muted)">Ce menu est en cours de conception</div>
-            <div style="font-size:13px;color:var(--color-text-muted);margin-top:4px">Bientôt disponible</div>
+            <div style="font-size:14px;color:var(--color-text-muted)">{{ placeholderNote }}</div>
+            <sc-if value="{{ hasMockup }}" hint-placeholder-val="{{ false }}">
+              <a href="{{ mockupHref }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 16px;margin-top:14px;border-radius:5px;background:var(--color-primary);color:#fff;font-size:13px;font-weight:600;text-decoration:none">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+                Ouvrir la maquette
+              </a>
+            </sc-if>
           </div>
         </div>
       </sc-if>
@@ -402,6 +407,9 @@ class Component extends DCLogic {
     msg:       'Messagerie de vente',
   };
 
+  // Écrans dessinés hors de la coquille CRM : on y renvoie depuis le placeholder.
+  MOCKUPS = { compte: './Mon%20Compte.dc.html' };
+
   MENUS_WITH_DESIGN = ['affaires','prospects','contacts','produits','activites','projets','devis','equipe','msg','stats','planif','guide','config','docs'];
 
   renderVals() {
@@ -412,6 +420,11 @@ class Component extends DCLogic {
     return {
       activeMenuLabel: this.MENU_LABELS[s.activeMenu] || s.activeMenu,
       showPlaceholder: !this.MENUS_WITH_DESIGN.includes(s.activeMenu),
+      hasMockup:       !!this.MOCKUPS[s.activeMenu],
+      mockupHref:      this.MOCKUPS[s.activeMenu] || '',
+      placeholderNote: this.MOCKUPS[s.activeMenu]
+        ? 'Écran livré en maquette dédiée, hors coquille CRM'
+        : 'Ce menu est en cours de conception',
       displayAffaires:  a('affaires')  ? 'block' : 'none',
       displayProspects: a('prospects') ? 'block' : 'none',
       displayContacts:  a('contacts')  ? 'block' : 'none',

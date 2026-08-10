@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/styles.css">
+  <script src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:'Roboto',-apple-system,sans-serif}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
+  </style>
+<script>
+/* Affiché dans le module Paramètres : la coquille de cet écran (rail, en-tête,
+   menu latéral) ferait doublon avec celle du module — on ne garde que le contenu. */
+if (window.self !== window.top) document.documentElement.classList.add('vr-embedded');
+</script>
+<style>
+.vr-embedded .vr-shell-rail,
+.vr-embedded .vr-shell-topbar,
+.vr-embedded .vr-shell-subheader,
+.vr-embedded .vr-shell-subnav{display:none!important}
+.vr-embedded,.vr-embedded body{height:100%}
+</style>
+</helmet>
+
+<div style="display:flex;height:100vh;overflow:hidden;font-family:'Roboto',-apple-system,sans-serif">
+
+  <!-- Rail -->
+  <div class="vr-shell-rail" style="width:46px;background:#1A1B5C;display:flex;flex-direction:column;align-items:center;flex-shrink:0;z-index:20">
+    <div style="height:48px;width:100%;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,0.08)">
+      <img src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/assets/logo-mark-white.png" style="width:22px;object-fit:contain">
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:1px;width:100%">
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="layout-dashboard" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="users" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="bar-chart-2" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="dollar-sign" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="calendar" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="user-circle" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="file-text" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="folder" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="mail" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.12);cursor:pointer"><i data-lucide="settings" style="width:17px;height:17px;color:#35AA47"></i></div>
+    </div>
+    <div style="padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:6px;border-top:1px solid rgba(255,255,255,0.08)">
+      <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,0.3);cursor:pointer;background:#fff;flex-shrink:0"><img src="uploads/logo Axa.png" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+      <div style="width:100%;height:28px;display:flex;align-items:center;justify-content:center;opacity:.4;cursor:pointer" style-hover="opacity:.8"><i data-lucide="more-horizontal" style="width:15px;height:15px;color:#fff"></i></div>
+    </div>
+  </div>
+
+  <!-- Right side -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0">
+
+    <!-- Top bar -->
+    <div class="vr-shell-topbar" style="height:48px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 20px;flex-shrink:0">
+      <span style="font-size:14px;font-weight:600;color:#111111;flex-shrink:0">Paramètres</span>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px">
+        <div style="position:relative;width:min(420px,100%)">
+          <i data-lucide="search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:#9CA3AF;pointer-events:none"></i>
+          <input placeholder="Rechercher dans Vooroo..." style="width:100%;padding:6px 12px 6px 30px;border:1px solid #D1D5DB;border-radius:20px;font-size:12px;font-family:'Roboto',sans-serif;color:#111;background:#fff">
+        </div>
+        <div style="width:28px;height:28px;border-radius:50%;border:1px solid #D1D5DB;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0" style-hover="background:#F9FAFB">
+          <i data-lucide="plus" style="width:14px;height:14px;color:#374151"></i>
+        </div>
+        <div style="position:relative;flex-shrink:0;cursor:pointer">
+          <img src="uploads/Gemini_Generated_Image_k2cip2k2cip2k2ci.png" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid #27A36A;display:block">
+          <div style="position:absolute;bottom:0;right:0;width:8px;height:8px;border-radius:50%;background:#22C55E;border:1.5px solid #fff"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#F3F4F6"><i data-lucide="circle-help" style="width:15px;height:15px;color:#9CA3AF"></i></div>
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative" style-hover="background:#F3F4F6">
+          <i data-lucide="bell" style="width:15px;height:15px;color:#9CA3AF"></i>
+          <div style="position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:#EF4444;border:1px solid #fff"></div>
+        </div>
+        <div style="width:30px;height:30px;border-radius:50%;background:#111111;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;cursor:pointer">H</div>
+      </div>
+    </div>
+
+    <!-- Sub-header -->
+    <div class="vr-shell-subheader" style="height:52px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0">
+      <div style="width:34px;height:34px;border-radius:8px;background:#F3F4F6;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <i data-lucide="settings" style="width:16px;height:16px;color:#6B7280"></i>
+      </div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#111111;line-height:1.2">Paramètres</div>
+        <div style="font-size:12px;color:#9CA3AF;line-height:1.2">Facturation</div>
+      </div>
+    </div>
+
+    <!-- Content row -->
+    <div style="flex:1;display:flex;overflow:hidden">
+
+      <!-- Settings sidebar -->
+      <div class="vr-shell-subnav" style="width:185px;background:#fff;border-right:1px solid #E5E7EB;overflow-y:auto;flex-shrink:0;display:flex;flex-direction:column">
+        <div style="padding:14px 16px 10px;font-size:14px;font-weight:700;color:#111111">Paramètres</div>
+        <div style="padding:12px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Organisation</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="building-2" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Entreprise</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="tag" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Champs de données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="user" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Aperçu utilisateur</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Abonnement</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="bar-chart-2" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Utilisation</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;background:#F0FDF4;border-left:2px solid #27A36A"><i data-lucide="credit-card" style="width:16px;height:16px;color:#27A36A;flex-shrink:0"></i><span style="font-size:13px;color:#27A36A;font-weight:500">Facturation</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Préférences</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="bell" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Notifications</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="smartphone" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Vos appareils</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="mail" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Synchronisation des e-mails</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="hard-drive" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Google Drive</span></div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Données</span></div>
+        <div style="padding:2px 8px 16px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="download" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Import des données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="upload" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Export des données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="rotate-ccw" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Restauration</span></div>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div style="flex:1;overflow-y:auto;background:#F4F5F7;min-width:0">
+
+        <!-- Trial banner -->
+        <div style="background:#E8F7EB;border-bottom:1px solid #B2DFC0;padding:10px 24px;display:flex;align-items:center;gap:14px;flex-shrink:0">
+          <i data-lucide="zap" style="width:18px;height:18px;color:#27A36A;flex-shrink:0"></i>
+          <div style="flex:1;min-width:0">
+            <span style="font-size:13px;font-weight:600;color:#111111">Envie d'aller plus loin sans attendre la fin de l'essai ?</span>
+            <span style="font-size:13px;color:#374151;margin-left:6px">Abonnez-vous maintenant et tirez encore plus de Vooroo.</span>
+          </div>
+          <div style="padding:7px 18px;background:#27A36A;border-radius:4px;font-size:13px;font-weight:600;color:#fff;cursor:pointer;flex-shrink:0;white-space:nowrap" style-hover="background:#1f8257">Sauter l'essai</div>
+        </div>
+
+        <div style="padding:24px;display:flex;gap:20px;align-items:flex-start">
+
+          <!-- Left column -->
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:16px">
+
+            <!-- Company + plan card -->
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden">
+              <!-- Header -->
+              <div style="padding:20px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E5E7EB">
+                <div>
+                  <div style="font-size:20px;font-weight:700;color:#111111">Entreprise BRAIN</div>
+                  <div style="font-size:11px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase;margin-top:3px">Facturation mensuelle</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:7px;padding:5px 12px;background:#E8F7EB;border:1px solid #B2DFC0;border-radius:20px;cursor:pointer" style-hover="background:#dcf0e2">
+                  <i data-lucide="clock" style="width:13px;height:13px;color:#27A36A"></i>
+                  <span style="font-size:12px;font-weight:600;color:#27A36A">11 jours d'essai gratuit</span>
+                </div>
+              </div>
+
+              <!-- Plan section -->
+              <div style="padding:20px 24px;border-bottom:1px solid #E5E7EB">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                  <div style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Votre plan</div>
+                  <div onClick="{{ modifierAbonnement }}" style="padding:6px 14px;border:1px solid #E5E7EB;border-radius:4px;font-size:12px;font-weight:500;color:#374151;cursor:pointer;background:#fff" style-hover="background:#F9FAFB">Modifier l'abonnement</div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div>
+                    <div style="font-size:15px;font-weight:700;color:#111111;margin-bottom:4px">Elite</div>
+                    <div style="font-size:13px;color:#6B7280">
+                      1 poste (1 utilisé(s)) × <span style="text-decoration:line-through;color:#9CA3AF">25 $</span>0 $ / par poste
+                      <span style="color:#27A36A;font-weight:500;cursor:pointer;margin-left:6px" style-hover="text-decoration:underline">Gérer les utilisateurs</span>
+                    </div>
+                  </div>
+                  <div style="text-align:right">
+                    <span style="text-decoration:line-through;font-size:13px;color:#9CA3AF">25 $</span>
+                    <span style="font-size:22px;font-weight:700;color:#111111;margin-left:6px">0 $</span>
+                    <span style="font-size:13px;color:#6B7280"> / mois</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Features list -->
+              <div style="padding:8px 0">
+                <sc-for list="{{ features }}" as="feat" hint-placeholder-count="10">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 24px;border-bottom:1px solid #F9FAFB">
+                    <span style="font-size:13px;color:#374151">{{ feat.name }}</span>
+                    <span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">{{ feat.tag }}</span>
+                  </div>
+                </sc-for>
+              </div>
+
+              <!-- Voir tous -->
+              <div style="padding:16px 24px">
+                <div style="width:100%;padding:12px;background:#111111;border-radius:4px;font-size:13px;font-weight:600;color:#fff;text-align:center;cursor:pointer" style-hover="background:#1A1A1A">Voir tous les détails du plan</div>
+              </div>
+            </div>
+
+            <!-- Annulation card -->
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:20px 24px">
+              <div style="font-size:15px;font-weight:600;color:#111111;margin-bottom:12px">Annulation</div>
+              <div style="height:1px;background:#E5E7EB;margin-bottom:16px"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <span style="font-size:13px;color:#27A36A;font-weight:500;cursor:pointer" style-hover="text-decoration:underline">Annuler l'abonnement</span>
+                <div onClick="{{ confirmCancel }}" style="padding:7px 18px;background:#EF4444;border-radius:4px;font-size:13px;font-weight:500;color:#fff;cursor:pointer" style-hover="background:#DC2626">Annuler</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right column -->
+          <div style="width:260px;flex-shrink:0;display:flex;flex-direction:column;gap:16px">
+
+            <!-- Factures card -->
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:20px">
+              <div style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px">Factures</div>
+              <div style="text-align:center;padding:16px 0">
+                <div style="width:48px;height:48px;border-radius:50%;background:#F3F4F6;display:flex;align-items:center;justify-content:center;margin:0 auto 10px">
+                  <i data-lucide="file-text" style="width:22px;height:22px;color:#D1D5DB"></i>
+                </div>
+                <div style="font-size:12px;color:#9CA3AF;line-height:1.5">Votre première facture apparaîtra ici après votre premier paiement</div>
+              </div>
+            </div>
+
+            <!-- Infos facturation card -->
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:20px">
+              <div style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Ajoutez vos informations de facturation</div>
+
+              <!-- Rocket illustration placeholder -->
+              <div style="background:#EFF6FF;border-radius:8px;height:130px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative;overflow:hidden">
+                <div style="position:absolute;width:80px;height:80px;border-radius:50%;background:#BFDBFE;opacity:.5;bottom:-20px;right:-10px"></div>
+                <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="26" y="10" width="8" height="40" rx="4" fill="#93C5FD"/>
+                  <polygon points="30,2 22,14 38,14" fill="#3B82F6"/>
+                  <rect x="18" y="36" width="8" height="14" rx="3" fill="#BFDBFE"/>
+                  <rect x="34" y="36" width="8" height="14" rx="3" fill="#BFDBFE"/>
+                  <circle cx="30" cy="28" r="4" fill="#1D4ED8"/>
+                  <rect x="26" y="50" width="8" height="10" rx="2" fill="#60A5FA"/>
+                  <ellipse cx="30" cy="62" rx="6" ry="3" fill="#93C5FD" opacity=".6"/>
+                  <line x1="10" y1="50" x2="22" y2="44" stroke="#93C5FD" stroke-width="1.5" stroke-dasharray="3 2"/>
+                  <line x1="50" y1="50" x2="38" y2="44" stroke="#93C5FD" stroke-width="1.5" stroke-dasharray="3 2"/>
+                  <circle cx="12" cy="34" r="2" fill="#BFDBFE"/>
+                  <circle cx="48" cy="28" r="1.5" fill="#93C5FD"/>
+                  <text x="8" y="22" font-size="10" fill="#93C5FD">+</text>
+                  <text x="44" y="42" font-size="10" fill="#BFDBFE">+</text>
+                </svg>
+              </div>
+
+              <div style="font-size:12px;color:#6B7280;line-height:1.5;margin-bottom:14px">Une fois votre essai terminé, le montant correspondant à votre plan et au nombre de postes que vous aurez ajoutés vous sera facturé.</div>
+
+              <div onClick="{{ ajouterInfos }}" style="width:100%;padding:9px;background:#27A36A;border-radius:4px;font-size:13px;font-weight:500;color:#fff;text-align:center;cursor:pointer" style-hover="background:#1f8257">Ajouter vos informations</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal paiement -->
+  <sc-if value="{{ payModal }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closePayModal }}" style="position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:50;display:flex;align-items:center;justify-content:center">
+      <div onClick="{{ stopPayProp }}" style="background:#fff;border-radius:10px;width:460px;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.18);display:flex;flex-direction:column">
+
+        <!-- Modal header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px 0">
+          <div style="font-size:17px;font-weight:700;color:#111">Informations de facturation</div>
+          <div onClick="{{ closePayModal }}" style="cursor:pointer;color:#9CA3AF;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%" style-hover="background:#F3F4F6;color:#374151"><i data-lucide="x" style="width:16px;height:16px"></i></div>
+        </div>
+        <div style="font-size:12px;color:#6B7280;padding:4px 24px 16px">Choisissez votre moyen de paiement récurrent</div>
+
+        <!-- Tabs -->
+        <div style="display:flex;border-bottom:1px solid #E5E7EB;margin:0 24px">
+          <div onClick="{{ setTabCard }}" style="padding:10px 16px;font-size:13px;cursor:pointer;{{ cardTabStyle }};display:flex;align-items:center;gap:7px" style-hover="color:#111">
+            <i data-lucide="credit-card" style="width:14px;height:14px"></i>Carte bancaire
+          </div>
+          <div onClick="{{ setTabMobile }}" style="padding:10px 16px;font-size:13px;cursor:pointer;{{ mobileTabStyle }};display:flex;align-items:center;gap:7px" style-hover="color:#111">
+            <i data-lucide="smartphone" style="width:14px;height:14px"></i>Mobile Money
+          </div>
+        </div>
+
+        <div style="padding:20px 24px 24px">
+
+          <!-- CARD form -->
+          <sc-if value="{{ isCard }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div>
+                <div style="font-size:12px;font-weight:500;color:#374151;margin-bottom:5px">Nom sur la carte</div>
+                <input placeholder="Jean Dupont" style="width:100%;border:1px solid #D1D5DB;border-radius:6px;padding:9px 12px;font-size:13px;color:#111;font-family:'Roboto',sans-serif;outline:none;background:#fff">
+              </div>
+              <div>
+                <div style="font-size:12px;font-weight:500;color:#374151;margin-bottom:5px">Numéro de carte</div>
+                <div style="display:flex;align-items:center;border:1px solid #D1D5DB;border-radius:6px;padding:9px 12px;gap:8px;background:#fff">
+                  <i data-lucide="credit-card" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i>
+                  <input placeholder="0000 0000 0000 0000" style="flex:1;border:none;outline:none;font-size:13px;color:#111;font-family:'Roboto',sans-serif;background:transparent">
+                  <div style="display:flex;gap:4px">
+                    <div style="width:28px;height:18px;background:#1A1F71;border-radius:3px;display:flex;align-items:center;justify-content:center"><span style="font-size:7px;font-weight:700;color:#fff;letter-spacing:-.3px">VISA</span></div>
+                    <div style="width:28px;height:18px;background:#fff;border:1px solid #E5E7EB;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:2px"><div style="width:8px;height:8px;border-radius:50%;background:#EB001B"></div><div style="width:8px;height:8px;border-radius:50%;background:#F79E1B;margin-left:-4px"></div></div>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;gap:12px">
+                <div style="flex:1">
+                  <div style="font-size:12px;font-weight:500;color:#374151;margin-bottom:5px">Date d'expiration</div>
+                  <input placeholder="MM / AA" style="width:100%;border:1px solid #D1D5DB;border-radius:6px;padding:9px 12px;font-size:13px;color:#111;font-family:'Roboto',sans-serif;outline:none;background:#fff">
+                </div>
+                <div style="flex:1">
+                  <div style="font-size:12px;font-weight:500;color:#374151;margin-bottom:5px">CVV</div>
+                  <div style="display:flex;align-items:center;border:1px solid #D1D5DB;border-radius:6px;padding:9px 12px;gap:8px;background:#fff">
+                    <input placeholder="•••" style="flex:1;border:none;outline:none;font-size:13px;color:#111;font-family:'Roboto',sans-serif;background:transparent;width:40px">
+                    <i data-lucide="lock" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;padding:10px 12px;background:#F9FAFB;border-radius:6px;border:1px solid #E5E7EB">
+                <i data-lucide="shield-check" style="width:14px;height:14px;color:#27A36A;flex-shrink:0"></i>
+                <span style="font-size:11px;color:#6B7280">Vos données bancaires sont chiffrées et sécurisées. Vooroo ne stocke jamais vos informations de carte.</span>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- MOBILE MONEY form -->
+          <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <!-- Titulaire -->
+              <div>
+                <div style="font-size:12px;font-weight:500;color:#374151;margin-bottom:5px">Titulaire du compte</div>
+                <input placeholder="Nom complet tel qu'enregistré" style="width:100%;border:1px solid #D1D5DB;border-radius:6px;padding:9px 12px;font-size:13px;color:#111;font-family:'Roboto',sans-serif;outline:none;background:#fff">
+              </div>
+              <!-- Pays -->
+              <div>
+                <div style="font-size:12px;font-weight:500;color:#374151;margin-bottom:5px">Pays</div>
+                <div style="position:relative">
+                  <select style="width:100%;border:1px solid #D1D5DB;border-radius:6px;padding:9px 36px 9px 12px;font-size:13px;color:#111;font-family:'Roboto',sans-serif;outline:none;background:#fff;appearance:none;cursor:pointer">
+                    <sc-for list="{{ mobileCountries }}" as="mc" hint-placeholder-count="10">
+                      <option value="{{ mc.code }}">{{ mc.flag }} {{ mc.name }} ({{ mc.dial }})</option>
+                    </sc-for>
+                  </select>
+                  <i data-lucide="chevron-down" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#9CA3AF;pointer-events:none"></i>
+                </div>
+              </div>
+              <!-- Operator selector -->
+              <div>
+                <div style="font-size:12px;font-weight:500;color:#374151;margin-bottom:8px">Opérateur</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                  <sc-for list="{{ operators }}" as="op" hint-placeholder-count="4">
+                    <div onClick="{{ op.onSelect }}" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:2px solid {{ op.selected ? '#27A36A' : '#E5E7EB' }};border-radius:6px;cursor:pointer;background:{{ op.selected ? '#F0FDF4' : '#fff' }}" style-hover="border-color:#27A36A;background:#F9FAFB">
+                      <div style="width:26px;height:26px;border-radius:50%;background:#F3F4F6;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                        <i data-lucide="smartphone" style="width:13px;height:13px;color:{{ op.selected ? '#27A36A' : '#9CA3AF' }}"></i>
+                      </div>
+                      <span style="font-size:12px;font-weight:500;color:{{ op.selected ? '#27A36A' : '#374151' }}">{{ op.label }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <!-- Numéro -->
+              <div>
+                <div style="font-size:12px;font-weight:500;color:#374151;margin-bottom:5px">Numéro Mobile Money</div>
+                <div style="display:flex;align-items:center;border:1px solid #D1D5DB;border-radius:6px;overflow:hidden;background:#fff">
+                  <div style="padding:9px 12px;background:#F9FAFB;border-right:1px solid #D1D5DB;font-size:13px;color:#374151;white-space:nowrap;flex-shrink:0">{{ selectedDial }}</div>
+                  <input placeholder="07 00 00 00 00" style="flex:1;border:none;outline:none;font-size:13px;color:#111;font-family:'Roboto',sans-serif;padding:9px 12px;background:transparent">
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:6px;padding:10px 12px;background:#FFF7ED;border-radius:6px;border:1px solid #FDE68A">
+                <i data-lucide="info" style="width:14px;height:14px;color:#D97706;flex-shrink:0;margin-top:1px"></i>
+                <span style="font-size:11px;color:#92400E;line-height:1.5">Un message de confirmation vous sera envoyé sur ce numéro pour autoriser les prélèvements récurrents.</span>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- CTA -->
+          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px">
+            <div onClick="{{ closePayModal }}" style="padding:9px 18px;border:1px solid #E5E7EB;border-radius:4px;font-size:13px;font-weight:500;color:#374151;cursor:pointer;background:#fff" style-hover="background:#F9FAFB">Annuler</div>
+            <div onClick="{{ closePayModal }}" style="padding:9px 20px;background:#27A36A;border-radius:4px;font-size:13px;font-weight:600;color:#fff;cursor:pointer" style-hover="background:#1f8257">Enregistrer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Modal annulation -->
+  <sc-if value="{{ cancelModal }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeCancelModal }}" style="position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:50;display:flex;align-items:center;justify-content:center">
+      <div onClick="{{ stopProp }}" style="background:#fff;border-radius:8px;padding:28px;width:400px;box-shadow:0 8px 32px rgba(0,0,0,0.16)">
+        <div style="font-size:17px;font-weight:700;color:#111;margin-bottom:10px">Annuler l'abonnement ?</div>
+        <div style="font-size:13px;color:#6B7280;line-height:1.5;margin-bottom:22px">Votre abonnement restera actif jusqu'à la fin de la période en cours. Après cette date, votre compte passera en mode gratuit.</div>
+        <div style="display:flex;justify-content:flex-end;gap:10px">
+          <div onClick="{{ closeCancelModal }}" style="padding:8px 18px;border:1px solid #E5E7EB;border-radius:4px;font-size:13px;font-weight:500;color:#374151;cursor:pointer;background:#fff" style-hover="background:#F9FAFB">Conserver l'abonnement</div>
+          <div onClick="{{ closeCancelModal }}" style="padding:8px 18px;background:#EF4444;border-radius:4px;font-size:13px;font-weight:500;color:#fff;cursor:pointer" style-hover="background:#DC2626">Confirmer l'annulation</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    cancelModal: false,
+    payModal: false, payTab: 'card',
+    cardNum: '', cardName: '', cardExp: '', cardCvc: '',
+    mobileNum: '', mobileOperator: 'orange', mobileName: '',
+  };
+
+  componentDidMount()  { if (window.lucide) window.lucide.createIcons(); }
+  componentDidUpdate() { if (window.lucide) window.lucide.createIcons(); }
+
+  renderVals() {
+    const features = [
+      { name: 'Prospects', tag: 'Inclus' },
+      { name: 'Affaires', tag: 'Inclus' },
+      { name: 'Activités', tag: 'Inclus' },
+      { name: 'Planificateur de rendez-vous', tag: 'Inclus' },
+      { name: 'Devis', tag: 'Inclus' },
+      { name: 'Factures', tag: 'Inclus' },
+      { name: 'Messagerie de vente', tag: 'Inclus' },
+      { name: 'Projets', tag: 'Inclus' },
+      { name: 'Vooroo IA', tag: 'Inclus' },
+      { name: '+100 intégrations', tag: 'Inclus' },
+    ];
+
+    const cancelModal = this.state.cancelModal;
+    const confirmCancel    = () => this.setState({ cancelModal: true });
+    const closeCancelModal = () => this.setState({ cancelModal: false });
+    const stopProp         = (e) => e.stopPropagation();
+    const modifierAbonnement = () => {};
+    const s = this.state;
+    const payModal = s.payModal;
+    const payTab   = s.payTab;
+    const ajouterInfos    = () => this.setState({ payModal: true });
+    const closePayModal   = () => this.setState({ payModal: false });
+    const stopPayProp     = (e) => e.stopPropagation();
+    const setPayTab    = (t) => () => this.setState({ payTab: t });
+    const setTabCard   = setPayTab('card');
+    const setTabMobile = setPayTab('mobile');
+
+    const isCard   = payTab === 'card';
+    const isMobile = payTab === 'mobile';
+    const cardTabStyle   = isCard   ? 'border-bottom:2px solid #27A36A;color:#27A36A;font-weight:600' : 'border-bottom:2px solid transparent;color:#6B7280';
+    const mobileTabStyle = isMobile ? 'border-bottom:2px solid #27A36A;color:#27A36A;font-weight:600' : 'border-bottom:2px solid transparent;color:#6B7280';
+
+    const operators = [
+      { key:'orange', label:'Orange Money' },
+      { key:'mtn', label:'MTN MoMo' },
+      { key:'moov', label:'Moov Money' },
+      { key:'wave', label:'Wave' },
+    ];
+    operators.forEach(op => { op.selected = s.mobileOperator === op.key; op.onSelect = () => this.setState({ mobileOperator: op.key }); });
+    const selectedOperatorLabel = (operators.find(o => o.key === s.mobileOperator) || operators[0]).label;
+
+    const mobileCountries = [
+      { code:'ci', name:"Côte d'Ivoire", dial:'+225', flag:'🇨🇮' },
+      { code:'sn', name:'Sénégal',       dial:'+221', flag:'🇸🇳' },
+      { code:'cm', name:'Cameroun',      dial:'+237', flag:'🇨🇲' },
+      { code:'gh', name:'Ghana',         dial:'+233', flag:'🇬🇭' },
+      { code:'ml', name:'Mali',          dial:'+223', flag:'🇲🇱' },
+      { code:'bf', name:'Burkina Faso',  dial:'+226', flag:'🇧🇫' },
+      { code:'gn', name:'Guinée',        dial:'+224', flag:'🇬🇳' },
+      { code:'tg', name:'Togo',          dial:'+228', flag:'🇹🇬' },
+      { code:'bj', name:'Bénin',         dial:'+229', flag:'🇧🇯' },
+      { code:'mg', name:'Madagascar',    dial:'+261', flag:'🇲🇬' },
+    ];
+    const selectedDial = mobileCountries[0].dial;
+
+    return { features, cancelModal, confirmCancel, closeCancelModal, stopProp, modifierAbonnement, ajouterInfos,
+      payModal, payTab, isCard, isMobile, closePayModal, stopPayProp, setTabCard, setTabMobile, cardTabStyle, mobileTabStyle,
+      operators, selectedOperatorLabel, mobileCountries, selectedDial };
+  }
+}
+</script>
+</body>
+</html>

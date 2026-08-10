@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/styles.css">
+  <script src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:'Roboto',-apple-system,sans-serif}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
+  </style>
+<script>
+/* Affiché dans le module Paramètres : la coquille de cet écran (rail, en-tête,
+   menu latéral) ferait doublon avec celle du module — on ne garde que le contenu. */
+if (window.self !== window.top) document.documentElement.classList.add('vr-embedded');
+</script>
+<style>
+.vr-embedded .vr-shell-rail,
+.vr-embedded .vr-shell-topbar,
+.vr-embedded .vr-shell-subheader,
+.vr-embedded .vr-shell-subnav{display:none!important}
+.vr-embedded,.vr-embedded body{height:100%}
+</style>
+</helmet>
+
+<div style="display:flex;height:100vh;overflow:hidden;font-family:'Roboto',-apple-system,sans-serif">
+
+  <!-- Rail -->
+  <div class="vr-shell-rail" style="width:46px;background:#1A1B5C;display:flex;flex-direction:column;align-items:center;flex-shrink:0;z-index:20">
+    <div style="height:48px;width:100%;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,0.08)">
+      <img src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/assets/logo-mark-white.png" style="width:22px;object-fit:contain">
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:1px;width:100%">
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="layout-dashboard" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="users" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="bar-chart-2" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="dollar-sign" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="calendar" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="user-circle" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="file-text" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="folder" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="mail" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.12);cursor:pointer"><i data-lucide="settings" style="width:17px;height:17px;color:#35AA47"></i></div>
+    </div>
+    <div style="padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:6px;border-top:1px solid rgba(255,255,255,0.08)">
+      <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,0.3);cursor:pointer;background:#fff;flex-shrink:0"><img src="uploads/logo Axa.png" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+      <div style="width:100%;height:28px;display:flex;align-items:center;justify-content:center;opacity:.4;cursor:pointer" style-hover="opacity:.8"><i data-lucide="more-horizontal" style="width:15px;height:15px;color:#fff"></i></div>
+    </div>
+  </div>
+
+  <!-- Right side -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0">
+
+    <!-- Top bar -->
+    <div class="vr-shell-topbar" style="height:48px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 20px;flex-shrink:0">
+      <span style="font-size:14px;font-weight:600;color:#111111;flex-shrink:0">Paramètres</span>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px">
+        <div style="position:relative;width:min(420px,100%)">
+          <i data-lucide="search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:#9CA3AF;pointer-events:none"></i>
+          <input placeholder="Rechercher dans Vooroo..." style="width:100%;padding:6px 12px 6px 30px;border:1px solid #D1D5DB;border-radius:20px;font-size:12px;font-family:'Roboto',sans-serif;color:#111;background:#fff">
+        </div>
+        <div style="width:28px;height:28px;border-radius:50%;border:1px solid #D1D5DB;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><i data-lucide="plus" style="width:14px;height:14px;color:#374151"></i></div>
+        <div style="position:relative;flex-shrink:0;cursor:pointer">
+          <img src="uploads/Gemini_Generated_Image_k2cip2k2cip2k2ci.png" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid #27A36A;display:block">
+          <div style="position:absolute;bottom:0;right:0;width:8px;height:8px;border-radius:50%;background:#22C55E;border:1.5px solid #fff"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#F3F4F6"><i data-lucide="circle-help" style="width:15px;height:15px;color:#9CA3AF"></i></div>
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative" style-hover="background:#F3F4F6">
+          <i data-lucide="bell" style="width:15px;height:15px;color:#9CA3AF"></i>
+          <div style="position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:#EF4444;border:1px solid #fff"></div>
+        </div>
+        <div style="width:30px;height:30px;border-radius:50%;background:#111111;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;cursor:pointer">H</div>
+      </div>
+    </div>
+
+    <!-- Sub-header -->
+    <div class="vr-shell-subheader" style="height:52px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0">
+      <div style="width:34px;height:34px;border-radius:8px;background:#F3F4F6;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <i data-lucide="settings" style="width:16px;height:16px;color:#6B7280"></i>
+      </div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#111111;line-height:1.2">Paramètres</div>
+        <div style="font-size:12px;color:#9CA3AF;line-height:1.2">Facturation</div>
+      </div>
+    </div>
+
+    <!-- Content row -->
+    <div style="flex:1;display:flex;overflow:hidden">
+
+      <!-- Settings sidebar -->
+      <div class="vr-shell-subnav" style="width:185px;background:#fff;border-right:1px solid #E5E7EB;overflow-y:auto;flex-shrink:0">
+        <div style="padding:14px 16px 10px;font-size:14px;font-weight:700;color:#111111">Paramètres</div>
+        <div style="padding:12px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Organisation</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="building-2" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Entreprise</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="tag" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Champs de données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="user" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Aperçu utilisateur</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Abonnement</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="bar-chart-2" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Utilisation</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;background:#F0FDF4;border-left:2px solid #27A36A;cursor:pointer"><i data-lucide="credit-card" style="width:16px;height:16px;color:#27A36A;flex-shrink:0"></i><span style="font-size:13px;color:#27A36A;font-weight:500">Facturation</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Préférences</span></div>
+        <div style="padding:2px 8px 16px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="bell" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Notifications</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="smartphone" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Vos appareils</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="mail" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Synchronisation des e-mails</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="hard-drive" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Google Drive</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Données</span></div>
+        <div style="padding:2px 8px 16px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="download" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Import des données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="upload" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Export des données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="rotate-ccw" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Restauration</span></div>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div style="flex:1;overflow-y:auto;background:#F4F5F7;min-width:0">
+        <div style="padding:24px;display:flex;gap:20px;align-items:flex-start">
+
+          <!-- Left column -->
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:16px">
+
+            <!-- Plan actif card -->
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden">
+              <!-- Header -->
+              <div style="padding:20px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E5E7EB">
+                <div>
+                  <div style="font-size:20px;font-weight:700;color:#111111">Entreprise BRAIN</div>
+                  <div style="font-size:11px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase;margin-top:3px">Facturation mensuelle</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:7px;padding:5px 12px;background:#E8F7EB;border:1px solid #B2DFC0;border-radius:20px">
+                  <div style="width:7px;height:7px;border-radius:50%;background:#27A36A"></div>
+                  <span style="font-size:12px;font-weight:600;color:#27A36A">Actif — expire le 3 sept. 2026</span>
+                </div>
+              </div>
+
+              <!-- Plan -->
+              <div style="padding:20px 24px;border-bottom:1px solid #E5E7EB">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                  <div style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Votre plan</div>
+                  <div style="padding:6px 14px;border:1px solid #E5E7EB;border-radius:4px;font-size:12px;font-weight:500;color:#374151;cursor:pointer;background:#fff" style-hover="background:#F9FAFB">Modifier l'abonnement</div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div>
+                    <div style="font-size:15px;font-weight:700;color:#111111;margin-bottom:4px">Elite</div>
+                    <div style="font-size:13px;color:#6B7280">
+                      1 poste (1 utilisé(s)) × 20 $ / par poste
+                      <span style="color:#27A36A;font-weight:500;cursor:pointer;margin-left:6px" style-hover="text-decoration:underline">Gérer les utilisateurs</span>
+                    </div>
+                  </div>
+                  <div style="text-align:right">
+                    <span style="font-size:22px;font-weight:700;color:#111111">20 $</span>
+                    <span style="font-size:13px;color:#6B7280"> / mois</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Features -->
+              <div style="padding:8px 0">
+                <sc-for list="{{ features }}" as="feat" hint-placeholder-count="10">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 24px;border-bottom:1px solid #F9FAFB">
+                    <span style="font-size:13px;color:#374151">{{ feat.name }}</span>
+                    <div style="display:flex;align-items:center;gap:5px">
+                      <i data-lucide="check-circle" style="width:13px;height:13px;color:#27A36A"></i>
+                      <span style="font-size:11px;font-weight:600;color:#27A36A;letter-spacing:.05em;text-transform:uppercase">Inclus</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="padding:16px 24px">
+                <div style="width:100%;padding:12px;background:#111111;border-radius:4px;font-size:13px;font-weight:600;color:#fff;text-align:center;cursor:pointer" style-hover="background:#1A1A1A">Voir tous les détails du plan</div>
+              </div>
+            </div>
+
+            <!-- Vos factures card -->
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden">
+              <div style="padding:16px 24px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;justify-content:space-between">
+                <div style="font-size:15px;font-weight:600;color:#111111">Vos factures</div>
+                <span style="font-size:12px;color:#27A36A;font-weight:500;cursor:pointer" style-hover="text-decoration:underline">Voir toutes</span>
+              </div>
+              <!-- Table header -->
+              <div style="display:grid;grid-template-columns:1fr 90px 100px 60px;padding:10px 24px;background:#F9FAFB;border-bottom:1px solid #E5E7EB">
+                <span style="font-size:11px;font-weight:600;color:#9CA3AF;text-transform:uppercase;letter-spacing:.05em">Date</span>
+                <span style="font-size:11px;font-weight:600;color:#9CA3AF;text-transform:uppercase;letter-spacing:.05em">Total</span>
+                <span style="font-size:11px;font-weight:600;color:#9CA3AF;text-transform:uppercase;letter-spacing:.05em">Statut</span>
+                <span style="font-size:11px;font-weight:600;color:#9CA3AF;text-transform:uppercase;letter-spacing:.05em">Actions</span>
+              </div>
+              <sc-for list="{{ invoices }}" as="inv" hint-placeholder-count="2">
+                <div style="display:grid;grid-template-columns:1fr 90px 100px 60px;padding:12px 24px;border-bottom:1px solid #F3F4F6;align-items:center">
+                  <span style="font-size:13px;color:#374151">{{ inv.date }}</span>
+                  <span style="font-size:13px;color:#374151">{{ inv.amount }}</span>
+                  <div>
+                    <span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:12px;background:{{ inv.statusBg }};color:{{ inv.statusColor }}">{{ inv.status }}</span>
+                  </div>
+                  <span style="font-size:13px;color:#27A36A;font-weight:500;cursor:pointer" style-hover="text-decoration:underline">Voir</span>
+                </div>
+              </sc-for>
+            </div>
+
+            <!-- Annulation card -->
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden">
+              <div onClick="{{ toggleCancelOpen }}" style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;cursor:pointer" style-hover="background:#F9FAFB">
+                <div style="font-size:15px;font-weight:600;color:#111111">Annulation</div>
+                <i data-lucide="{{ cancelChevron }}" style="width:16px;height:16px;color:#9CA3AF"></i>
+              </div>
+              <sc-if value="{{ cancelOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:0 24px 20px;border-top:1px solid #E5E7EB">
+                  <div style="font-size:13px;color:#6B7280;line-height:1.5;margin:14px 0 16px">En annulant votre abonnement, votre compte restera actif jusqu'au 3 sept. 2026, puis passera en mode gratuit.</div>
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <span style="font-size:13px;color:#27A36A;font-weight:500;cursor:pointer" style-hover="text-decoration:underline">En savoir plus sur l'annulation</span>
+                    <div onClick="{{ confirmCancel }}" style="padding:7px 18px;background:#EF4444;border-radius:4px;font-size:13px;font-weight:500;color:#fff;cursor:pointer" style-hover="background:#DC2626">Annuler l'abonnement</div>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+
+          </div>
+
+          <!-- Right column -->
+          <div style="width:260px;flex-shrink:0;display:flex;flex-direction:column;gap:16px">
+
+            <!-- Dernière facture PDF -->
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden">
+              <div style="padding:14px 16px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;justify-content:space-between">
+                <div style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Dernière facture</div>
+                <div style="display:flex;align-items:center;gap:5px;padding:5px 10px;background:#27A36A;border-radius:4px;cursor:pointer;font-size:11px;font-weight:600;color:#fff" style-hover="background:#1f8257">
+                  <i data-lucide="download" style="width:11px;height:11px;color:#fff"></i>
+                  Télécharger
+                </div>
+              </div>
+              <!-- PDF preview — facture Vooroo image -->
+              <div style="background:#F4F5F7;padding:10px">
+                <img src="uploads/pasted-1785781260990-0.png" style="width:100%;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.08);display:block">
+              </div>
+              <div style="padding:8px 14px;font-size:11px;color:#9CA3AF;text-align:center">Facture #VR-2026-00042 · 3 août 2026</div>
+            </div>
+
+            <!-- Moyen de paiement enregistré -->
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:16px">
+              <div style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Moyen de paiement</div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#F9FAFB;border:1px solid #E5E7EB;border-radius:6px;margin-bottom:12px">
+                <div style="width:40px;height:26px;background:#1A1F71;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                  <span style="font-size:9px;font-weight:700;color:#fff;letter-spacing:-.3px">VISA</span>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:13px;font-weight:500;color:#111">•••• •••• •••• 4242</div>
+                  <div style="font-size:11px;color:#9CA3AF">Expire 08/28 · Jean Dupont</div>
+                </div>
+                <div style="width:20px;height:20px;border-radius:50%;background:#E8F7EB;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                  <i data-lucide="check" style="width:11px;height:11px;color:#27A36A"></i>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <div style="flex:1;padding:7px;border:1px solid #E5E7EB;border-radius:4px;font-size:12px;font-weight:500;color:#374151;text-align:center;cursor:pointer" style-hover="background:#F9FAFB">Modifier</div>
+                <div style="flex:1;padding:7px;border:1px solid #FCA5A5;border-radius:4px;font-size:12px;font-weight:500;color:#EF4444;text-align:center;cursor:pointer" style-hover="background:#FEF2F2">Supprimer</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal annulation -->
+  <sc-if value="{{ cancelModal }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeCancelModal }}" style="position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:50;display:flex;align-items:center;justify-content:center">
+      <div onClick="{{ stopProp }}" style="background:#fff;border-radius:8px;padding:28px;width:400px;box-shadow:0 8px 32px rgba(0,0,0,0.16)">
+        <div style="font-size:17px;font-weight:700;color:#111;margin-bottom:10px">Annuler l'abonnement ?</div>
+        <div style="font-size:13px;color:#6B7280;line-height:1.5;margin-bottom:22px">Votre abonnement restera actif jusqu'à la fin de la période en cours. Après cette date, votre compte passera en mode gratuit.</div>
+        <div style="display:flex;justify-content:flex-end;gap:10px">
+          <div onClick="{{ closeCancelModal }}" style="padding:8px 18px;border:1px solid #E5E7EB;border-radius:4px;font-size:13px;font-weight:500;color:#374151;cursor:pointer" style-hover="background:#F9FAFB">Conserver l'abonnement</div>
+          <div onClick="{{ closeCancelModal }}" style="padding:8px 18px;background:#EF4444;border-radius:4px;font-size:13px;font-weight:500;color:#fff;cursor:pointer" style-hover="background:#DC2626">Confirmer l'annulation</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { cancelModal: false, cancelOpen: false };
+
+  componentDidMount()  { if (window.lucide) window.lucide.createIcons(); }
+  componentDidUpdate() { if (window.lucide) window.lucide.createIcons(); }
+
+  renderVals() {
+    const features = [
+      { name: 'Prospects' }, { name: 'Affaires' }, { name: 'Activités' },
+      { name: 'Planificateur de rendez-vous' }, { name: 'Devis' }, { name: 'Factures' },
+      { name: 'Messagerie de vente' }, { name: 'Projets' }, { name: 'Vooroo IA' },
+      { name: '+100 intégrations' },
+    ];
+
+    const invoices = [
+      { date: '3 août 2026',   amount: '20 $US', status: 'Payé',     statusBg: '#E8F7EB', statusColor: '#27A36A' },
+      { date: '3 juil. 2026',  amount: '20 $US', status: 'Payé',     statusBg: '#E8F7EB', statusColor: '#27A36A' },
+    ];
+
+    const cancelModal      = this.state.cancelModal;
+    const cancelOpen       = this.state.cancelOpen;
+    const toggleCancelOpen = () => this.setState(s => ({ cancelOpen: !s.cancelOpen }));
+    const cancelChevron    = cancelOpen ? 'chevron-up' : 'chevron-down';
+    const confirmCancel    = () => this.setState({ cancelModal: true });
+    const closeCancelModal = () => this.setState({ cancelModal: false });
+    const stopProp         = (e) => e.stopPropagation();
+
+    return { features, invoices, cancelModal, cancelOpen, toggleCancelOpen, cancelChevron, confirmCancel, closeCancelModal, stopProp };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/styles.css">
+  <script src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:'Roboto',-apple-system,sans-serif}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
+    input[type=checkbox]{accent-color:#27A36A;width:14px;height:14px;cursor:pointer}
+  </style>
+<script>
+/* Affiché dans le module Paramètres : la coquille de cet écran (rail, en-tête,
+   menu latéral) ferait doublon avec celle du module — on ne garde que le contenu. */
+if (window.self !== window.top) document.documentElement.classList.add('vr-embedded');
+</script>
+<style>
+.vr-embedded .vr-shell-rail,
+.vr-embedded .vr-shell-topbar,
+.vr-embedded .vr-shell-subheader,
+.vr-embedded .vr-shell-subnav{display:none!important}
+.vr-embedded,.vr-embedded body{height:100%}
+</style>
+</helmet>
+
+<div style="display:flex;height:100vh;overflow:hidden;font-family:'Roboto',-apple-system,sans-serif">
+
+  <!-- Rail -->
+  <div class="vr-shell-rail" style="width:46px;background:#1A1B5C;display:flex;flex-direction:column;align-items:center;flex-shrink:0;z-index:20">
+    <div style="height:48px;width:100%;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,0.08)">
+      <img src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/assets/logo-mark-white.png" style="width:22px;object-fit:contain">
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:1px;width:100%">
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="layout-dashboard" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="users" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="bar-chart-2" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="dollar-sign" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="calendar" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="user-circle" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="file-text" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="folder" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="mail" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.12);cursor:pointer"><i data-lucide="settings" style="width:17px;height:17px;color:#35AA47"></i></div>
+    </div>
+    <div style="padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:6px;border-top:1px solid rgba(255,255,255,0.08)">
+      <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,0.3);cursor:pointer;background:#fff;flex-shrink:0"><img src="uploads/logo Axa.png" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+    </div>
+  </div>
+
+  <!-- Right side -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0">
+
+    <!-- Top bar -->
+    <div class="vr-shell-topbar" style="height:48px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 20px;flex-shrink:0">
+      <span style="font-size:14px;font-weight:600;color:#111111;flex-shrink:0">Paramètres</span>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px">
+        <div style="position:relative;width:min(420px,100%)">
+          <i data-lucide="search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:#9CA3AF;pointer-events:none"></i>
+          <input placeholder="Rechercher dans Vooroo..." style="width:100%;padding:6px 12px 6px 30px;border:1px solid #D1D5DB;border-radius:20px;font-size:12px;font-family:'Roboto',sans-serif;color:#111;background:#fff">
+        </div>
+        <div style="width:28px;height:28px;border-radius:50%;border:1px solid #D1D5DB;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><i data-lucide="plus" style="width:14px;height:14px;color:#374151"></i></div>
+        <div style="position:relative;flex-shrink:0">
+          <img src="uploads/Gemini_Generated_Image_k2cip2k2cip2k2ci.png" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid #27A36A;display:block">
+          <div style="position:absolute;bottom:0;right:0;width:8px;height:8px;border-radius:50%;background:#22C55E;border:1.5px solid #fff"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#F3F4F6"><i data-lucide="circle-help" style="width:15px;height:15px;color:#9CA3AF"></i></div>
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative" style-hover="background:#F3F4F6">
+          <i data-lucide="bell" style="width:15px;height:15px;color:#9CA3AF"></i>
+          <div style="position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:#EF4444;border:1px solid #fff"></div>
+        </div>
+        <div style="width:30px;height:30px;border-radius:50%;background:#111111;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;cursor:pointer">H</div>
+      </div>
+    </div>
+
+    <!-- Sub-header -->
+    <div class="vr-shell-subheader" style="height:52px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0">
+      <div style="width:34px;height:34px;border-radius:8px;background:#F3F4F6;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <i data-lucide="settings" style="width:16px;height:16px;color:#6B7280"></i>
+      </div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#111111;line-height:1.2">Paramètres</div>
+        <div style="font-size:12px;color:#9CA3AF;line-height:1.2">Restauration de données</div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div style="flex:1;display:flex;overflow:hidden">
+
+      <!-- Sidebar -->
+      <div class="vr-shell-subnav" style="width:185px;background:#fff;border-right:1px solid #E5E7EB;overflow-y:auto;flex-shrink:0">
+        <div style="padding:14px 16px 10px;font-size:14px;font-weight:700;color:#111111">Paramètres</div>
+        <div style="padding:12px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Organisation</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="building-2" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Entreprise</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="tag" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Champs de données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="user" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Aperçu utilisateur</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Abonnement</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="bar-chart-2" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Utilisation</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="credit-card" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Facturation</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Préférences</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="bell" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Notifications</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="smartphone" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Vos appareils</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="mail" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Synchronisation des e-mails</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="hard-drive" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Google Drive</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Données</span></div>
+        <div style="padding:2px 8px 16px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="download" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Import des données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="upload" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Export des données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;background:#F0FDF4;border-left:2px solid #27A36A"><i data-lucide="rotate-ccw" style="width:16px;height:16px;color:#27A36A;flex-shrink:0"></i><span style="font-size:13px;color:#27A36A;font-weight:500">Restauration</span></div>
+        </div>
+      </div>
+
+      <!-- Main -->
+      <div style="flex:1;overflow-y:auto;background:#F4F5F7;min-width:0">
+        <div style="max-width:1100px;margin:0 auto;padding:28px 24px">
+
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px">
+            <h1 style="font-size:20px;font-weight:700;color:#111111">Restaurer les données</h1>
+            <span style="font-size:14px;font-weight:600;color:#27A36A">{{ activeTabLabel }}</span>
+          </div>
+          <p style="font-size:13px;color:#6B7280;margin-bottom:24px">Récupérez vos données supprimées depuis moins de 30 jours. Sélectionnez un type pour voir les options disponibles.</p>
+
+          <!-- Tabs row -->
+          <div style="display:flex;align-items:center;gap:0;border-bottom:1px solid #E5E7EB;margin-bottom:16px">
+            <div style="flex:1;display:flex;align-items:flex-end;gap:0;overflow-x:auto;overflow-y:hidden">
+              <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="7">
+                <div onClick="{{ tab.onSelect }}" style="display:flex;align-items:center;gap:5px;padding:10px 18px;cursor:pointer;border-bottom:2px solid {{ tab.borderColor }};white-space:nowrap;flex-shrink:0" style-hover="background:#F9FAFB">
+                  <span style="font-size:13px;font-weight:500;color:{{ tab.labelColor }}">{{ tab.label }}</span>
+                  <span style="font-size:12px;font-weight:600;color:{{ tab.countColor }}">{{ tab.count }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;padding:0 8px;flex-shrink:0">
+              <div style="width:20px;height:14px;display:flex;align-items:center;justify-content:center;border:1px solid #E5E7EB;border-radius:2px;cursor:pointer;background:#fff" style-hover="background:#F3F4F6"><i data-lucide="chevron-up" style="width:10px;height:10px;color:#6B7280"></i></div>
+              <div style="width:20px;height:14px;display:flex;align-items:center;justify-content:center;border:1px solid #E5E7EB;border-radius:2px;cursor:pointer;background:#fff" style-hover="background:#F3F4F6"><i data-lucide="chevron-down" style="width:10px;height:10px;color:#6B7280"></i></div>
+            </div>
+          </div>
+
+          <!-- Count -->
+          <div style="font-size:13px;color:#6B7280;margin-bottom:12px">{{ activeCount }}</div>
+
+          <!-- Table (has items) -->
+          <sc-if value="{{ hasItems }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:6px;overflow:hidden">
+              <!-- Header -->
+              <div style="display:grid;grid-template-columns:{{ gridCols }};padding:10px 16px;background:#F9FAFB;border-bottom:1px solid #E5E7EB;align-items:center">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <input type="checkbox" onClick="{{ toggleAll }}">
+                  <span style="font-size:11px;font-weight:700;color:#9CA3AF;letter-spacing:.06em;text-transform:uppercase">NOM</span>
+                </div>
+                <sc-for list="{{ extraHeaders }}" as="h" hint-placeholder-count="2">
+                  <span style="font-size:11px;font-weight:700;color:#9CA3AF;letter-spacing:.06em;text-transform:uppercase">{{ h }}</span>
+                </sc-for>
+                <span></span>
+              </div>
+              <!-- Rows -->
+              <sc-for list="{{ rows }}" as="row" hint-placeholder-count="3">
+                <div style="display:grid;grid-template-columns:{{ gridCols }};padding:12px 16px;border-bottom:1px solid #F3F4F6;align-items:center" style-hover="background:#FAFAFA">
+                  <div style="display:flex;align-items:flex-start;gap:10px">
+                    <input type="checkbox" style="margin-top:2px">
+                    <div>
+                      <div style="font-size:13px;font-weight:600;color:#111111">{{ row.name }}</div>
+                      <sc-if value="{{ row.sub }}" hint-placeholder-val="{{ '' }}">
+                        <div style="font-size:11px;color:#27A36A;margin-top:1px">{{ row.sub }}</div>
+                      </sc-if>
+                    </div>
+                  </div>
+                  <sc-for list="{{ row.extras }}" as="ex" hint-placeholder-count="2">
+                    <span style="font-size:13px;color:#374151">{{ ex }}</span>
+                  </sc-for>
+                  <div style="display:flex;justify-content:flex-end">
+                    <div style="width:30px;height:30px;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid transparent" style-hover="border-color:#E5E7EB;background:#F9FAFB" title="Restaurer">
+                      <i data-lucide="rotate-ccw" style="width:14px;height:14px;color:#6B7280"></i>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- Empty state -->
+          <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:6px;padding:60px 20px;display:flex;flex-direction:column;align-items:center;gap:12px">
+              <div style="width:60px;height:60px;border-radius:50%;background:#F3F4F6;display:flex;align-items:center;justify-content:center">
+                <i data-lucide="trash-2" style="width:24px;height:24px;color:#9CA3AF"></i>
+              </div>
+              <div style="font-size:15px;font-weight:600;color:#111111">Aucun élément à restaurer</div>
+              <div style="font-size:13px;color:#6B7280">{{ emptyMessage }}</div>
+            </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { activeTab: 0, checkedAll: false };
+
+  componentDidMount()  { if (window.lucide) window.lucide.createIcons(); }
+  componentDidUpdate() { if (window.lucide) window.lucide.createIcons(); }
+
+  renderVals() {
+    const s = this.state;
+
+    const tabData = [
+      {
+        label: 'Prospects', count: 2,
+        unit: 'éléments',
+        cols: '1fr 160px 200px 200px 40px',
+        headers: ['SUPPRIMÉ PAR', 'HEURE DE SUPPRESSION', 'ADRESSE E-MAIL'],
+        rows: [
+          { name: 'Accra FinServ',  sub: 'Lead-new', extras: ['Administrator', '10 juil. 2026 à 18:25', '—'] },
+          { name: 'Adjoua Kouadio', sub: 'Lead-new', extras: ['Administrator', '10 juil. 2026 à 16:52', 'a.kouadio@santeplus.ci'] },
+        ],
+      },
+      {
+        label: 'Affaires', count: 6,
+        unit: 'éléments',
+        cols: '1fr 200px 220px 40px',
+        headers: ['SUPPRIMÉ PAR', 'HEURE DE SUPPRESSION'],
+        rows: [
+          { name: 'Compte rendu de notre echange', sub: 'Deal-negotiating', extras: ['Administrator', '14 juil. 2026 à 00:10'] },
+          { name: 'E2E Test affaire',              sub: 'Deal-negotiating', extras: ['Administrator', '14 juil. 2026 à 00:09'] },
+          { name: 'Test QA Fix Org Deal',          sub: 'Deal-negotiating', extras: ['Administrator', '10 juil. 2026 à 22:05'] },
+          { name: 'Test QA Affaire Org AccraFinServ', sub: 'Deal-negotiating', extras: ['Administrator', '10 juil. 2026 à 18:25'] },
+          { name: 'Test QA Affaire Adjoua',        sub: 'Deal-negotiating', extras: ['Administrator', '10 juil. 2026 à 16:52'] },
+          { name: 'QA-Pipedrive-98533',            sub: 'Deal-negotiating', extras: ['hebacav130@luxudata.com', '6 juil. 2026 à 00:43'] },
+        ],
+      },
+      {
+        label: 'Contacts', count: 4,
+        unit: 'personnes',
+        cols: '1fr 160px 200px 180px 200px 40px',
+        headers: ['SUPPRIMÉ PAR', 'HEURE DE SUPPRESSION', 'ORGANISATION', 'ADRESSE E-MAIL'],
+        rows: [
+          { name: '__ProbeChlog__',   sub: '', extras: ['Administrator', '11 juil. 2026 à 08:13', '—', '—'] },
+          { name: 'Marc Test Complet', sub: '', extras: ['Administrator', '10 juil. 2026 à 12:29', 'O1001', 'marc.complet@example.com'] },
+          { name: 'Test Canal QA',    sub: '', extras: ['Administrator', '10 juil. 2026 à 10:23', '—', '—'] },
+          { name: 'Test QA Personne', sub: '', extras: ['Administrator', '10 juil. 2026 à 06:15', '—', 'testqa.personne@example.com'] },
+        ],
+      },
+      {
+        label: 'Organisations', count: 3,
+        unit: 'éléments',
+        cols: '1fr 200px 220px 200px 40px',
+        headers: ['SUPPRIMÉ PAR', 'HEURE DE SUPPRESSION', 'ADRESSE E-MAIL'],
+        rows: [
+          { name: '__PROBE_CHLOG_ORG__', sub: '',         extras: ['Administrator', '11 juil. 2026 à 08:13', '—'] },
+          { name: 'Test Complet SARL',   sub: 'Industrie', extras: ['Administrator', '10 juil. 2026 à 12:29', '—'] },
+          { name: 'Test QA Organisation', sub: '',        extras: ['Administrator', '10 juil. 2026 à 06:17', '—'] },
+        ],
+      },
+      {
+        label: 'Activités', count: 6,
+        unit: 'éléments',
+        cols: '1fr 200px 220px 40px',
+        headers: ['SUPPRIMÉ PAR', 'HEURE DE SUPPRESSION'],
+        rows: [
+          { name: 'Test QA Fix Org Activite',      sub: 'Appel', extras: ['Administrator', '10 juil. 2026 à 22:05'] },
+          { name: 'Prospect créé : P1008',          sub: 'Tâche', extras: ['Administrator', '10 juil. 2026 à 22:05'] },
+          { name: 'Test QA Activite Org AccraFinServ', sub: 'Appel', extras: ['Administrator', '10 juil. 2026 à 18:25'] },
+          { name: 'Test QA Sync Activité Adjoua',   sub: 'Appel', extras: ['Administrator', '10 juil. 2026 à 16:52'] },
+          { name: 'Appel de suivi QA',              sub: 'Appel', extras: ['Administrator', '10 juil. 2026 à 05:10'] },
+          { name: 'QA composer Lot3',               sub: 'Appel', extras: ['Administrator', '10 juil. 2026 à 02:55'] },
+        ],
+      },
+      {
+        label: 'Produits', count: 0,
+        unit: 'élément',
+        cols: '1fr 200px 220px 40px',
+        headers: ['SUPPRIMÉ PAR', 'HEURE DE SUPPRESSION'],
+        rows: [],
+        emptyMsg: 'Aucune suppression de produits dans les 30 derniers jours.',
+      },
+      {
+        label: 'Projets', count: 0,
+        unit: 'élément',
+        cols: '1fr 200px 220px 40px',
+        headers: ['SUPPRIMÉ PAR', 'HEURE DE SUPPRESSION'],
+        rows: [],
+        emptyMsg: 'Aucune suppression de projets dans les 30 derniers jours.',
+      },
+    ];
+
+    const active = tabData[s.activeTab];
+    const tabs = tabData.map((t, i) => {
+      const isActive = i === s.activeTab;
+      return {
+        label: t.label, count: t.count,
+        active: isActive,
+        labelColor: isActive ? '#27A36A' : '#6B7280',
+        countColor: (t.count > 0 || isActive) ? '#27A36A' : '#9CA3AF',
+        borderColor: isActive ? '#27A36A' : 'transparent',
+        onSelect: () => this.setState({ activeTab: i }),
+      };
+    });
+
+    const count = active.rows.length;
+    const unit = active.unit;
+    const activeCount = count === 0 ? '0 élément' : `${count} ${unit}`;
+    const hasItems = count > 0;
+    const isEmpty = count === 0;
+    const emptyMessage = active.emptyMsg || '';
+    const gridCols = active.cols;
+    const extraHeaders = active.headers;
+    const rows = active.rows;
+    const toggleAll = () => this.setState(st => ({ checkedAll: !st.checkedAll }));
+
+    const activeTabLabel = active.label;
+    return { tabs, activeCount, hasItems, isEmpty, emptyMessage, gridCols, extraHeaders, rows, toggleAll, activeTabLabel };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/styles.css">
+  <script src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:'Roboto',-apple-system,sans-serif}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
+  </style>
+<script>
+/* Affiché dans le module Paramètres : la coquille de cet écran (rail, en-tête,
+   menu latéral) ferait doublon avec celle du module — on ne garde que le contenu. */
+if (window.self !== window.top) document.documentElement.classList.add('vr-embedded');
+</script>
+<style>
+.vr-embedded .vr-shell-rail,
+.vr-embedded .vr-shell-topbar,
+.vr-embedded .vr-shell-subheader,
+.vr-embedded .vr-shell-subnav{display:none!important}
+.vr-embedded,.vr-embedded body{height:100%}
+</style>
+</helmet>
+
+<div style="display:flex;height:100vh;overflow:hidden;font-family:'Roboto',-apple-system,sans-serif">
+
+  <!-- Rail -->
+  <div class="vr-shell-rail" style="width:46px;background:#1A1B5C;display:flex;flex-direction:column;align-items:center;flex-shrink:0;z-index:20">
+    <div style="height:48px;width:100%;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,0.08)">
+      <img src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/assets/logo-mark-white.png" style="width:22px;object-fit:contain">
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:1px;width:100%">
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="layout-dashboard" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="users" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="bar-chart-2" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="dollar-sign" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="calendar" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="user-circle" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="file-text" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="folder" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.12);cursor:pointer"><i data-lucide="settings" style="width:17px;height:17px;color:#35AA47"></i></div>
+    </div>
+    <div style="padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:6px;border-top:1px solid rgba(255,255,255,0.08)">
+      <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,0.3);cursor:pointer;background:#fff;flex-shrink:0"><img src="uploads/logo Axa.png" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+      <div style="width:100%;height:28px;display:flex;align-items:center;justify-content:center;opacity:.4;cursor:pointer" style-hover="opacity:.8"><i data-lucide="more-horizontal" style="width:15px;height:15px;color:#fff"></i></div>
+    </div>
+  </div>
+
+  <!-- Right side -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0">
+
+    <!-- Top bar -->
+    <div class="vr-shell-topbar" style="height:48px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 20px;flex-shrink:0">
+      <span style="font-size:14px;font-weight:600;color:#111111;flex-shrink:0">Paramètres</span>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px">
+        <div style="position:relative;width:min(420px,100%)">
+          <i data-lucide="search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:#9CA3AF;pointer-events:none"></i>
+          <input placeholder="Rechercher dans Vooroo..." style="width:100%;padding:6px 12px 6px 30px;border:1px solid #D1D5DB;border-radius:20px;font-size:12px;font-family:'Roboto',sans-serif;color:#111;background:#fff">
+        </div>
+        <div style="width:28px;height:28px;border-radius:50%;border:1px solid #D1D5DB;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0" style-hover="background:#F9FAFB"><i data-lucide="plus" style="width:14px;height:14px;color:#374151"></i></div>
+        <div style="position:relative;flex-shrink:0;cursor:pointer">
+          <img src="uploads/Gemini_Generated_Image_k2cip2k2cip2k2ci.png" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid #27A36A;display:block">
+          <div style="position:absolute;bottom:0;right:0;width:8px;height:8px;border-radius:50%;background:#22C55E;border:1.5px solid #fff"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#F3F4F6"><i data-lucide="circle-help" style="width:15px;height:15px;color:#9CA3AF"></i></div>
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative" style-hover="background:#F3F4F6">
+          <i data-lucide="bell" style="width:15px;height:15px;color:#9CA3AF"></i>
+          <div style="position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:#EF4444;border:1px solid #fff"></div>
+        </div>
+        <div style="width:30px;height:30px;border-radius:50%;background:#111111;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;cursor:pointer">H</div>
+      </div>
+    </div>
+
+    <!-- Sub-header -->
+    <div class="vr-shell-subheader" style="height:52px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0">
+      <div style="width:34px;height:34px;border-radius:8px;background:#F3F4F6;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <i data-lucide="settings" style="width:16px;height:16px;color:#6B7280"></i>
+      </div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#111111;line-height:1.2">Paramètres</div>
+        <div style="font-size:12px;color:#9CA3AF;line-height:1.2">Synchronisation des e-mails</div>
+      </div>
+    </div>
+
+    <!-- Content row -->
+    <div style="flex:1;display:flex;overflow:hidden">
+
+      <!-- Sidebar -->
+      <div class="vr-shell-subnav" style="width:185px;background:#fff;border-right:1px solid #E5E7EB;overflow-y:auto;flex-shrink:0">
+        <div style="padding:14px 16px 10px;font-size:14px;font-weight:700;color:#111111">Paramètres</div>
+        <div style="padding:12px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Organisation</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="building-2" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Entreprise</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="tag" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Champs de données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="user" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Aperçu utilisateur</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Abonnement</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="bar-chart-2" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Utilisation</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="credit-card" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Facturation</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Préférences</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="bell" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Notifications</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="smartphone" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Vos appareils</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;background:#F0FDF4;border-left:2px solid #27A36A"><i data-lucide="mail" style="width:16px;height:16px;color:#27A36A;flex-shrink:0"></i><span style="font-size:13px;color:#27A36A;font-weight:500">Synchronisation des e-mails</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="hard-drive" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Google Drive</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Données</span></div>
+        <div style="padding:2px 8px 16px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="download" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Import des données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="upload" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Export des données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="rotate-ccw" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Restauration</span></div>
+        </div>
+      </div>
+
+      <!-- Main -->
+      <div style="flex:1;overflow-y:auto;background:#F4F5F7;min-width:0">
+        <div style="padding:28px 24px;max-width:1100px;margin:0 auto">
+
+          <h1 style="font-size:20px;font-weight:700;color:#111111;margin-bottom:20px">Synchronisation des e-mails</h1>
+
+          <!-- Tabs -->
+          <div style="display:flex;gap:0;border-bottom:1px solid #E5E7EB;background:#fff;border-radius:8px 8px 0 0;padding:0 8px;margin-bottom:0">
+            <div onClick="{{ setTabCompte }}" style="padding:13px 18px;font-size:13px;cursor:pointer;border-bottom:2px solid {{ tabCompte.border }};color:{{ tabCompte.color }};font-weight:{{ tabCompte.weight }};white-space:nowrap" style-hover="color:#111">Compte</div>
+            <div onClick="{{ setTabCci }}" style="padding:13px 18px;font-size:13px;cursor:pointer;border-bottom:2px solid {{ tabCci.border }};color:{{ tabCci.color }};font-weight:{{ tabCci.weight }};white-space:nowrap" style-hover="color:#111">Cci intelligente</div>
+            <div onClick="{{ setTabIA }}" style="padding:13px 18px;font-size:13px;cursor:pointer;border-bottom:2px solid {{ tabIA.border }};color:{{ tabIA.color }};font-weight:{{ tabIA.weight }};white-space:nowrap" style-hover="color:#111">IA pour les e-mails</div>
+          </div>
+
+          <!-- TAB : Compte -->
+          <sc-if value="{{ isCompte }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 8px 8px;padding:24px">
+              <div style="font-size:15px;font-weight:600;color:#111;margin-bottom:8px">Compte e-mail</div>
+              <div style="font-size:13px;color:#6B7280;margin-bottom:20px">Connectez votre boîte e-mail pour synchroniser automatiquement vos échanges avec vos contacts et affaires Vooroo.</div>
+              <div style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:#27A36A;border-radius:4px;font-size:13px;font-weight:500;color:#fff;cursor:pointer" style-hover="background:#1f8257">
+                <i data-lucide="plus" style="width:14px;height:14px;color:#fff"></i>Connecter une boîte e-mail
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- TAB : Cci intelligente -->
+          <sc-if value="{{ isCci }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#fff;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 8px 8px">
+
+              <!-- Section : Cci intelligente des e-mails -->
+              <div style="padding:24px 24px 20px;border-bottom:1px solid #E5E7EB">
+                <div style="font-size:15px;font-weight:600;color:#111111;margin-bottom:10px">Cci intelligente des e-mails</div>
+                <div style="font-size:13px;color:#374151;line-height:1.6;margin-bottom:16px">Copiez et collez cette adresse de Cci intelligente aux champs Cc ou Cci lorsque vous envoyez des e-mails ou transférez les e-mails reçus vers cette adresse pour synchroniser automatiquement vos e-mails dans Vooroo.</div>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <input value="{{ cciAddress }}" readonly style="width:300px;border:1px solid #D1D5DB;border-radius:4px;padding:9px 12px;font-size:13px;color:#374151;background:#F9FAFB;font-family:'Roboto',sans-serif;outline:none">
+                  <div onClick="{{ copyCci }}" style="padding:9px 18px;background:#27A36A;border-radius:4px;font-size:13px;font-weight:500;color:#fff;cursor:pointer;white-space:nowrap" style-hover="background:#1f8257">{{ copyLabel }}</div>
+                  <span style="font-size:13px;color:#27A36A;font-weight:500;cursor:pointer" style-hover="text-decoration:underline">Changer</span>
+                </div>
+              </div>
+
+              <!-- Section : Adresses autorisées -->
+              <div style="padding:24px 24px 20px;border-bottom:1px solid #E5E7EB">
+                <div style="font-size:15px;font-weight:600;color:#111111;margin-bottom:10px">Adresses autorisées pour la Cci intelligente</div>
+                <div style="font-size:13px;color:#374151;line-height:1.6;margin-bottom:8px">Vous pouvez utiliser la Cci intelligente avec vos adresses e-mail qui ont été ajoutées à cette liste. Si une adresse ne figure pas dans la liste, les e-mails ne seront pas synchronisés, même si vous ajoutez l'adresse de Cci intelligente à l'e-mail.</div>
+                <div style="font-size:13px;color:#374151;line-height:1.6;margin-bottom:16px">Votre adresse e-mail principale figure par défaut dans la liste et ne peut pas en être retirée.</div>
+                <!-- Adresse principale -->
+                <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F9FAFB;border:1px solid #E5E7EB;border-radius:6px;margin-bottom:12px">
+                  <i data-lucide="mail" style="width:14px;height:14px;color:#9CA3AF;flex-shrink:0"></i>
+                  <span style="font-size:13px;color:#374151;flex:1">hugo.martin@brain.ci</span>
+                  <span style="font-size:11px;color:#9CA3AF;background:#F3F4F6;padding:2px 8px;border-radius:10px">Principale</span>
+                </div>
+                <!-- Adresses supplémentaires -->
+                <sc-for list="{{ allowedAddresses }}" as="addr" hint-placeholder-count="1">
+                  <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;border:1px solid #E5E7EB;border-radius:6px;margin-bottom:8px">
+                    <i data-lucide="mail" style="width:14px;height:14px;color:#9CA3AF;flex-shrink:0"></i>
+                    <span style="font-size:13px;color:#374151;flex:1">{{ addr.email }}</span>
+                    <div onClick="{{ addr.onRemove }}" style="cursor:pointer;color:#9CA3AF" style-hover="color:#EF4444"><i data-lucide="x" style="width:14px;height:14px"></i></div>
+                  </div>
+                </sc-for>
+                <!-- Ajout -->
+                <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+                  <input placeholder="Saisissez une adresse e-mail" style="width:280px;border:1px solid #D1D5DB;border-radius:4px;padding:9px 12px;font-size:13px;color:#374151;font-family:'Roboto',sans-serif;outline:none">
+                  <div style="padding:9px 18px;border:1px solid #D1D5DB;border-radius:4px;font-size:13px;color:#9CA3AF;cursor:pointer;background:#fff" style-hover="background:#F9FAFB">Ajouter</div>
+                </div>
+              </div>
+
+              <!-- Section : Partage de messages par défaut -->
+              <div style="padding:24px 24px 28px">
+                <div style="font-size:15px;font-weight:600;color:#111111;margin-bottom:18px">Partage de messages par défaut</div>
+                <!-- Radio : Partagé -->
+                <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;cursor:pointer" onClick="{{ setSharePublic }}">
+                  <div style="width:18px;height:18px;border-radius:50%;border:2px solid {{ sharePublic ? '#27A36A' : '#D1D5DB' }};background:#fff;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center">
+                    <sc-if value="{{ sharePublic }}" hint-placeholder-val="{{ false }}">
+                      <div style="width:8px;height:8px;border-radius:50%;background:#27A36A"></div>
+                    </sc-if>
+                  </div>
+                  <div>
+                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+                      <span style="font-size:13px;color:#374151">Partagé – visible par tous</span>
+                      <i data-lucide="lock-open" style="width:13px;height:13px;color:#9CA3AF"></i>
+                    </div>
+                    <div style="font-size:13px;color:#6B7280;line-height:1.5">Les conversations e-mail seront visibles par tous les utilisateurs si elles sont liées à des éléments dans Vooroo.</div>
+                  </div>
+                </div>
+                <!-- Radio : Privé -->
+                <div style="display:flex;align-items:flex-start;gap:10px;cursor:pointer" onClick="{{ setSharePrivate }}">
+                  <div style="width:18px;height:18px;border-radius:50%;border:2px solid {{ sharePrivate ? '#27A36A' : '#D1D5DB' }};background:#fff;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center">
+                    <sc-if value="{{ sharePrivate }}" hint-placeholder-val="{{ true }}">
+                      <div style="width:8px;height:8px;border-radius:50%;background:#27A36A"></div>
+                    </sc-if>
+                  </div>
+                  <div>
+                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+                      <span style="font-size:13px;color:#374151">Privé</span>
+                      <i data-lucide="lock" style="width:13px;height:13px;color:#9CA3AF"></i>
+                    </div>
+                    <div style="font-size:13px;color:#6B7280;line-height:1.5">Les conversations e-mail ne seront visibles que par vous, même si elles sont liées à des éléments Vooroo.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- TAB : IA pour les e-mails -->
+          <sc-if value="{{ isIA }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 8px 8px">
+
+              <!-- Section : Résumé d'e-mails -->
+              <div style="padding:24px 24px 20px;border-bottom:1px solid #E5E7EB">
+                <div style="font-size:16px;font-weight:600;color:#111111;margin-bottom:16px">Résumé d'e-mails</div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div onClick="{{ toggleResume }}" style="width:40px;height:22px;border-radius:11px;background:{{ togResume.bg }};position:relative;cursor:pointer;flex-shrink:0">
+                    <div style="width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ togResume.tx }};transition:transform 150ms"></div>
+                  </div>
+                  <span style="font-size:13px;color:#374151">Activer la fonctionnalité de résumé des e-mails par l'IA</span>
+                  <span style="font-size:10px;font-weight:700;padding:2px 8px;background:#27A36A;color:#fff;border-radius:10px;letter-spacing:.03em">BÉTA</span>
+                  <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid #9CA3AF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:8px;color:#9CA3AF;font-weight:700">i</span></div>
+                </div>
+              </div>
+
+              <!-- Section : Génération de contenus -->
+              <div style="padding:24px 24px 28px">
+                <div style="font-size:16px;font-weight:600;color:#111111;margin-bottom:16px">Génération de contenus</div>
+                <!-- Toggle 1 -->
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+                  <div onClick="{{ toggleGeneration }}" style="width:40px;height:22px;border-radius:11px;background:{{ togGeneration.bg }};position:relative;cursor:pointer;flex-shrink:0">
+                    <div style="width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ togGeneration.tx }};transition:transform 150ms"></div>
+                  </div>
+                  <span style="font-size:13px;color:#374151">Activer la création de contenus d'e-mails par l'IA</span>
+                  <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid #9CA3AF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:8px;color:#9CA3AF;font-weight:700">i</span></div>
+                </div>
+                <!-- Toggle 2 -->
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div onClick="{{ toggleSuggestions }}" style="width:40px;height:22px;border-radius:11px;background:{{ togSuggestions.bg }};position:relative;cursor:pointer;flex-shrink:0">
+                    <div style="width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ togSuggestions.tx }};transition:transform 150ms"></div>
+                  </div>
+                  <span style="font-size:13px;color:#374151">Activer les suggestions de réponses alimentées par l'IA</span>
+                  <span style="font-size:10px;font-weight:700;padding:2px 8px;background:#27A36A;color:#fff;border-radius:10px;letter-spacing:.03em">BÉTA</span>
+                  <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid #9CA3AF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:8px;color:#9CA3AF;font-weight:700">i</span></div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    tab: 'cci',
+    shareMode: 'private',
+    copied: false,
+    resume: true, generation: true, suggestions: true,
+    allowedAddresses: [{ email: 'h.martin.pro@gmail.com', id: 1 }],
+  };
+
+  tog(key) {
+    const on = this.state[key];
+    return { on, bg: on ? '#27A36A' : '#D1D5DB', tx: on ? 'translateX(18px)' : 'translateX(0px)' };
+  }
+
+  componentDidMount()  { if (window.lucide) window.lucide.createIcons(); }
+  componentDidUpdate() { if (window.lucide) window.lucide.createIcons(); }
+
+  renderVals() {
+    const s = this.state;
+    const tabStyle = (key) => s.tab === key
+      ? { border: '#27A36A', color: '#27A36A', weight: '600' }
+      : { border: 'transparent', color: '#6B7280', weight: '400' };
+
+    const isCompte = s.tab === 'compte';
+    const isCci    = s.tab === 'cci';
+    const isIA     = s.tab === 'ia';
+
+    const setTabCompte = () => this.setState({ tab: 'compte' });
+    const setTabCci    = () => this.setState({ tab: 'cci' });
+    const setTabIA     = () => this.setState({ tab: 'ia' });
+
+    const tabCompte = tabStyle('compte');
+    const tabCci    = tabStyle('cci');
+    const tabIA     = tabStyle('ia');
+
+    const sharePublic  = s.shareMode === 'public';
+    const sharePrivate = s.shareMode === 'private';
+    const setSharePublic  = () => this.setState({ shareMode: 'public' });
+    const setSharePrivate = () => this.setState({ shareMode: 'private' });
+
+    const cciAddress = 'brain2@vooroomail.com';
+    const copyLabel  = s.copied ? 'Copié !' : 'Copier';
+    const copyCci    = () => { this.setState({ copied: true }); setTimeout(() => this.setState({ copied: false }), 2000); };
+
+    const allowedAddresses = s.allowedAddresses.map(a => ({
+      ...a,
+      onRemove: () => this.setState({ allowedAddresses: s.allowedAddresses.filter(x => x.id !== a.id) }),
+    }));
+
+    const togResume      = this.tog('resume');
+    const togGeneration  = this.tog('generation');
+    const togSuggestions = this.tog('suggestions');
+    const toggleResume      = () => this.setState({ resume: !s.resume });
+    const toggleGeneration  = () => this.setState({ generation: !s.generation });
+    const toggleSuggestions = () => this.setState({ suggestions: !s.suggestions });
+
+    return {
+      isCompte, isCci, isIA,
+      setTabCompte, setTabCci, setTabIA,
+      tabCompte, tabCci, tabIA,
+      sharePublic, sharePrivate, setSharePublic, setSharePrivate,
+      cciAddress, copyLabel, copyCci,
+      allowedAddresses,
+      togResume, togGeneration, togSuggestions,
+      toggleResume, toggleGeneration, toggleSuggestions,
+    };
+  }
+}
+</script>
+</body>
+</html>

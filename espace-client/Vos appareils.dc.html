@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/styles.css">
+  <script src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:'Roboto',-apple-system,sans-serif}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
+  </style>
+<script>
+/* Affiché dans le module Paramètres : la coquille de cet écran (rail, en-tête,
+   menu latéral) ferait doublon avec celle du module — on ne garde que le contenu. */
+if (window.self !== window.top) document.documentElement.classList.add('vr-embedded');
+</script>
+<style>
+.vr-embedded .vr-shell-rail,
+.vr-embedded .vr-shell-topbar,
+.vr-embedded .vr-shell-subheader,
+.vr-embedded .vr-shell-subnav{display:none!important}
+.vr-embedded,.vr-embedded body{height:100%}
+</style>
+</helmet>
+
+<div style="display:flex;height:100vh;overflow:hidden;font-family:'Roboto',-apple-system,sans-serif">
+
+  <!-- Rail -->
+  <div class="vr-shell-rail" style="width:46px;background:#1A1B5C;display:flex;flex-direction:column;align-items:center;flex-shrink:0;z-index:20">
+    <div style="height:48px;width:100%;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,0.08)">
+      <img src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/assets/logo-mark-white.png" style="width:22px;object-fit:contain">
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:1px;width:100%">
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="layout-dashboard" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="users" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="bar-chart-2" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="dollar-sign" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="calendar" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="user-circle" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="file-text" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="folder" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="mail" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.12);cursor:pointer"><i data-lucide="settings" style="width:17px;height:17px;color:#35AA47"></i></div>
+    </div>
+    <div style="padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:6px;border-top:1px solid rgba(255,255,255,0.08)">
+      <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,0.3);cursor:pointer;background:#fff;flex-shrink:0"><img src="uploads/logo Axa.png" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+      <div style="width:100%;height:28px;display:flex;align-items:center;justify-content:center;opacity:.4;cursor:pointer" style-hover="opacity:.8"><i data-lucide="more-horizontal" style="width:15px;height:15px;color:#fff"></i></div>
+    </div>
+  </div>
+
+  <!-- Right side -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0">
+
+    <!-- Top bar -->
+    <div class="vr-shell-topbar" style="height:48px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 20px;flex-shrink:0">
+      <span style="font-size:14px;font-weight:600;color:#111111;flex-shrink:0">Paramètres</span>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px">
+        <div style="position:relative;width:min(420px,100%)">
+          <i data-lucide="search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:#9CA3AF;pointer-events:none"></i>
+          <input placeholder="Rechercher dans Vooroo..." style="width:100%;padding:6px 12px 6px 30px;border:1px solid #D1D5DB;border-radius:20px;font-size:12px;font-family:'Roboto',sans-serif;color:#111;background:#fff">
+        </div>
+        <div style="width:28px;height:28px;border-radius:50%;border:1px solid #D1D5DB;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0" style-hover="background:#F9FAFB"><i data-lucide="plus" style="width:14px;height:14px;color:#374151"></i></div>
+        <div style="position:relative;flex-shrink:0;cursor:pointer">
+          <img src="uploads/Gemini_Generated_Image_k2cip2k2cip2k2ci.png" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid #27A36A;display:block">
+          <div style="position:absolute;bottom:0;right:0;width:8px;height:8px;border-radius:50%;background:#22C55E;border:1.5px solid #fff"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#F3F4F6"><i data-lucide="circle-help" style="width:15px;height:15px;color:#9CA3AF"></i></div>
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative" style-hover="background:#F3F4F6">
+          <i data-lucide="bell" style="width:15px;height:15px;color:#9CA3AF"></i>
+          <div style="position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:#EF4444;border:1px solid #fff"></div>
+        </div>
+        <div style="width:30px;height:30px;border-radius:50%;background:#111111;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;cursor:pointer">H</div>
+      </div>
+    </div>
+
+    <!-- Sub-header -->
+    <div class="vr-shell-subheader" style="height:52px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0">
+      <div style="width:34px;height:34px;border-radius:8px;background:#F3F4F6;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <i data-lucide="settings" style="width:16px;height:16px;color:#6B7280"></i>
+      </div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#111111;line-height:1.2">Paramètres</div>
+        <div style="font-size:12px;color:#9CA3AF;line-height:1.2">Vos appareils</div>
+      </div>
+    </div>
+
+    <!-- Content row -->
+    <div style="flex:1;display:flex;overflow:hidden">
+
+      <!-- Sidebar -->
+      <div class="vr-shell-subnav" style="width:185px;background:#fff;border-right:1px solid #E5E7EB;overflow-y:auto;flex-shrink:0">
+        <div style="padding:14px 16px 10px;font-size:14px;font-weight:700;color:#111111">Paramètres</div>
+        <div style="padding:12px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Organisation</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="building-2" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Entreprise</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="tag" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Champs de données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="user" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Aperçu utilisateur</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Abonnement</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="bar-chart-2" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Utilisation</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="credit-card" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Facturation</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Préférences</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="bell" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Notifications</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;background:#F0FDF4;border-left:2px solid #27A36A"><i data-lucide="smartphone" style="width:16px;height:16px;color:#27A36A;flex-shrink:0"></i><span style="font-size:13px;color:#27A36A;font-weight:500">Vos appareils</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="mail" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Synchronisation des e-mails</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="hard-drive" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Google Drive</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Données</span></div>
+        <div style="padding:2px 8px 16px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="download" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Import des données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="upload" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Export des données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="rotate-ccw" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Restauration</span></div>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div style="flex:1;overflow-y:auto;background:#F4F5F7;min-width:0">
+        <div style="max-width:1100px;margin:0 auto;padding:28px 24px;display:flex;flex-direction:column;gap:20px">
+
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+            <h1 style="font-size:20px;font-weight:700;color:#111111">Vos appareils</h1>
+            <div style="position:relative;flex-shrink:0" data-user-filter="1">
+              <div onClick="{{ toggleUserDropdown }}" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid #E5E7EB;border-radius:4px;background:#fff;font-size:13px;color:#374151;cursor:pointer;white-space:nowrap" style-hover="background:#F9FAFB">
+                <i data-lucide="users" style="width:14px;height:14px;color:#9CA3AF"></i>
+                {{ selectedUserLabel }}
+                <i data-lucide="chevron-down" style="width:12px;height:12px;color:#9CA3AF"></i>
+              </div>
+              <sc-if value="{{ userDropdownOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;right:0;top:calc(100% + 4px);background:#fff;border:1px solid #E5E7EB;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.1);z-index:30;min-width:200px;padding:4px 0;overflow:hidden">
+                  <sc-for list="{{ users }}" as="u" hint-placeholder-count="4">
+                    <div onClick="{{ u.onSelect }}" style="display:flex;align-items:center;justify-content:space-between;padding:9px 14px;font-size:13px;cursor:pointer;color:{{ u.active ? '#27A36A' : '#374151' }};background:{{ u.active ? '#F0FDF4' : '#fff' }}" style-hover="background:#F9FAFB">
+                      <span>{{ u.label }}</span>
+                      <sc-if value="{{ u.active }}" hint-placeholder-val="{{ false }}">
+                        <i data-lucide="check" style="width:13px;height:13px;color:#27A36A"></i>
+                      </sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+
+          <!-- Appareils actifs -->
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden">
+            <div style="padding:20px 24px;border-bottom:1px solid #E5E7EB">
+              <div style="font-size:16px;font-weight:600;color:#111111;margin-bottom:4px">Appareils actifs</div>
+              <div style="font-size:13px;color:#6B7280">Voici les appareils actuellement connectés à votre compte Vooroo, ordonnés suivant leur heure de connexion.</div>
+            </div>
+
+            <!-- Device rows -->
+            <sc-for list="{{ activeDevices }}" as="dev" hint-placeholder-count="3">
+              <!-- Row -->
+              <div onClick="{{ dev.onSelect }}" style="display:flex;align-items:center;gap:14px;padding:14px 24px;border-bottom:1px solid #F3F4F6;cursor:pointer" style-hover="background:#FAFAFA">
+                <i data-lucide="{{ dev.icon }}" style="width:20px;height:20px;color:#374151;flex-shrink:0"></i>
+                <div style="flex:1;min-width:0;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+                  <span style="font-size:13px;font-weight:600;color:#111111;white-space:nowrap">{{ dev.name }}</span>
+                  <span style="font-size:13px;color:#6B7280;white-space:nowrap">{{ dev.location }}</span>
+                  <span style="font-size:13px;color:#6B7280;white-space:nowrap">{{ dev.connectedAt }}</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+                  <sc-if value="{{ dev.isCurrent }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding:6px 14px;background:#27A36A;border-radius:4px;font-size:11px;font-weight:700;color:#fff;letter-spacing:.03em;white-space:nowrap">CET APPAREIL</div>
+                  </sc-if>
+                  <i data-lucide="{{ dev.chevron }}" style="width:15px;height:15px;color:#9CA3AF"></i>
+                </div>
+              </div>
+              <!-- Detail panel -->
+              <sc-if value="{{ dev.selected }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#F9FAFB;border-bottom:1px solid #E5E7EB;padding:20px 24px;display:flex;flex-direction:column;gap:16px">
+                  <!-- Header -->
+                  <div style="display:flex;align-items:flex-start;gap:16px">
+                    <div style="width:56px;height:48px;background:#E5E7EB;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                      <i data-lucide="{{ dev.icon }}" style="width:26px;height:26px;color:#374151"></i>
+                    </div>
+                    <div style="flex:1">
+                      <div style="font-size:15px;font-weight:700;color:#111111;margin-bottom:3px">{{ dev.name }}</div>
+                      <div style="font-size:13px;color:#6B7280;line-height:1.6">{{ dev.location }}<br>{{ dev.connectedAt }}<br>Première connexion : {{ dev.firstSeen }}</div>
+                    </div>
+                  </div>
+                  <!-- Actions -->
+                  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                    <div onClick="{{ dev.onDisconnect }}" style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border:1px solid #E5E7EB;border-radius:20px;font-size:13px;color:#374151;cursor:pointer;background:#fff" style-hover="background:#F3F4F6">
+                      <i data-lucide="log-out" style="width:13px;height:13px;color:#374151"></i>Se déconnecter
+                    </div>
+                    <div style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border:1px solid #E5E7EB;border-radius:20px;font-size:13px;color:#374151;cursor:pointer;background:#fff" style-hover="background:#F3F4F6">
+                      <i data-lucide="help-circle" style="width:13px;height:13px;color:#374151"></i>Vous ne reconnaissez pas cette activité ?
+                    </div>
+                  </div>
+                  <div style="height:1px;background:#E5E7EB"></div>
+                  <!-- Activité récente -->
+                  <div>
+                    <div style="font-size:10px;font-weight:700;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase;margin-bottom:10px">Activité récente</div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                      <div style="width:7px;height:7px;border-radius:50%;background:#27A36A;flex-shrink:0"></div>
+                      <span style="font-size:13px;color:#374151">Côte d'Ivoire</span>
+                      <span style="font-size:13px;color:#9CA3AF">3 août 2026</span>
+                    </div>
+                    <span style="font-size:13px;color:#27A36A;font-weight:500;cursor:pointer" style-hover="text-decoration:underline">Comment les lieux et les heures sont déterminés</span>
+                  </div>
+                  <div style="height:1px;background:#E5E7EB"></div>
+                  <!-- Apps -->
+                  <div>
+                    <div style="font-size:10px;font-weight:700;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px">Navigateurs, applis et services</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:10px 24px;margin-bottom:10px">
+                      <sc-for list="{{ dev.apps }}" as="app" hint-placeholder-count="2">
+                        <div style="display:flex;align-items:center;gap:8px">
+                          <div style="width:22px;height:22px;border-radius:4px;background:#E5E7EB;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                            <i data-lucide="grid" style="width:12px;height:12px;color:#6B7280"></i>
+                          </div>
+                          <span style="font-size:13px;color:#374151">{{ app }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <span style="font-size:12px;color:#27A36A;font-weight:500;cursor:pointer" style-hover="text-decoration:underline">Navigateurs, applis et services ayant certains droits d'accès à votre compte sur l'appareil</span>
+                  </div>
+                </div>
+              </sc-if>
+            </sc-for>
+
+            <!-- Security notice -->
+            <div style="padding:16px 24px">
+              <div style="font-size:13px;color:#374151;line-height:1.6">
+                Si vous remarquez des connexions suspectes, nous vous recommandons de déconnecter l'appareil suspect, d'activer
+                <span style="color:#27A36A;font-weight:500;cursor:pointer" style-hover="text-decoration:underline">l'authentification à deux facteurs</span>
+                et de
+                <span style="color:#27A36A;font-weight:500;cursor:pointer" style-hover="text-decoration:underline">changer votre mot de passe</span>
+                pour un autre plus sûr.
+              </div>
+            </div>
+          </div>
+
+          <!-- Historique par appareils -->
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden">
+            <div style="padding:20px 24px;border-bottom:1px solid #E5E7EB;display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+              <div style="flex:1;min-width:0">
+                <div style="font-size:16px;font-weight:600;color:#111111;margin-bottom:4px">Historique par appareils</div>
+                <div style="font-size:13px;color:#6B7280;line-height:1.5">Voici votre historique par appareils. Vous pouvez utiliser cette liste pour voir comment, quand et depuis quels appareils ont eu lieu les connexions à votre compte au cours des 60 derniers jours.</div>
+              </div>
+              <!-- Export dropdown -->
+              <div style="position:relative;flex-shrink:0" data-export-root="1">
+                <div onClick="{{ toggleExport }}" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid #E5E7EB;border-radius:4px;font-size:13px;color:#374151;cursor:pointer;background:#fff;white-space:nowrap" style-hover="background:#F9FAFB">
+                  Exporter
+                  <i data-lucide="chevron-down" style="width:13px;height:13px;color:#9CA3AF"></i>
+                </div>
+                <sc-if value="{{ exportOpen }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute;right:0;top:calc(100% + 4px);background:#fff;border:1px solid #E5E7EB;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.1);z-index:30;min-width:140px;padding:4px 0;overflow:hidden">
+                    <div onClick="{{ exportCSV }}" style="padding:9px 16px;font-size:13px;color:#374151;cursor:pointer;display:flex;align-items:center;gap:8px" style-hover="background:#F9FAFB">
+                      <i data-lucide="file-spreadsheet" style="width:13px;height:13px;color:#9CA3AF"></i>CSV
+                    </div>
+                    <div onClick="{{ exportPDF }}" style="padding:9px 16px;font-size:13px;color:#374151;cursor:pointer;display:flex;align-items:center;gap:8px" style-hover="background:#F9FAFB">
+                      <i data-lucide="file-text" style="width:13px;height:13px;color:#9CA3AF"></i>PDF
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+
+            <!-- Table header -->
+            <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr;padding:10px 24px;background:#F9FAFB;border-bottom:1px solid #E5E7EB">
+              <span style="font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.06em">Appareil</span>
+              <span style="font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.06em">Localisation</span>
+              <span style="font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.06em">Connexion</span>
+              <span style="font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.06em">Déconnexion</span>
+            </div>
+
+            <!-- Table rows -->
+            <sc-for list="{{ history }}" as="h" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr;padding:14px 24px;border-bottom:1px solid #F3F4F6;align-items:start">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <i data-lucide="monitor" style="width:18px;height:18px;color:#374151;flex-shrink:0"></i>
+                  <span style="font-size:13px;font-weight:600;color:#111111">{{ h.device }}</span>
+                </div>
+                <div>
+                  <div style="font-size:13px;color:#374151">{{ h.city }}</div>
+                  <div style="font-size:11px;color:#9CA3AF;margin-top:2px">{{ h.ip }}</div>
+                </div>
+                <div>
+                  <div style="font-size:13px;color:#374151">{{ h.connectedAt }}</div>
+                  <div style="font-size:11px;color:#9CA3AF;margin-top:2px">{{ h.connectedBy }}</div>
+                </div>
+                <div>
+                  <div style="font-size:13px;color:#374151">{{ h.disconnectedAt }}</div>
+                  <div style="font-size:11px;color:#9CA3AF;margin-top:2px">{{ h.disconnectedReason }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Disconnect modal -->
+  <sc-if value="{{ disconnectModal }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeDisconnect }}" style="position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:50;display:flex;align-items:center;justify-content:center">
+      <div onClick="{{ stopProp }}" style="background:#fff;border-radius:8px;padding:28px;width:400px;box-shadow:0 8px 32px rgba(0,0,0,0.16)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div style="width:36px;height:36px;border-radius:50%;background:#FEF2F2;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <i data-lucide="log-out" style="width:16px;height:16px;color:#EF4444"></i>
+          </div>
+          <div style="font-size:16px;font-weight:700;color:#111">Déconnecter l'appareil</div>
+        </div>
+        <div style="font-size:13px;color:#6B7280;line-height:1.6;margin-bottom:22px">Cet appareil sera déconnecté de votre compte Vooroo. Vous devrez vous reconnecter pour accéder à nouveau à votre compte depuis cet appareil.</div>
+        <div style="display:flex;justify-content:flex-end;gap:10px">
+          <div onClick="{{ closeDisconnect }}" style="padding:8px 18px;border:1px solid #E5E7EB;border-radius:4px;font-size:13px;font-weight:500;color:#374151;cursor:pointer;background:#fff" style-hover="background:#F9FAFB">Annuler</div>
+          <div onClick="{{ confirmDisconnect }}" style="padding:8px 18px;background:#EF4444;border-radius:4px;font-size:13px;font-weight:500;color:#fff;cursor:pointer" style-hover="background:#DC2626">Déconnecter</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { exportOpen: false, selectedDevice: null, disconnectModal: null, userFilter: 'all', userDropdownOpen: false };
+
+  componentDidMount()  { if (window.lucide) window.lucide.createIcons(); document.addEventListener('click', this._close); }
+  componentDidUpdate() { if (window.lucide) window.lucide.createIcons(); }
+  componentWillUnmount() { document.removeEventListener('click', this._close); }
+
+  _close = (e) => {
+    if (!e.target.closest('[data-export-root]') && this.state.exportOpen) this.setState({ exportOpen: false });
+    if (!e.target.closest('[data-user-filter]') && !e.target.closest('[data-user-filter="2"]') && this.state.userDropdownOpen) this.setState({ userDropdownOpen: false });
+  };
+
+  renderVals() {
+    const mkDevice = (id, name, type, location, connectedAt, firstSeen, apps) => {
+      const selected = this.state.selectedDevice === id;
+      const isMobile = type === 'mobile';
+      return {
+        id, name, type, location, connectedAt, firstSeen, apps,
+        selected, isCurrent: id === 'chrome-win',
+        icon: isMobile ? 'smartphone' : 'monitor',
+        chevron: selected ? 'chevron-up' : 'chevron-down',
+        onSelect: () => this.setState(s => ({ selectedDevice: s.selectedDevice === id ? null : id })),
+        onDisconnect: () => this.setState({ disconnectModal: id }),
+      };
+    };
+
+    const activeDevices = [
+      mkDevice('chrome-win',  'Chrome, Windows',  'desktop', 'Abidjan, Côte d\'Ivoire', 'July 30, 2026 8:04 AM',  '5 oct. 2023', ['Google Drive for desktop','Firefox','Notion']),
+      mkDevice('iphone-15',   'Safari, iPhone 15', 'mobile',  'Abidjan, Côte d\'Ivoire', 'August 3, 2026 6:22 PM', '12 jan. 2025', ['Safari Mobile','WhatsApp']),
+      mkDevice('edge-pc',     'Edge, Windows PC',  'desktop', 'Abidjan, Côte d\'Ivoire', 'August 2, 2026 11:45 AM','20 mars 2024', ['Microsoft Teams','Outlook']),
+    ];
+
+    const disconnectModal = this.state.disconnectModal;
+    const closeDisconnect  = () => this.setState({ disconnectModal: null });
+    const confirmDisconnect = () => this.setState({ disconnectModal: null, selectedDevice: null });
+
+    const history = [
+      { device: 'Chrome, Windows', city: 'Abidjan, Ivory Coast', ip: '102.209.222.60',  connectedAt: 'July 29, 2026 10:53 AM', connectedBy: 'par mot de passe', disconnectedAt: 'July 29, 2026 10:53 PM', disconnectedReason: 'la connexion a expiré au bout de 12 heures' },
+      { device: 'Chrome, Windows', city: 'Abidjan, Ivory Coast', ip: '102.209.222.107', connectedAt: 'July 28, 2026 11:12 AM', connectedBy: 'par inscription',    disconnectedAt: 'July 28, 2026 11:12 PM', disconnectedReason: 'la connexion a expiré au bout de 12 heures' },
+      { device: 'Chrome, Windows', city: 'Abidjan, Ivory Coast', ip: '102.209.221.88',  connectedAt: 'July 27, 2026 9:30 AM',  connectedBy: 'par mot de passe', disconnectedAt: 'July 27, 2026 9:30 PM',  disconnectedReason: 'la connexion a expiré au bout de 12 heures' },
+      { device: 'Chrome, Windows', city: 'Abidjan, Ivory Coast', ip: '102.209.220.14',  connectedAt: 'July 26, 2026 2:15 PM',  connectedBy: 'par mot de passe', disconnectedAt: 'July 26, 2026 2:15 AM',  disconnectedReason: 'la connexion a expiré au bout de 12 heures' },
+      { device: 'Chrome, Windows', city: 'Abidjan, Ivory Coast', ip: '102.209.219.55',  connectedAt: 'July 25, 2026 8:44 AM',  connectedBy: 'par mot de passe', disconnectedAt: 'July 25, 2026 8:44 PM',  disconnectedReason: 'la connexion a expiré au bout de 12 heures' },
+    ];
+
+    const exportOpen = this.state.exportOpen;
+    const toggleExport = () => setTimeout(() => this.setState(s => ({ exportOpen: !s.exportOpen })), 0);
+    const exportCSV = () => this.setState({ exportOpen: false });
+    const exportPDF = () => this.setState({ exportOpen: false });
+
+    const stopProp = (e) => e.stopPropagation();
+
+    const users = [
+      { key: 'all',   label: 'Tous les utilisateurs' },
+      { key: 'hm',    label: 'HM — Hugo Martin' },
+      { key: 'kd',    label: 'KD — Koné David' },
+      { key: 'as',    label: 'AS — Aya Sanogo' },
+    ];
+    const userFilter = this.state.userFilter;
+    const userDropdownOpen = this.state.userDropdownOpen;
+    const selectedUserLabel = (users.find(u => u.key === userFilter) || users[0]).label;
+    users.forEach(u => { u.onSelect = () => this.setState({ userFilter: u.key, userDropdownOpen: false }); u.active = u.key === userFilter; });
+    const toggleUserDropdown = () => setTimeout(() => this.setState(s => ({ userDropdownOpen: !s.userDropdownOpen })), 0);
+    return { activeDevices, history, exportOpen, toggleExport, exportCSV, exportPDF,
+      disconnectModal, closeDisconnect, confirmDisconnect, stopProp,
+      users, userFilter, userDropdownOpen, selectedUserLabel, toggleUserDropdown };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/effects.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/styles.css">
+  <script src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/_ds_bundle.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;600&display=swap">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background: #F2F2F2; color: #111111; }
+    a, a:hover { color: var(--green-vooroo); text-decoration: none; }
+    .vcheck { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+    .vcheck input[type="checkbox"] { appearance: none; width: 16px; height: 16px; min-width: 16px; border: 1.5px solid #C0C0C0; border-radius: 3px; cursor: pointer; margin-top: 2px; transition: background 150ms, border-color 150ms; }
+    .vcheck input[type="checkbox"]:checked { background: var(--green-vooroo); border-color: var(--green-vooroo); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 3.5L3.8 6.5L9 1' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+    .vcheck input[type="checkbox"]:disabled { opacity: 0.4; cursor: default; }
+    .v-select { appearance: none; width: 100%; padding: 10px 36px 10px 12px; border: 1px solid #E0E0E0; border-radius: 3px; font-family: 'Roboto', sans-serif; font-size: 14px; color: #111111; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1L6 7L11 1' stroke='%238A8A8A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") no-repeat right 12px center; cursor: pointer; }
+    .v-select:focus { outline: none; border-color: var(--green-vooroo); }
+    .v-input { width: 100%; padding: 10px 12px; border: 1px solid #E0E0E0; border-radius: 3px; font-family: 'Roboto', sans-serif; font-size: 14px; color: #111111; }
+    .v-input:focus { outline: none; border-color: var(--green-vooroo); }
+    .v-input:disabled { background: #F2F2F2; color: #8A8A8A; }
+    .account-nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 3px; font-size: 14px; color: #3A3A3A; cursor: pointer; transition: background 150ms; text-wrap: pretty; }
+    .account-nav-item:hover { background: #F2F2F2; }
+    .account-nav-item.active { background: #EAF7EC; color: var(--green-vooroo); font-weight: 500; }
+    .topnav-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 3px; cursor: pointer; color: #8A8A8A; }
+    .topnav-icon:hover { background: #F2F2F2; color: #111111; }
+    .section-card { background: #fff; border: 1px solid #E0E0E0; border-radius: 4px; padding: 28px 32px; }
+    .avatar-circle { width: 72px; height: 72px; border-radius: 50%; background: #E0E0E0; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+    .tooltip-icon { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; border: 1px solid #C0C0C0; color: #8A8A8A; font-size: 10px; font-weight: 600; cursor: help; flex-shrink: 0; }
+    /* Toggle switch */
+    .v-toggle { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
+    .v-toggle input { opacity: 0; width: 0; height: 0; }
+    .v-toggle-track { position: absolute; inset: 0; background: #C0C0C0; border-radius: 20px; cursor: pointer; transition: background 150ms; }
+    .v-toggle input:checked + .v-toggle-track { background: var(--green-vooroo); }
+    .v-toggle-track::after { content: ''; position: absolute; width: 14px; height: 14px; background: #fff; border-radius: 50%; top: 3px; left: 3px; transition: transform 150ms; }
+    .v-toggle input:checked + .v-toggle-track::after { transform: translateX(16px); }
+    /* Menu drag items */
+    .menu-col { border: 1px solid #E0E0E0; border-radius: 4px; overflow: hidden; background: #fff; }
+    .menu-col-header { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #111111; }
+    .menu-item { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-bottom: 1px solid #F0F0F0; background: #fff; cursor: grab; transition: background 120ms; user-select: none; }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item:hover { background: #FAFAFA; }
+    .menu-item.drag-over { background: #EAF7EC; border-top: 2px solid var(--green-vooroo); }
+    .menu-item.dragging { opacity: 0.4; }
+    .menu-icon-wrap { width: 28px; height: 28px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .eye-btn { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 3px; cursor: pointer; color: #C0C0C0; margin-left: auto; flex-shrink: 0; transition: color 120ms; }
+    .eye-btn:hover { color: #3A3A3A; }
+    
+    .dd-row { display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;transition:background 120ms; }
+    .dd-row:hover { background:#F5F5F5; }
+    .dd-row span { font-size:13px;color:#111111; }
+    .dd-row.dd-danger span { color:#E53E3E; }
+    .dd-icon { width:18px;height:18px;flex-shrink:0;color:#6B7280; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .page-content { animation: fadeIn 180ms ease; }
+    /* Bottom save bar */
+    .save-bar { position: sticky; bottom: 0; background: #fff; border-top: 1px solid #E0E0E0; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  </style>
+<script>
+/* Affiché dans le module Paramètres : la coquille de cet écran (rail, en-tête,
+   menu latéral) ferait doublon avec celle du module — on ne garde que le contenu. */
+if (window.self !== window.top) document.documentElement.classList.add('vr-embedded');
+</script>
+<style>
+.vr-embedded .vr-shell-rail,
+.vr-embedded .vr-shell-topbar,
+.vr-embedded .vr-shell-subheader,
+.vr-embedded .vr-shell-subnav{display:none!important}
+.vr-embedded,.vr-embedded body{height:100%}
+</style>
+</helmet>
+
+<div style="display:flex; height:100vh; overflow:hidden;">
+
+  <!-- Icon rail -->
+  <div style="width:48px; background:#1A1B5C; display:flex; flex-direction:column; align-items:center; padding:12px 0; gap:4px; flex-shrink:0; z-index:10;">
+    <div style="margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.1); width:100%; display:flex; justify-content:center;">
+      <img src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/assets/logo-mark-white.png" style="width:26px; height:auto;" alt="Vooroo">
+    </div>
+    <div class="topnav-icon" style="color:rgba(255,255,255,0.4);"><i data-lucide="book-open" style="width:18px;height:18px;"></i></div>
+    <div class="topnav-icon" style="color:rgba(255,255,255,0.4);"><i data-lucide="bar-chart-2" style="width:18px;height:18px;"></i></div>
+    <div class="topnav-icon" style="color:rgba(255,255,255,0.4);"><i data-lucide="target" style="width:18px;height:18px;"></i></div>
+    <div class="topnav-icon" style="color:rgba(255,255,255,0.4);"><i data-lucide="kanban" style="width:18px;height:18px;"></i></div>
+    <div class="topnav-icon" style="color:rgba(255,255,255,0.4);"><i data-lucide="calendar-check" style="width:18px;height:18px;"></i></div>
+    <div class="topnav-icon" style="color:rgba(255,255,255,0.4);"><i data-lucide="mail" style="width:18px;height:18px;"></i></div>
+    <div class="topnav-icon" style="color:rgba(255,255,255,0.4);"><i data-lucide="users" style="width:18px;height:18px;"></i></div>
+    <div class="topnav-icon" style="color:rgba(255,255,255,0.4);"><i data-lucide="file-text" style="width:18px;height:18px;"></i></div>
+    <div style="flex:1;"></div>
+    <div class="topnav-icon" style="background:rgba(255,255,255,0.1); color:#35AA47; border-radius:50%; width:32px; height:32px;">
+      <i data-lucide="settings" style="width:18px;height:18px;"></i>
+    </div>
+    <div style="width:32px;height:32px;border-radius:6px;overflow:hidden;cursor:pointer;margin-top:4px;flex-shrink:0;">
+      <img src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/assets/logo-axa.png" style="width:100%;height:100%;object-fit:cover;" alt="AXA">
+    </div>
+  </div>
+
+  <!-- Main column -->
+  <div style="display:flex; flex-direction:column; flex:1; overflow:hidden;">
+
+    <!-- Top bar -->
+    <div class="vr-shell-topbar" style="height:52px; background:#fff; border-bottom:1px solid #E0E0E0; display:flex; align-items:center; padding:0 24px; flex-shrink:0;">
+      <span style="font-size:14px; font-weight:700; color:#111111; flex-shrink:0;">Mon compte</span>
+      <div style="flex:1; display:flex; justify-content:center; align-items:center; gap:10px;">
+        <div style="display:flex;align-items:center;gap:8px;border:1px solid #E0E0E0;border-radius:20px;padding:6px 14px;width:300px;">
+          <i data-lucide="search" style="width:13px;height:13px;color:#8A8A8A;flex-shrink:0;"></i>
+          <span style="font-size:13px;color:#8A8A8A;flex:1;">Rechercher dans Vooroo...</span>
+          <span style="font-size:11px;color:#8A8A8A;background:#F2F2F2;padding:2px 6px;border-radius:3px;white-space:nowrap;">⌘K</span>
+        </div>
+        <div style="width:28px;height:28px;border:1px solid #E0E0E0;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#3A3A3A;flex-shrink:0;">
+          <i data-lucide="plus" style="width:14px;height:14px;"></i>
+        </div>
+        <div style="width:36px;height:36px;border-radius:50%;overflow:hidden;cursor:pointer;flex-shrink:0;border:2px solid #35AA47;">
+          <img src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/assets/avatar-ai.png" style="width:100%;height:100%;object-fit:cover;" alt="Avatar">
+        </div>
+      </div>
+      <div style="flex-shrink:0; display:flex; align-items:center; gap:6px;">
+        <div style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#8A8A8A;">
+          <i data-lucide="help-circle" style="width:18px;height:18px;"></i>
+        </div>
+        <div style="position:relative;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#8A8A8A;">
+          <i data-lucide="bell" style="width:18px;height:18px;"></i>
+          <span style="position:absolute;top:5px;right:4px;width:7px;height:7px;background:#E53E3E;border-radius:50%;border:1.5px solid #fff;"></span>
+        </div>
+        <div id="user-menu-btn" style="width:30px;height:30px;border-radius:50%;background:#111111;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:13px;color:#fff;">BD</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Context bar -->
+    <div style="height:44px; background:#fff; border-bottom:1px solid #E0E0E0; display:flex; align-items:center; padding:0 20px; gap:10px; flex-shrink:0;">
+      <i data-lucide="user-circle" style="width:16px;height:16px;color:#8A8A8A;flex-shrink:0;"></i>
+      <div style="display:flex;flex-direction:column;justify-content:center;line-height:1.2;">
+        <span style="font-size:13px;font-weight:600;color:#111111;">Mon compte</span>
+        <span id="context-sub" style="font-size:11px;color:#8A8A8A;">Profil et préférences personnelles</span>
+      </div>
+    </div>
+
+    <!-- Body row -->
+    <div style="display:flex; flex:1; overflow:hidden;">
+
+      <!-- Profile dropdown -->
+      <div id="profile-dropdown" style="display:none;position:fixed;top:58px;right:16px;width:280px;background:#fff;border:1px solid #E0E0E0;border-radius:6px;box-shadow:0 8px 28px rgba(0,0,0,0.14);z-index:2000;overflow:hidden;">
+        <div style="padding:14px 16px 12px;border-bottom:1px solid #F0F0F0;display:flex;align-items:center;gap:12px;">
+          <div style="width:42px;height:42px;border-radius:50%;overflow:hidden;border:2px solid #35AA47;flex-shrink:0;">
+            <img src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/assets/avatar-ai.png" style="width:100%;height:100%;object-fit:cover;" alt="">
+          </div>
+          <div>
+            <p style="font-size:14px;font-weight:600;color:#111111;line-height:1.2;margin:0;">Brain David</p>
+            <p style="font-size:12px;color:#8A8A8A;margin:0;">livaret252@aganseo.com</p>
+          </div>
+        </div>
+        <div style="padding:6px 0;border-bottom:1px solid #F0F0F0;">
+          <p style="font-size:10px;font-weight:700;letter-spacing:0.08em;color:#C0C0C0;text-transform:uppercase;padding:6px 16px 4px;margin:0;">Mon compte</p>
+          <div class="dd-row"><i data-lucide="user" class="dd-icon"></i><span>Profil et préférences personnelles</span></div>
+          <div class="dd-row"><i data-lucide="layout-dashboard" class="dd-icon"></i><span>Préférences d'interfaces</span></div>
+          <div class="dd-row"><i data-lucide="graduation-cap" class="dd-icon"></i><span>Vooroo Academy</span></div>
+        </div>
+        <div style="padding:6px 0;border-bottom:1px solid #F0F0F0;">
+          <p style="font-size:10px;font-weight:700;letter-spacing:0.08em;color:#C0C0C0;text-transform:uppercase;padding:6px 16px 4px;margin:0;">Vue d'ensemble de l'entreprise</p>
+          <div class="dd-row"><i data-lucide="settings" class="dd-icon"></i><span>Paramètres de l'entreprise</span></div>
+          <div class="dd-row"><i data-lucide="users" class="dd-icon"></i><span>Equipe</span></div>
+          <div class="dd-row"><i data-lucide="credit-card" class="dd-icon"></i><span>Gérer mon plan</span></div>
+        </div>
+        <div style="padding:6px 0;">
+          <div class="dd-row"><i data-lucide="grid-2x2" class="dd-icon"></i><span>Outils et applis</span></div>
+          <div class="dd-row dd-danger"><i data-lucide="log-out" class="dd-icon"></i><span>Déconnexion</span></div>
+        </div>
+      </div>
+      <!-- Account sidebar -->
+      <div style="width:260px; background:#fff; border-right:1px solid #E0E0E0; padding:24px 12px; flex-shrink:0; overflow-y:auto;">
+        <div style="padding:0 4px 16px 4px; border-bottom:1px solid #E0E0E0; margin-bottom:16px;">
+          <p style="font-size:16px; font-weight:600; color:#111111;">Mon compte</p>
+        </div>
+        <div class="account-nav-item active" id="nav-profil" onclick="showPage('profil')">
+          <i data-lucide="user" style="width:16px;height:16px;flex-shrink:0;"></i>
+          <span>Profil et préférences personnelles</span>
+        </div>
+        <div class="account-nav-item" id="nav-interface" onclick="showPage('interface')">
+          <i data-lucide="monitor" style="width:16px;height:16px;flex-shrink:0;"></i>
+          <span>Préférences d'interface</span>
+        </div>
+        <div class="account-nav-item" id="nav-mdp" onclick="showPage('mdp')">
+          <i data-lucide="lock" style="width:16px;height:16px;flex-shrink:0;"></i>
+          <span>Mot de passe et identifiant</span>
+        </div>
+        <div class="account-nav-item" id="nav-entreprises" onclick="showPage('entreprises')">
+          <i data-lucide="building-2" style="width:16px;height:16px;flex-shrink:0;"></i>
+          <span>Mes entreprises</span>
+        </div>
+      </div>
+
+      <!-- Content wrapper -->
+      <div style="flex:1; display:flex; flex-direction:column; overflow:hidden;">
+
+        <!-- ── PAGE: PROFIL ── -->
+        <div id="page-profil" style="flex:1; overflow-y:auto; padding:32px 40px;" class="page-content">
+          <div style="max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:24px;">
+            <div>
+              <h1 style="font-size:24px; font-weight:600; color:#111111; line-height:1.2;">Profil et préférences personnelles</h1>
+              <p style="font-size:13px; color:#8A8A8A; margin-top:4px; text-wrap:pretty;">Gérez votre photo, vos informations personnelles et vos préférences de compte.</p>
+            </div>
+            <div class="section-card">
+              <p style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#8A8A8A; margin-bottom:16px;">Photo de profil</p>
+              <div style="display:flex; align-items:center; gap:20px; padding:8px 0;">
+                <div class="avatar-circle">
+                  <span style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#8A8A8A;">BD</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <button style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid #E0E0E0;border-radius:3px;background:#fff;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500;color:#111111;cursor:pointer;">
+                    <i data-lucide="upload" style="width:14px;height:14px;"></i>
+                    Choisir une image
+                  </button>
+                  <p style="font-size:12px;color:#8A8A8A;">Taille maximale 2 Mo. Formats : JPG, GIF, PNG.</p>
+                </div>
+              </div>
+            </div>
+            <div class="section-card">
+              <p style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#8A8A8A; margin-bottom:20px;">Informations personnelles</p>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <label style="font-size:13px;font-weight:500;color:#3A3A3A;">Votre nom complet</label>
+                  <input class="v-input" type="text" value="BRAIN DAVID">
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <label style="font-size:13px;font-weight:500;color:#3A3A3A;">Adresse e-mail</label>
+                  <div style="display:flex;gap:8px;">
+                    <input class="v-input" type="email" value="livaret252@aganseo.com" disabled style="flex:1;">
+                    <button style="width:36px;height:38px;flex-shrink:0;border:1px solid #E0E0E0;border-radius:3px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#3A3A3A;">
+                      <i data-lucide="pencil" style="width:14px;height:14px;"></i>
+                    </button>
+                  </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <label style="font-size:13px;font-weight:500;color:#3A3A3A;">Numéro de téléphone</label>
+                  <div style="display:flex;border:1px solid #E0E0E0;border-radius:3px;overflow:visible;position:relative;" id="phoneWrap">
+                    <div id="phoneDialBtn" onclick="toggleDial('phone')" style="display:flex;align-items:center;gap:6px;padding:0 10px;background:#F9F9F9;border-right:1px solid #E0E0E0;cursor:pointer;min-width:88px;justify-content:space-between;user-select:none;flex-shrink:0;">
+                      <span id="phoneFlag" style="font-size:18px;">🇨🇲</span>
+                      <span id="phoneCode" style="font-size:13px;color:#111;font-weight:500;">+237</span>
+                      <i data-lucide="chevron-down" style="width:12px;height:12px;color:#8A8A8A;"></i>
+                    </div>
+                    <input class="v-input" type="tel" placeholder="6 00 00 00 00" style="border:none;border-radius:0;flex:1;">
+                    <div id="phoneDrop" style="display:none;position:absolute;top:100%;left:0;width:300px;background:#fff;border:1px solid #E0E0E0;border-radius:3px;box-shadow:0 4px 16px rgba(0,0,0,0.12);z-index:300;max-height:220px;overflow-y:auto;margin-top:2px;"></div>
+                  </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <label style="font-size:13px;font-weight:500;color:#3A3A3A;">Numéro WhatsApp</label>
+                  <div style="display:flex;border:1px solid #E0E0E0;border-radius:3px;overflow:visible;position:relative;" id="waWrap">
+                    <div id="waDialBtn" onclick="toggleDial('wa')" style="display:flex;align-items:center;gap:6px;padding:0 10px;background:#F9F9F9;border-right:1px solid #E0E0E0;cursor:pointer;min-width:88px;justify-content:space-between;user-select:none;flex-shrink:0;">
+                      <span id="waFlag" style="font-size:18px;">🇨🇲</span>
+                      <span id="waCode" style="font-size:13px;color:#111;font-weight:500;">+237</span>
+                      <i data-lucide="chevron-down" style="width:12px;height:12px;color:#8A8A8A;"></i>
+                    </div>
+                    <input class="v-input" type="tel" placeholder="6 00 00 00 00" style="border:none;border-radius:0;flex:1;">
+                    <div id="waDrop" style="display:none;position:absolute;top:100%;left:0;width:300px;background:#fff;border:1px solid #E0E0E0;border-radius:3px;box-shadow:0 4px 16px rgba(0,0,0,0.12);z-index:300;max-height:220px;overflow-y:auto;margin-top:2px;"></div>
+                  </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <label style="font-size:13px;font-weight:500;color:#3A3A3A;">Fuseau horaire</label>
+                  <select class="v-select">
+                    <option>(+00:00) UTC</option>
+                    <option>(+01:00) Paris</option>
+                    <option>(+03:00) Nairobi</option>
+                  </select>
+                  <p style="font-size:11px;color:#8A8A8A;line-height:1.4;text-wrap:pretty;">Le fuseau horaire est mis à jour automatiquement pour correspondre à celui de votre ordinateur.</p>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <label style="font-size:13px;font-weight:500;color:#3A3A3A;">Langue</label>
+                  <select class="v-select"><option>Français</option><option>English</option></select>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <label style="font-size:13px;font-weight:500;color:#3A3A3A;">Format des dates et des nombres</label>
+                  <select class="v-select"><option>Français (France)</option><option>English (United States)</option></select>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <label style="font-size:13px;font-weight:500;color:#3A3A3A;">Devise par défaut</label>
+                  <select class="v-select"><option>CFA Franc BCEAO (XOF)</option><option>Euro (EUR)</option><option>Dollar US (USD)</option></select>
+                </div>
+              </div>
+            </div>
+            <div class="section-card">
+              <p style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#8A8A8A; margin-bottom:20px;">Préférences d'affichage</p>
+              <div style="display:flex;flex-direction:column;gap:14px;">
+                <label class="vcheck"><input type="checkbox" checked><span style="font-size:14px;color:#111;line-height:1.4;">Afficher la fenêtre d'ajout d'activité après avoir remporté une affaire</span></label>
+                <label class="vcheck"><input type="checkbox" checked><span style="font-size:14px;color:#111;display:flex;align-items:center;gap:6px;flex-wrap:wrap;line-height:1.4;">Montrer les activités et notes masquées dans les vues détaillées <span class="tooltip-icon" title="Ces activités sont uniquement visibles par vous.">i</span></span></label>
+                <div>
+                  <label class="vcheck"><input type="checkbox" id="openDetailCheck"><span style="font-size:14px;color:#111;display:flex;align-items:center;gap:6px;flex-wrap:wrap;line-height:1.4;">Ouvrir la vue détaillée après la création d'un nouvel élément <span class="tooltip-icon" title="Choisissez les types d'éléments concernés.">i</span></span></label>
+                  <div style="margin-left:26px;margin-top:10px;display:flex;flex-direction:column;gap:10px;">
+                    <label class="vcheck"><input type="checkbox" disabled><span style="font-size:13px;color:#8A8A8A;">Prospect / affaire</span></label>
+                    <label class="vcheck"><input type="checkbox" disabled><span style="font-size:13px;color:#8A8A8A;">Personne</span></label>
+                    <label class="vcheck"><input type="checkbox" disabled><span style="font-size:13px;color:#8A8A8A;">Organisation</span></label>
+                    <label class="vcheck"><input type="checkbox" disabled><span style="font-size:13px;color:#8A8A8A;">Projet</span></label>
+                  </div>
+                </div>
+                <label class="vcheck"><input type="checkbox"><span style="font-size:14px;color:#111;line-height:1.4;">Convertir les numéros de téléphone au format international</span></label>
+                <label class="vcheck"><input type="checkbox" checked><span style="font-size:14px;color:#111;line-height:1.4;">Afficher une animation après chaque affaire gagnée</span></label>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:flex-end;padding-bottom:40px;">
+              <button style="padding:10px 28px;background:var(--green-vooroo);color:#fff;border:none;border-radius:3px;font-family:'Roboto',sans-serif;font-size:14px;font-weight:600;letter-spacing:0.04em;cursor:pointer;" onmouseover="this.style.background='#2A8C39'" onmouseout="this.style.background='#35AA47'">ENREGISTRER</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── PAGE: PRÉFÉRENCES D'INTERFACE ── -->
+        <div id="page-interface" style="display:none; flex:1; overflow-y:auto; padding:32px 40px;" class="page-content">
+          <div style="max-width:820px; margin:0 auto; display:flex; flex-direction:column; gap:28px;">
+            <div>
+              <h1 style="font-size:24px; font-weight:600; color:#111111; line-height:1.2;">Préférences d'interface</h1>
+              <p style="font-size:13px; color:#8A8A8A; margin-top:4px; text-wrap:pretty;">Personnalisez l'apparence et la navigation dans Vooroo. Ces paramètres sont personnels et n'affectent pas les autres utilisateurs du compte de votre entreprise.</p>
+            </div>
+
+            <!-- Apparence -->
+            <div class="section-card">
+              <p style="font-size:15px; font-weight:600; color:#111111; margin-bottom:20px;">Apparence</p>
+              <div style="display:flex;flex-direction:column;gap:6px; max-width:200px;">
+                <label style="font-size:13px;font-weight:500;color:#3A3A3A;">Thème</label>
+                <select class="v-select"><option>Clair</option><option>Sombre</option></select>
+              </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="section-card">
+              <p style="font-size:15px; font-weight:600; color:#111111; margin-bottom:20px;">Navigation</p>
+              <div style="display:flex;flex-direction:column;gap:18px;">
+
+                <!-- Toggle raccourcis clavier -->
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <label class="v-toggle">
+                    <input type="checkbox" checked>
+                    <span class="v-toggle-track"></span>
+                  </label>
+                  <span style="font-size:14px;color:#111111;">Raccourcis clavier</span>
+                  <span class="tooltip-icon" title="Activez les raccourcis clavier pour naviguer plus rapidement dans Vooroo.">i</span>
+                </div>
+
+                <!-- Page d'accueil par défaut -->
+                <div style="display:flex;flex-direction:column;gap:6px; max-width:260px;">
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <label style="font-size:13px;font-weight:500;color:#3A3A3A;">Page d'accueil par défaut</label>
+                    <span class="tooltip-icon" title="La page qui s'affiche lors de votre connexion.">i</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;border:1px solid #E0E0E0;border-radius:3px;padding:8px 12px;background:#fff;cursor:pointer;">
+                    <div style="width:20px;height:20px;border-radius:3px;background:#111111;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                      <i data-lucide="book-open" style="width:12px;height:12px;color:#fff;"></i>
+                    </div>
+                    <span style="font-size:14px;color:#111111;flex:1;">Guide d'utilisation</span>
+                    <i data-lucide="chevron-down" style="width:14px;height:14px;color:#8A8A8A;"></i>
+                  </div>
+                </div>
+
+                <!-- Instructions -->
+                <p style="font-size:13px;color:#3A3A3A;line-height:1.5;text-wrap:pretty;">Choisissez jusqu'à 10 éléments à afficher dans la barre latérale de gauche. Les éléments restants apparaîtront sous le menu « Plus ». Glissez et déposez pour réorganiser les éléments.</p>
+
+                <!-- Two-column menu organizer -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+                  <!-- Sidebar items -->
+                  <div class="menu-col">
+                    <div class="menu-col-header">
+                      <div style="width:28px;height:28px;border-radius:4px;background:#35AA47;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i data-lucide="layout-dashboard" style="width:14px;height:14px;color:#fff;"></i>
+                      </div>
+                      <div>
+                        <p style="font-size:12px;font-weight:600;color:#fff;">Apparaît dans la barre latérale gauche</p>
+                        <p style="font-size:11px;color:rgba(255,255,255,0.6);" id="sidebar-count">7/10</p>
+                      </div>
+                    </div>
+                    <div id="sidebar-list">
+                      <!-- items injected by JS -->
+                    </div>
+                  </div>
+
+                  <!-- Plus menu items -->
+                  <div class="menu-col">
+                    <div class="menu-col-header">
+                      <div style="width:28px;height:28px;border-radius:4px;background:#3A3A3A;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i data-lucide="more-horizontal" style="width:14px;height:14px;color:#fff;"></i>
+                      </div>
+                      <div>
+                        <p style="font-size:12px;font-weight:600;color:#fff;">Apparaît dans le menu Plus</p>
+                        <p style="font-size:11px;color:rgba(255,255,255,0.6);">Éléments supplémentaires</p>
+                      </div>
+                    </div>
+                    <div id="plus-list">
+                      <!-- items injected by JS -->
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- Appliquer configuration par défaut -->
+            <div style="display:flex;align-items:center;gap:6px;padding-bottom:8px;">
+              <span style="font-size:13px;color:var(--green-vooroo);cursor:pointer;font-weight:500;">Appliquer la configuration par défaut du menu</span>
+              <span class="tooltip-icon" title="Réinitialise la barre de navigation à la configuration Vooroo par défaut.">i</span>
+            </div>
+
+          </div>
+
+          <!-- Sticky save bar -->
+          <div class="save-bar">
+            <span style="font-size:13px;color:#8A8A8A;">Les modifications seront appliquées à votre prochaine connexion.</span>
+            <div style="display:flex;gap:10px;">
+              <button style="padding:9px 20px;border:1px solid #E0E0E0;border-radius:3px;background:#fff;font-family:'Roboto',sans-serif;font-size:14px;color:#3A3A3A;cursor:pointer;">Annuler</button>
+              <button style="padding:9px 24px;background:var(--green-vooroo);color:#fff;border:none;border-radius:3px;font-family:'Roboto',sans-serif;font-size:14px;font-weight:600;cursor:pointer;" onmouseover="this.style.background='#2A8C39'" onmouseout="this.style.background='#35AA47'">Enregistrer</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── PAGE: MDP (placeholder) ── -->
+        <div id="page-mdp" style="display:none; flex:1; overflow-y:auto; padding:32px 40px;" class="page-content">
+          <div style="max-width:760px; margin:0 auto;">
+            <h1 style="font-size:24px; font-weight:600; color:#111111;">Mot de passe et identifiant</h1>
+            <p style="font-size:13px; color:#8A8A8A; margin-top:4px;">Modifiez votre mot de passe et vos identifiants de connexion.</p>
+          </div>
+        </div>
+
+        <!-- ── PAGE: ENTREPRISES (placeholder) ── -->
+        <div id="page-entreprises" style="display:none; flex:1; overflow-y:auto; padding:32px 40px;" class="page-content">
+          <div style="max-width:760px; margin:0 auto;">
+            <h1 style="font-size:24px; font-weight:600; color:#111111;">Mes entreprises</h1>
+            <p style="font-size:13px; color:#8A8A8A; margin-top:4px;">Gérez les entreprises liées à votre compte.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440, &quot;height&quot;: 900}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    if (window.lucide) lucide.createIcons();
+
+    // ── Page navigation ──
+    window.showPage = (page) => {
+      const pages = ['profil','interface','mdp','entreprises'];
+      const labels = {
+        profil: 'Profil et préférences personnelles',
+        interface: "Préférences d'interface",
+        mdp: 'Mot de passe et identifiant',
+        entreprises: 'Mes entreprises'
+      };
+      pages.forEach(p => {
+        const el = document.getElementById('page-'+p);
+        const nav = document.getElementById('nav-'+p);
+        if (el) {
+          if (p === page) { el.style.display = 'flex'; el.style.flexDirection = 'column'; }
+          else { el.style.display = 'none'; }
+        }
+        if (nav) nav.classList.toggle('active', p === page);
+      });
+      const lbl = labels[page] || '';
+      const bc = document.getElementById('breadcrumb-sub');
+      const ctx = document.getElementById('context-sub');
+      if (bc) bc.textContent = lbl;
+      if (ctx) ctx.textContent = lbl;
+      if (window.lucide) lucide.createIcons();
+    };
+
+    // ── Phone / WA dial code selector ──
+    const COUNTRIES = [
+      {name:'Algérie',flag:'🇩🇿',code:'+213'},{name:'Allemagne',flag:'🇩🇪',code:'+49'},
+      {name:'Angola',flag:'🇦🇴',code:'+244'},{name:'Bénin',flag:'🇧🇯',code:'+229'},
+      {name:'Burkina Faso',flag:'🇧🇫',code:'+226'},{name:'Burundi',flag:'🇧🇮',code:'+257'},
+      {name:'Cambodge',flag:'🇰🇭',code:'+855'},{name:'Cameroun',flag:'🇨🇲',code:'+237'},
+      {name:'Canada',flag:'🇨🇦',code:'+1'},{name:'Cap-Vert',flag:'🇨🇻',code:'+238'},
+      {name:'Centrafrique',flag:'🇨🇫',code:'+236'},{name:'Comores',flag:'🇰🇲',code:'+269'},
+      {name:'Congo',flag:'🇨🇬',code:'+242'},{name:'Congo (RDC)',flag:'🇨🇩',code:'+243'},
+      {name:"Côte d'Ivoire",flag:'🇨🇮',code:'+225'},{name:'Djibouti',flag:'🇩🇯',code:'+253'},
+      {name:'Égypte',flag:'🇪🇬',code:'+20'},{name:'Espagne',flag:'🇪🇸',code:'+34'},
+      {name:'Éthiopie',flag:'🇪🇹',code:'+251'},{name:'France',flag:'🇫🇷',code:'+33'},
+      {name:'Gabon',flag:'🇬🇦',code:'+241'},{name:'Gambie',flag:'🇬🇲',code:'+220'},
+      {name:'Ghana',flag:'🇬🇭',code:'+233'},{name:'Guinée',flag:'🇬🇳',code:'+224'},
+      {name:'Guinée-Bissau',flag:'🇬🇼',code:'+245'},{name:'Kenya',flag:'🇰🇪',code:'+254'},
+      {name:'Madagascar',flag:'🇲🇬',code:'+261'},{name:'Mali',flag:'🇲🇱',code:'+223'},
+      {name:'Maroc',flag:'🇲🇦',code:'+212'},{name:'Maurice',flag:'🇲🇺',code:'+230'},
+      {name:'Mauritanie',flag:'🇲🇷',code:'+222'},{name:'Niger',flag:'🇳🇪',code:'+227'},
+      {name:'Nigeria',flag:'🇳🇬',code:'+234'},{name:'Ouganda',flag:'🇺🇬',code:'+256'},
+      {name:'Portugal',flag:'🇵🇹',code:'+351'},{name:'Rwanda',flag:'🇷🇼',code:'+250'},
+      {name:'Sénégal',flag:'🇸🇳',code:'+221'},{name:'Tanzanie',flag:'🇹🇿',code:'+255'},
+      {name:'Tchad',flag:'🇹🇩',code:'+235'},{name:'Togo',flag:'🇹🇬',code:'+228'},
+      {name:'Tunisie',flag:'🇹🇳',code:'+216'},{name:'Zambie',flag:'🇿🇲',code:'+260'},
+      {name:'Zimbabwe',flag:'🇿🇼',code:'+263'},
+    ];
+
+    const buildDrop = (dropId, flagId, codeId, btnId) => {
+      const drop = document.getElementById(dropId);
+      if (!drop) return;
+      COUNTRIES.forEach(c => {
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;gap:12px;padding:9px 14px;cursor:pointer;font-size:14px;';
+        row.innerHTML = `<span style="font-size:18px;width:22px;">${c.flag}</span><span style="flex:1;color:#111;">${c.name}</span><span style="color:#8A8A8A;font-size:12px;">${c.code}</span>`;
+        row.addEventListener('mouseenter', () => row.style.background='#EAF7EC');
+        row.addEventListener('mouseleave', () => row.style.background='');
+        row.addEventListener('click', () => {
+          document.getElementById(flagId).textContent = c.flag;
+          document.getElementById(codeId).textContent = c.code;
+          drop.style.display = 'none';
+        });
+        drop.appendChild(row);
+      });
+      const cam = COUNTRIES.find(c => c.name === 'Cameroun');
+      if (cam) { document.getElementById(flagId).textContent = cam.flag; document.getElementById(codeId).textContent = cam.code; }
+    };
+    buildDrop('phoneDrop','phoneFlag','phoneCode','phoneDialBtn');
+    buildDrop('waDrop','waFlag','waCode','waDialBtn');
+
+    window.toggleDial = (which) => {
+      const drop = document.getElementById(which==='phone'?'phoneDrop':'waDrop');
+      const other = document.getElementById(which==='phone'?'waDrop':'phoneDrop');
+      other.style.display = 'none';
+      drop.style.display = drop.style.display === 'block' ? 'none' : 'block';
+    };
+    document.addEventListener('click', (e) => {
+      ['phone','wa'].forEach(w => {
+        const btn = document.getElementById(w+'DialBtn');
+        const drop = document.getElementById(w+'Drop');
+        if (btn && drop && !btn.contains(e.target) && !drop.contains(e.target)) drop.style.display = 'none';
+      });
+    });
+
+    // ── Sub-checkboxes ──
+    const parent = document.getElementById('openDetailCheck');
+    if (parent) parent.addEventListener('change', () => {
+      document.querySelectorAll('.vcheck input[disabled]').forEach(cb => {
+        cb.disabled = !parent.checked;
+        cb.closest('.vcheck').querySelector('span').style.color = parent.checked ? '#111' : '#8A8A8A';
+      });
+    });
+
+    // ── Menu organizer ──
+    const ICON_MAP = {
+      'Guide d\'utilisation':'book-open','Statistiques':'bar-chart-2','Prospects':'target',
+      'Pipeline Affaires':'kanban','Activités':'calendar-check','Planificateur de rendez-vous':'calendar-clock',
+      'Messagerie de vente':'mail','Contacts':'users','Devis & Factures':'file-text',
+      'Projets':'folder','Documents':'file','Produits':'package',
+      'Vooroo Academy':'graduation-cap','Equipe':'users-2',
+      'Importer des données':'upload','Exporter des données':'download','Restaurer des données':'rotate-ccw',
+    };
+    const COLOR_MAP = {
+      'Guide d\'utilisation':'#1A1B5C','Statistiques':'#7C3AED','Prospects':'#F59E0B',
+      'Pipeline Affaires':'#0EA5E9','Activités':'#10B981','Planificateur de rendez-vous':'#EC4899',
+      'Messagerie de vente':'#EF4444','Contacts':'#6366F1','Devis & Factures':'#F97316',
+      'Projets':'#14B8A6','Documents':'#64748B','Produits':'#A855F7',
+      'Vooroo Academy':'#35AA47','Equipe':'#0284C7',
+      'Importer des données':'#78716C','Exporter des données':'#78716C','Restaurer des données':'#78716C',
+    };
+
+    let sidebarItems = ['Guide d\'utilisation','Statistiques','Prospects','Pipeline Affaires','Activités','Planificateur de rendez-vous','Messagerie de vente'];
+    let plusItems = ['Contacts','Devis & Factures','Projets','Documents','Produits','Vooroo Academy','Equipe','Importer des données','Exporter des données','Restaurer des données'];
+
+    let dragSrc = null;
+    let dragFrom = null;
+
+    const renderMenus = () => {
+      const sidebarEl = document.getElementById('sidebar-list');
+      const plusEl = document.getElementById('plus-list');
+      const countEl = document.getElementById('sidebar-count');
+      if (!sidebarEl || !plusEl) return;
+      if (countEl) countEl.textContent = sidebarItems.length + '/10';
+
+      const makeItem = (name, listRef, otherRef, isPlus) => {
+        const div = document.createElement('div');
+        div.className = 'menu-item';
+        div.draggable = true;
+        div.dataset.name = name;
+        const icon = ICON_MAP[name] || 'circle';
+        const color = COLOR_MAP[name] || '#8A8A8A';
+        div.innerHTML = `
+          <i data-lucide="grip-vertical" style="width:14px;height:14px;color:#C0C0C0;flex-shrink:0;"></i>
+          <div class="menu-icon-wrap" style="background:${color}10;">
+            <i data-lucide="${icon}" style="width:14px;height:14px;color:${color};"></i>
+          </div>
+          <span style="font-size:14px;color:#111111;flex:1;">${name}</span>
+          <div class="eye-btn" title="${isPlus ? 'Déplacer dans la barre latérale' : 'Déplacer dans le menu Plus'}">
+            <i data-lucide="${isPlus ? 'arrow-left' : 'arrow-right'}" style="width:14px;height:14px;"></i>
+          </div>
+        `;
+        // Move button
+        div.querySelector('.eye-btn').addEventListener('click', (e) => {
+          e.stopPropagation();
+          const idx = listRef.indexOf(name);
+          if (idx > -1) listRef.splice(idx, 1);
+          if (!isPlus && sidebarItems.length >= 10) { otherRef.push(name); }
+          else { otherRef.splice(isPlus ? sidebarItems.length : 0, 0, name); }
+          renderMenus();
+        });
+        // Drag
+        div.addEventListener('dragstart', (e) => { dragSrc = name; dragFrom = listRef; div.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; });
+        div.addEventListener('dragend', () => div.classList.remove('dragging'));
+        div.addEventListener('dragover', (e) => { e.preventDefault(); div.classList.add('drag-over'); });
+        div.addEventListener('dragleave', () => div.classList.remove('drag-over'));
+        div.addEventListener('drop', (e) => {
+          e.preventDefault(); div.classList.remove('drag-over');
+          if (!dragSrc || dragSrc === name) return;
+          const srcList = dragFrom;
+          const tgtList = listRef;
+          const srcIdx = srcList.indexOf(dragSrc);
+          const tgtIdx = tgtList.indexOf(name);
+          if (srcIdx > -1) srcList.splice(srcIdx, 1);
+          if (srcList === tgtList) { tgtList.splice(tgtIdx, 0, dragSrc); }
+          else {
+            if (tgtList === sidebarItems && sidebarItems.length >= 10) { dragFrom.push(dragSrc); }
+            else { tgtList.splice(tgtIdx, 0, dragSrc); }
+          }
+          dragSrc = null; dragFrom = null;
+          renderMenus();
+        });
+        return div;
+      };
+
+      sidebarEl.innerHTML = '';
+      sidebarItems.forEach(n => sidebarEl.appendChild(makeItem(n, sidebarItems, plusItems, false)));
+      plusEl.innerHTML = '';
+      plusItems.forEach(n => plusEl.appendChild(makeItem(n, plusItems, sidebarItems, true)));
+
+      if (window.lucide) lucide.createIcons();
+    };
+
+    renderMenus();
+    // Profile dropdown
+    const menuBtn = document.getElementById('user-menu-btn');
+    const menuDrop = document.getElementById('profile-dropdown');
+    if (menuBtn && menuDrop) {
+      menuBtn.addEventListener('click', (e) => { e.stopPropagation(); const open = menuDrop.style.display !== 'block'; menuDrop.style.display = open ? 'block' : 'none'; if (open && window.lucide) lucide.createIcons(); });
+      document.addEventListener('click', (e) => { if (!menuDrop.contains(e.target)) menuDrop.style.display = 'none'; });
+    }
+    if (window.lucide) lucide.createIcons();
+  }
+}
+</script>
+</body>
+</html>

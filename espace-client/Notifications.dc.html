@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/styles.css">
+  <script src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:'Roboto',-apple-system,sans-serif}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
+  </style>
+<script>
+/* Affiché dans le module Paramètres : la coquille de cet écran (rail, en-tête,
+   menu latéral) ferait doublon avec celle du module — on ne garde que le contenu. */
+if (window.self !== window.top) document.documentElement.classList.add('vr-embedded');
+</script>
+<style>
+.vr-embedded .vr-shell-rail,
+.vr-embedded .vr-shell-topbar,
+.vr-embedded .vr-shell-subheader,
+.vr-embedded .vr-shell-subnav{display:none!important}
+.vr-embedded,.vr-embedded body{height:100%}
+</style>
+</helmet>
+
+<div style="display:flex;height:100vh;overflow:hidden;font-family:'Roboto',-apple-system,sans-serif">
+
+  <!-- Rail -->
+  <div class="vr-shell-rail" style="width:46px;background:#1A1B5C;display:flex;flex-direction:column;align-items:center;flex-shrink:0;z-index:20">
+    <div style="height:48px;width:100%;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,0.08)">
+      <img src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/assets/logo-mark-white.png" style="width:22px;object-fit:contain">
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:1px;width:100%">
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="layout-dashboard" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="users" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="bar-chart-2" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="dollar-sign" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="calendar" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="user-circle" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="file-text" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="folder" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="mail" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.12);cursor:pointer"><i data-lucide="settings" style="width:17px;height:17px;color:#35AA47"></i></div>
+    </div>
+    <div style="padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:6px;border-top:1px solid rgba(255,255,255,0.08)">
+      <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,0.3);cursor:pointer;background:#fff;flex-shrink:0"><img src="uploads/logo Axa.png" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+      <div style="width:100%;height:28px;display:flex;align-items:center;justify-content:center;opacity:.4;cursor:pointer" style-hover="opacity:.8"><i data-lucide="more-horizontal" style="width:15px;height:15px;color:#fff"></i></div>
+    </div>
+  </div>
+
+  <!-- Right side -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0">
+
+    <!-- Top bar -->
+    <div class="vr-shell-topbar" style="height:48px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 20px;flex-shrink:0">
+      <span style="font-size:14px;font-weight:600;color:#111111;flex-shrink:0">Paramètres</span>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px">
+        <div style="position:relative;width:min(420px,100%)">
+          <i data-lucide="search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:#9CA3AF;pointer-events:none"></i>
+          <input placeholder="Rechercher dans Vooroo..." style="width:100%;padding:6px 12px 6px 30px;border:1px solid #D1D5DB;border-radius:20px;font-size:12px;font-family:'Roboto',sans-serif;color:#111;background:#fff">
+        </div>
+        <div style="width:28px;height:28px;border-radius:50%;border:1px solid #D1D5DB;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0" style-hover="background:#F9FAFB">
+          <i data-lucide="plus" style="width:14px;height:14px;color:#374151"></i>
+        </div>
+        <div style="position:relative;flex-shrink:0;cursor:pointer">
+          <img src="uploads/Gemini_Generated_Image_k2cip2k2cip2k2ci.png" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid #27A36A;display:block">
+          <div style="position:absolute;bottom:0;right:0;width:8px;height:8px;border-radius:50%;background:#22C55E;border:1.5px solid #fff"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#F3F4F6"><i data-lucide="circle-help" style="width:15px;height:15px;color:#9CA3AF"></i></div>
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative" style-hover="background:#F3F4F6">
+          <i data-lucide="bell" style="width:15px;height:15px;color:#9CA3AF"></i>
+          <div style="position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:#EF4444;border:1px solid #fff"></div>
+        </div>
+        <div style="width:30px;height:30px;border-radius:50%;background:#111111;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;cursor:pointer">H</div>
+      </div>
+    </div>
+
+    <!-- Sub-header -->
+    <div class="vr-shell-subheader" style="height:52px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0">
+      <div style="width:34px;height:34px;border-radius:8px;background:#F3F4F6;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <i data-lucide="settings" style="width:16px;height:16px;color:#6B7280"></i>
+      </div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#111111;line-height:1.2">Paramètres</div>
+        <div style="font-size:12px;color:#9CA3AF;line-height:1.2">Notifications</div>
+      </div>
+    </div>
+
+    <!-- Content row -->
+    <div style="flex:1;display:flex;overflow:hidden">
+
+      <!-- Settings sidebar -->
+      <div class="vr-shell-subnav" style="width:185px;background:#fff;border-right:1px solid #E5E7EB;overflow-y:auto;flex-shrink:0;display:flex;flex-direction:column">
+        <div style="padding:14px 16px 10px;font-size:14px;font-weight:700;color:#111111">Paramètres</div>
+        <div style="padding:12px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Organisation</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="building-2" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Entreprise</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="tag" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Champs de données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="user" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Aperçu utilisateur</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Abonnement</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="bar-chart-2" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Utilisation</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="credit-card" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Facturation</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Préférences</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;background:#F0FDF4;border-left:2px solid #27A36A"><i data-lucide="bell" style="width:16px;height:16px;color:#27A36A;flex-shrink:0"></i><span style="font-size:13px;color:#27A36A;font-weight:500">Notifications</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="smartphone" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Vos appareils</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="mail" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Synchronisation des e-mails</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="hard-drive" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Google Drive</span></div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Données</span></div>
+        <div style="padding:2px 8px 16px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="download" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Import des données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="upload" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Export des données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="rotate-ccw" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Restauration</span></div>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div style="flex:1;overflow-y:auto;background:#F4F5F7;min-width:0">
+        <div style="max-width:1100px;margin:0 auto;padding:28px 24px">
+
+          <h1 style="font-size:20px;font-weight:700;color:#111111;margin-bottom:24px">Notifications</h1>
+
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden">
+
+            <!-- Paramètres des notifications -->
+            <div style="padding:20px 24px">
+              <div style="font-size:15px;font-weight:600;color:#111111;margin-bottom:4px">Paramètres des notifications</div>
+              <div style="font-size:13px;color:#6B7280">
+                Ajustez la manière dont vous recevez les notifications dans votre flux de notifications.
+                <span onClick="{{ openPanel }}" style="color:#27A36A;font-weight:500;cursor:pointer;margin-left:4px" style-hover="text-decoration:underline">Ouvrir les paramètres de notifications</span>
+              </div>
+            </div>
+            <div style="height:1px;background:#E5E7EB"></div>
+
+            <!-- Notification in-app -->
+            <div style="padding:20px 24px">
+              <div style="font-size:15px;font-weight:600;color:#111111;margin-bottom:16px">Notification in-app sur bureau</div>
+              <!-- Toggle row 1 -->
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px;padding-left:20px">
+                <span style="font-size:13px;color:#374151;line-height:1.5;flex:1">Afficher des notifications en temps réel sur les mises à jour dès qu'elles interviennent</span>
+                <div onClick="{{ toggleInAppRealTime }}" style="width:36px;height:20px;border-radius:10px;background:{{ togInAppRealTime.bg }};position:relative;cursor:pointer;flex-shrink:0;margin-top:1px">
+                  <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ togInAppRealTime.tx }};transition:transform 150ms"></div>
+                </div>
+              </div>
+              <!-- Toggle row 2 -->
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding-left:20px">
+                <div style="display:flex;align-items:center;gap:6px;flex:1">
+                  <span style="font-size:13px;color:#374151">Afficher le bot de prise en main</span>
+                  <div style="width:15px;height:15px;border-radius:50%;border:1.5px solid #9CA3AF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:8px;color:#9CA3AF;font-weight:700">i</span></div>
+                </div>
+                <div onClick="{{ toggleInAppBot }}" style="width:36px;height:20px;border-radius:10px;background:{{ togInAppBot.bg }};position:relative;cursor:pointer;flex-shrink:0">
+                  <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ togInAppBot.tx }};transition:transform 150ms"></div>
+                </div>
+              </div>
+            </div>
+            <div style="height:1px;background:#E5E7EB"></div>
+
+            <!-- Préférences marketing -->
+            <div style="padding:20px 24px">
+              <div style="font-size:15px;font-weight:600;color:#111111;margin-bottom:4px">Préférences marketing et communications</div>
+              <div style="font-size:13px;color:#6B7280;margin-bottom:16px">Contrôlez vos préférences marketing et communications, ainsi que la façon dont nous utilisons vos données.</div>
+              <!-- Toggle 3 -->
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px;padding-left:20px">
+                <span style="font-size:13px;color:#374151;line-height:1.5;flex:1">Recevez des conseils pratiques, des actus produits et des offres exclusives par e-mail</span>
+                <div onClick="{{ toggleMarketingEmail }}" style="width:36px;height:20px;border-radius:10px;background:{{ togMarketingEmail.bg }};position:relative;cursor:pointer;flex-shrink:0;margin-top:1px">
+                  <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ togMarketingEmail.tx }};transition:transform 150ms"></div>
+                </div>
+              </div>
+              <!-- Toggle 4 -->
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px;padding-left:20px">
+                <span style="font-size:13px;color:#374151;line-height:1.5;flex:1">Partager mes données avec des tiers pour des campagnes de marketing plus pertinentes</span>
+                <div onClick="{{ toggleMarketingData }}" style="width:36px;height:20px;border-radius:10px;background:{{ togMarketingData.bg }};position:relative;cursor:pointer;flex-shrink:0;margin-top:1px">
+                  <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ togMarketingData.tx }};transition:transform 150ms"></div>
+                </div>
+              </div>
+              <!-- Toggle 5 -->
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding-left:20px">
+                <span style="font-size:13px;color:#374151;flex:1">Recevez des messages via WhatsApp Business</span>
+                <div onClick="{{ toggleMarketingWhatsapp }}" style="width:36px;height:20px;border-radius:10px;background:{{ togMarketingWhatsapp.bg }};position:relative;cursor:pointer;flex-shrink:0">
+                  <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ togMarketingWhatsapp.tx }};transition:transform 150ms"></div>
+                </div>
+              </div>
+            </div>
+            <div style="height:1px;background:#E5E7EB"></div>
+
+            <!-- Save -->
+            <div style="padding:16px 24px;display:flex;align-items:center;gap:12px">
+              <div onClick="{{ save }}" style="display:inline-flex;align-items:center;gap:6px;padding:9px 20px;background:#27A36A;border-radius:4px;cursor:pointer;font-size:13px;font-weight:500;color:#fff" style-hover="background:#1f8257">
+                <sc-if value="{{ saved }}" hint-placeholder-val="{{ false }}"><i data-lucide="check" style="width:13px;height:13px;color:#fff"></i></sc-if>
+                {{ saveLabel }}
+              </div>
+              <sc-if value="{{ saved }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size:12px;color:#27A36A;font-weight:500">Préférences enregistrées ✓</span>
+              </sc-if>
+            </div>
+          </div>
+
+          <!-- Bloc 2 : Paramètres du panneau inline -->
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;margin-top:16px">
+
+            <!-- Suivi des progrès -->
+            <div style="padding:20px 24px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+              <div style="flex:1">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+                  <div style="font-size:15px;font-weight:600;color:#111111">Suivi des progrès</div>
+                  <div style="width:15px;height:15px;border-radius:50%;border:1.5px solid #9CA3AF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:8px;color:#9CA3AF;font-weight:700">i</span></div>
+                </div>
+                <div style="font-size:13px;color:#6B7280;line-height:1.5">Suivez votre progression journalière et mensuelle vers la réalisation de vos objectifs.</div>
+              </div>
+              <div onClick="{{ togglePanelProgress }}" style="width:36px;height:20px;border-radius:10px;background:{{ togProgress.bg }};position:relative;cursor:pointer;flex-shrink:0;margin-top:2px">
+                <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ togProgress.tx }};transition:transform 150ms"></div>
+              </div>
+            </div>
+            <div style="height:1px;background:#E5E7EB"></div>
+
+            <!-- Gérer les notifications -->
+            <div style="padding:20px 24px">
+              <div style="font-size:15px;font-weight:600;color:#111111;margin-bottom:16px">Gérer les notifications</div>
+
+              <!-- Activer les alertes -->
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px">
+                <span style="font-size:13px;font-weight:500;color:#111111">Activer les alertes</span>
+                <div onClick="{{ togglePanelAlerts }}" style="width:36px;height:20px;border-radius:10px;background:{{ togAlerts.bg }};position:relative;cursor:pointer;flex-shrink:0">
+                  <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ togAlerts.tx }};transition:transform 150ms"></div>
+                </div>
+              </div>
+              <div style="font-size:13px;color:#6B7280;margin-bottom:12px;line-height:1.5">Recevez des notifications pour les nouvelles activités de flux sous forme d'alertes dans le coin supérieur droit de votre écran.</div>
+              <div style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid #E5E7EB;border-radius:4px;cursor:pointer;background:#F9FAFB;font-size:12px;color:#374151;margin-bottom:20px" style-hover="background:#F3F4F6">
+                <i data-lucide="pause-circle" style="width:13px;height:13px;color:#6B7280"></i>
+                Mettre les alertes en pause pour aujourd'hui
+              </div>
+
+              <!-- Recevoir par e-mail -->
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px">
+                <span style="font-size:13px;font-weight:500;color:#111111">Recevoir les notifications par e-mail</span>
+                <div onClick="{{ togglePanelEmail }}" style="width:36px;height:20px;border-radius:10px;background:{{ togEmail.bg }};position:relative;cursor:pointer;flex-shrink:0">
+                  <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ togEmail.tx }};transition:transform 150ms"></div>
+                </div>
+              </div>
+              <div style="font-size:13px;color:#6B7280;margin-bottom:12px;line-height:1.5">Recevez des e-mails en temps réel pour les activités sélectionnées et un résumé quotidien de l'activité de votre compte, à l'heure que vous avez fixée.</div>
+              <div style="display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid #E5E7EB;border-radius:4px;background:#F9FAFB;cursor:pointer;font-size:12px;color:#374151" style-hover="background:#F3F4F6">
+                <i data-lucide="clock" style="width:13px;height:13px;color:#6B7280"></i>
+                À 7:00 AM
+                <i data-lucide="chevron-down" style="width:12px;height:12px;color:#9CA3AF"></i>
+              </div>
+            </div>
+            <div style="height:1px;background:#E5E7EB"></div>
+
+            <!-- Types de notifications -->
+            <div style="padding:20px 24px">
+              <div style="font-size:15px;font-weight:600;color:#111111;margin-bottom:4px">Types de notifications</div>
+              <div style="font-size:13px;color:#6B7280;margin-bottom:16px;line-height:1.5">Choisissez les types de notifications que vous souhaitez recevoir. <strong style="color:#374151">Nous vous informerons toujours des informations importantes touchant à votre compte.</strong></div>
+
+              <sc-for list="{{ notifSections }}" as="ns" hint-placeholder-count="8">
+                <div style="border:1px solid #E5E7EB;border-radius:6px;margin-bottom:8px;overflow:hidden">
+                  <div style="display:flex;align-items:center;gap:8px;padding:11px 14px;cursor:pointer;background:#fff" style-hover="background:#F9FAFB">
+                    <div onClick="{{ ns.onToggleOpen }}" style="flex:1;display:flex;align-items:center;gap:8px;min-width:0">
+                      <i data-lucide="{{ ns.chevron }}" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i>
+                      <i data-lucide="{{ ns.icon }}" style="width:13px;height:13px;color:#6B7280;flex-shrink:0"></i>
+                      <span style="font-size:13px;font-weight:500;color:#111111">{{ ns.label }}</span>
+                    </div>
+                    <div onClick="{{ ns.onToggle }}" style="width:34px;height:19px;border-radius:10px;background:{{ ns.togBg }};position:relative;cursor:pointer;flex-shrink:0">
+                      <div style="width:15px;height:15px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ ns.togTx }};transition:transform 150ms"></div>
+                    </div>
+                  </div>
+                  <sc-if value="{{ ns.open }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding:12px 14px 14px;border-top:1px solid #F3F4F6">
+                      <div style="font-size:12px;color:#6B7280;margin-bottom:10px;line-height:1.5">{{ ns.description }}</div>
+                      <sc-if value="{{ ns.isUpdates }}" hint-placeholder-val="{{ false }}">
+                        <div style="margin-bottom:8px">
+                          <span style="font-size:12px;color:#27A36A;font-weight:500;cursor:pointer" style-hover="text-decoration:underline">Gérer les éléments suivis</span>
+                          <div style="font-size:12px;font-weight:600;color:#374151;margin-top:8px;margin-bottom:4px">Notifier à propos de</div>
+                        </div>
+                      </sc-if>
+                      <sc-for list="{{ ns.checkboxes }}" as="nscb" hint-placeholder-count="2">
+                        <div onClick="{{ nscb.onToggle }}" style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;padding:4px 0" style-hover="opacity:.8">
+                          <div style="width:15px;height:15px;border-radius:3px;border:1.5px solid {{ nscb.border }};background:{{ nscb.bg }};flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center">
+                            <sc-if value="{{ nscb.checked }}" hint-placeholder-val="{{ true }}">
+                              <i data-lucide="check" style="width:9px;height:9px;color:#fff"></i>
+                            </sc-if>
+                          </div>
+                          <div style="display:flex;align-items:center;gap:5px;flex:1">
+                            <span style="font-size:12px;color:#374151;line-height:1.4">{{ nscb.label }}</span>
+                            <sc-if value="{{ nscb.hasInfo }}" hint-placeholder-val="{{ false }}">
+                              <div style="width:14px;height:14px;border-radius:50%;border:1.5px solid #D1D5DB;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:7px;color:#9CA3AF;font-weight:700">i</span></div>
+                            </sc-if>
+                          </div>
+                        </div>
+                      </sc-for>
+                      <sc-if value="{{ ns.hasExtra }}" hint-placeholder-val="{{ false }}">
+                        <div style="margin-top:8px">
+                          <div style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid #E5E7EB;border-radius:4px;background:#F9FAFB;font-size:11px;color:#374151;cursor:pointer">{{ ns.extraLabel }}<i data-lucide="chevron-down" style="width:11px;height:11px;color:#9CA3AF"></i></div>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Side panel overlay -->
+  <sc-if value="{{ panelOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closePanel }}" style="position:fixed;inset:0;background:rgba(0,0,0,0.25);z-index:50"></div>
+    <div style="position:fixed;right:0;top:0;bottom:0;width:390px;background:#fff;z-index:51;overflow-y:auto;box-shadow:-4px 0 24px rgba(0,0,0,0.12);display:flex;flex-direction:column">
+
+      <!-- Panel header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #E5E7EB;flex-shrink:0">
+        <div onClick="{{ closePanel }}" style="display:flex;align-items:center;gap:6px;cursor:pointer;color:#374151;font-size:13px;font-weight:500" style-hover="color:#111">
+          <i data-lucide="chevron-left" style="width:16px;height:16px"></i>
+          Retour aux notifications
+        </div>
+        <div onClick="{{ closePanel }}" style="cursor:pointer;color:#9CA3AF" style-hover="color:#374151">
+          <i data-lucide="x" style="width:16px;height:16px"></i>
+        </div>
+      </div>
+
+      <div style="padding:18px 16px;flex:1">
+        <div style="font-size:16px;font-weight:700;color:#111111;margin-bottom:20px">Paramètres</div>
+
+        <!-- Suivi des progrès -->
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #F3F4F6">
+          <div style="flex:1">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
+              <span style="font-size:13px;font-weight:600;color:#111111">Suivi des progrès</span>
+              <div style="width:14px;height:14px;border-radius:50%;border:1.5px solid #9CA3AF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:8px;color:#9CA3AF;font-weight:700">i</span></div>
+            </div>
+            <div style="font-size:12px;color:#6B7280;line-height:1.5">Suivez votre progression journalière et mensuelle vers la réalisation de vos objectifs.</div>
+          </div>
+          <div onClick="{{ togglePanelProgress }}" style="width:36px;height:20px;border-radius:10px;background:{{ togProgress.bg }};position:relative;cursor:pointer;flex-shrink:0;margin-top:2px">
+            <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ togProgress.tx }};transition:transform 150ms"></div>
+          </div>
+        </div>
+
+        <!-- Gérer les notifications -->
+        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #F3F4F6">
+          <div style="font-size:13px;font-weight:700;color:#111111;margin-bottom:14px">Gérer les notifications</div>
+
+          <!-- Activer les alertes -->
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px">
+            <span style="font-size:13px;font-weight:500;color:#111111">Activer les alertes</span>
+            <div onClick="{{ togglePanelAlerts }}" style="width:36px;height:20px;border-radius:10px;background:{{ togAlerts.bg }};position:relative;cursor:pointer;flex-shrink:0">
+              <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ togAlerts.tx }};transition:transform 150ms"></div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:#6B7280;margin-bottom:10px;line-height:1.5">Recevez des notifications pour les nouvelles activités de flux sous forme d'alertes dans le coin supérieur droit de votre écran.</div>
+          <div style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid #E5E7EB;border-radius:4px;cursor:pointer;background:#F9FAFB;font-size:12px;color:#374151;margin-bottom:18px" style-hover="background:#F3F4F6">
+            <i data-lucide="pause-circle" style="width:13px;height:13px;color:#6B7280"></i>
+            Mettre les alertes en pause pour aujourd'hui
+          </div>
+
+          <!-- Recevoir par e-mail -->
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px">
+            <span style="font-size:13px;font-weight:500;color:#111111">Recevoir les notifications par e-mail</span>
+            <div onClick="{{ togglePanelEmail }}" style="width:36px;height:20px;border-radius:10px;background:{{ togEmail.bg }};position:relative;cursor:pointer;flex-shrink:0">
+              <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ togEmail.tx }};transition:transform 150ms"></div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:#6B7280;margin-bottom:10px;line-height:1.5">Recevez des e-mails en temps réel pour les activités sélectionnées et un résumé quotidien de l'activité de votre compte, à l'heure que vous avez fixée.</div>
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid #E5E7EB;border-radius:4px;background:#F9FAFB;cursor:pointer;font-size:12px;color:#374151" style-hover="background:#F3F4F6">
+            <i data-lucide="clock" style="width:13px;height:13px;color:#6B7280"></i>
+            À 7:00 AM
+            <i data-lucide="chevron-down" style="width:12px;height:12px;color:#9CA3AF"></i>
+          </div>
+        </div>
+
+        <!-- Types de notifications -->
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#111111;margin-bottom:4px">Types de notifications</div>
+          <div style="font-size:12px;color:#6B7280;margin-bottom:14px;line-height:1.5">Choisissez les types de notifications que vous souhaitez recevoir. <strong style="color:#374151">Nous vous informerons toujours des informations importantes touchant à votre compte.</strong></div>
+
+          <sc-for list="{{ notifSections }}" as="ns" hint-placeholder-count="8">
+            <div style="border:1px solid #E5E7EB;border-radius:6px;margin-bottom:8px;overflow:hidden">
+              <div style="display:flex;align-items:center;gap:8px;padding:11px 14px;cursor:pointer;background:#fff" style-hover="background:#F9FAFB">
+                <div onClick="{{ ns.onToggleOpen }}" style="flex:1;display:flex;align-items:center;gap:8px;min-width:0">
+                  <i data-lucide="{{ ns.chevron }}" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i>
+                  <i data-lucide="{{ ns.icon }}" style="width:13px;height:13px;color:#6B7280;flex-shrink:0"></i>
+                  <span style="font-size:13px;font-weight:500;color:#111111">{{ ns.label }}</span>
+                </div>
+                <div onClick="{{ ns.onToggle }}" style="width:34px;height:19px;border-radius:10px;background:{{ ns.togBg }};position:relative;cursor:pointer;flex-shrink:0">
+                  <div style="width:15px;height:15px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ ns.togTx }};transition:transform 150ms"></div>
+                </div>
+              </div>
+              <sc-if value="{{ ns.open }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:12px 14px 14px;border-top:1px solid #F3F4F6">
+                  <div style="font-size:12px;color:#6B7280;margin-bottom:10px;line-height:1.5">{{ ns.description }}</div>
+                  <sc-if value="{{ ns.isUpdates }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-bottom:8px">
+                      <span style="font-size:12px;color:#27A36A;font-weight:500;cursor:pointer" style-hover="text-decoration:underline">Gérer les éléments suivis</span>
+                      <div style="font-size:12px;font-weight:600;color:#374151;margin-top:8px;margin-bottom:4px">Notifier à propos de</div>
+                    </div>
+                  </sc-if>
+                  <sc-for list="{{ ns.checkboxes }}" as="nscb" hint-placeholder-count="2">
+                    <div onClick="{{ nscb.onToggle }}" style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;padding:4px 0" style-hover="opacity:.8">
+                      <div style="width:15px;height:15px;border-radius:3px;border:1.5px solid {{ nscb.border }};background:{{ nscb.bg }};flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center">
+                        <sc-if value="{{ nscb.checked }}" hint-placeholder-val="{{ true }}">
+                          <i data-lucide="check" style="width:9px;height:9px;color:#fff"></i>
+                        </sc-if>
+                      </div>
+                      <div style="display:flex;align-items:center;gap:5px;flex:1">
+                        <span style="font-size:12px;color:#374151;line-height:1.4">{{ nscb.label }}</span>
+                        <sc-if value="{{ nscb.hasInfo }}" hint-placeholder-val="{{ false }}">
+                          <div style="width:14px;height:14px;border-radius:50%;border:1.5px solid #D1D5DB;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:7px;color:#9CA3AF;font-weight:700">i</span></div>
+                        </sc-if>
+                      </div>
+                    </div>
+                  </sc-for>
+                  <sc-if value="{{ ns.hasExtra }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:8px">
+                      <div style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid #E5E7EB;border-radius:4px;background:#F9FAFB;font-size:11px;color:#374151;cursor:pointer">{{ ns.extraLabel }}<i data-lucide="chevron-down" style="width:11px;height:11px;color:#9CA3AF"></i></div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    panelOpen: false,
+    inAppRealTime: false, inAppBot: false,
+    marketingEmail: false, marketingData: true, marketingWhatsapp: false,
+    webhooks: false, saved: false,
+    panelProgress: true, panelAlerts: true, panelEmail: true,
+    ns_emails: true, ns_activities: true, ns_updates: true,
+    ns_analytics: false, ns_comments: false, ns_mentions: false, ns_assigned: false, ns_product: false,
+    tog_emails: true, tog_activities: true, tog_updates: true,
+    tog_analytics: true, tog_comments: true, tog_mentions: false, tog_assigned: false, tog_product: true,
+    cb_eAlert: true, cb_eRecap: true,
+    cb_aAlert: true, cb_aRecap: true, cb_aDistinct: false,
+    cb_uAff: true, cb_uOrg: true, cb_uCon: true, cb_uAct: true, cb_uPro: true, cb_uProj: true, cb_uDevis: true, cb_uFact: true, cb_uAlert: true, cb_uHour: false, cb_uDay: false,
+    cb_anAlert: true,
+    cb_coAlert: true, cb_coDistinct: false,
+    cb_meAlert: true, cb_meDistinct: false,
+    cb_asAlert: true, cb_asRecap: true,
+    cb_prAlert: true,
+  };
+
+  t(key) {
+    const on = this.state[key];
+    return { on, bg: on ? '#27A36A' : '#D1D5DB', tx: on ? 'translateX(16px)' : 'translateX(0px)',
+      onToggle: () => this.setState({ [key]: !on }) };
+  }
+
+  cb(key, label, hasInfo) {
+    const checked = this.state[key];
+    return { checked, label, hasInfo: !!hasInfo,
+      border: checked ? '#27A36A' : '#D1D5DB', bg: checked ? '#27A36A' : '#fff',
+      onToggle: () => this.setState({ [key]: !checked }) };
+  }
+
+  componentDidMount()  { if (window.lucide) window.lucide.createIcons(); }
+  componentDidUpdate() { if (window.lucide) window.lucide.createIcons(); }
+
+  renderVals() {
+    const s = this.state;
+
+    const togInAppRealTime   = this.t('inAppRealTime');
+    const togInAppBot        = this.t('inAppBot');
+    const togMarketingEmail  = this.t('marketingEmail');
+    const togMarketingData   = this.t('marketingData');
+    const togMarketingWhatsapp = this.t('marketingWhatsapp');
+    const togWebhooks        = this.t('webhooks');
+    const togProgress        = this.t('panelProgress');
+    const togAlerts          = this.t('panelAlerts');
+    const togEmail           = this.t('panelEmail');
+
+    const toggleInAppRealTime    = togInAppRealTime.onToggle;
+    const toggleInAppBot         = togInAppBot.onToggle;
+    const toggleMarketingEmail   = togMarketingEmail.onToggle;
+    const toggleMarketingData    = togMarketingData.onToggle;
+    const toggleMarketingWhatsapp = togMarketingWhatsapp.onToggle;
+    const toggleWebhooks         = togWebhooks.onToggle;
+    const togglePanelProgress    = togProgress.onToggle;
+    const togglePanelAlerts      = togAlerts.onToggle;
+    const togglePanelEmail       = togEmail.onToggle;
+
+    const openPanel  = () => this.setState({ panelOpen: true });
+    const closePanel = () => this.setState({ panelOpen: false });
+    const panelOpen  = s.panelOpen;
+
+    const save     = () => { this.setState({ saved: true }); setTimeout(() => this.setState({ saved: false }), 2500); };
+    const saved    = s.saved;
+    const saveLabel = saved ? 'Enregistré' : 'Enregistrer';
+
+    const mkSection = (id, label, icon, desc, cbs, hasExtra, extraLabel, isUpdates) => {
+      const open = s['ns_' + id];
+      const tog  = s['tog_' + id];
+      return {
+        label, icon, description: desc,
+        open, chevron: open ? 'chevron-up' : 'chevron-down',
+        togBg: tog ? '#27A36A' : '#D1D5DB',
+        togTx: tog ? 'translateX(15px)' : 'translateX(0px)',
+        checkboxes: cbs, hasExtra: !!hasExtra, extraLabel: extraLabel || '',
+        isUpdates: !!isUpdates,
+        onToggleOpen: () => this.setState({ ['ns_' + id]: !open }),
+        onToggle: () => this.setState({ ['tog_' + id]: !tog }),
+      };
+    };
+
+    const notifSections = [
+      mkSection('emails', 'Suivi des e-mails', 'mail',
+        "Lorsque les clients ouvrent les e-mails que vous avez envoyés ou cliquent sur leurs liens. S'applique aux e-mails pour lesquels le suivi est activé.",
+        [ this.cb('cb_eAlert', "Afficher l'alerte", true), this.cb('cb_eRecap', "Inclure dans l'e-mail récapitulatif", true) ]),
+      mkSection('activities', "Rappels d'activités", 'calendar-check',
+        'Activités programmées pour la journée.',
+        [ this.cb('cb_aAlert', "Afficher l'alerte", true),
+          this.cb('cb_aRecap', "Inclure dans l'e-mail récapitulatif", false),
+          this.cb('cb_aDistinct', "Envoyer un e-mail distinct 1 heure avant le début de l'activité", false) ],
+        true, '10 minutes avant'),
+      mkSection('updates', 'Mises à jour sur ce que je suis', 'eye',
+        "Lorsque des modifications sont apportées aux affaires, aux personnes de contact ou aux organisations que vous suivez.",
+        [ this.cb('cb_uAff', 'Affaires', false), this.cb('cb_uOrg', 'Organisations', false), this.cb('cb_uCon', 'Contacts', false),
+          this.cb('cb_uAct', 'Activités', false), this.cb('cb_uPro', 'Prospects', false), this.cb('cb_uProj', 'Projets', false),
+          this.cb('cb_uDevis', 'Devis', false), this.cb('cb_uFact', 'Factures', false),
+          this.cb('cb_uAlert', "Afficher l'alerte", true),
+          this.cb('cb_uHour', "Envoyer un récapitulatif par e-mail toutes les heures", false),
+          this.cb('cb_uDay', "Envoyer un récapitulatif par e-mail une fois par jour", true) ],
+        false, '', true),
+      mkSection('analytics', 'Analytique et conseils personnalisés', 'bar-chart-2',
+        'Aperçu des résultats et recommandations concrètes basées sur les performances passées.',
+        [ this.cb('cb_anAlert', "Afficher l'alerte", true) ]),
+      mkSection('comments', 'Commentaires', 'message-square',
+        "Lorsqu'un membre de l'équipe commente une note dont vous êtes propriétaire ou sur laquelle vous avez laissé des commentaires.",
+        [ this.cb('cb_coAlert', "Afficher l'alerte", true),
+          this.cb('cb_coDistinct', "Envoyer un e-mail distinct pour chaque commentaire", false) ]),
+      mkSection('mentions', 'Mentions', 'at-sign',
+        "Lorsqu'un membre de l'équipe vous @mentionne dans une note ou un commentaire.",
+        [ this.cb('cb_meAlert', "Afficher l'alerte", true),
+          this.cb('cb_meDistinct', "Envoyer un e-mail distinct chaque fois que l'on vous @mentionne", false) ]),
+      mkSection('assigned', 'Attribuée à vous', 'user-check',
+        "Lorsqu'un nouvel élément vous est attribué (comme une affaire, une activité ou un projet).",
+        [ this.cb('cb_asAlert', "Afficher l'alerte", true),
+          this.cb('cb_asRecap', "Inclure dans l'e-mail récapitulatif", true) ]),
+      mkSection('product', 'Nouveautés produit', 'package',
+        "Actualités sur les dernières versions et les fonctionnalités à venir de Vooroo.",
+        [ this.cb('cb_prAlert', "Afficher l'alerte", true) ]),
+    ];
+
+    return {
+      panelOpen, openPanel, closePanel,
+      togInAppRealTime, togInAppBot, toggleInAppRealTime, toggleInAppBot,
+      togMarketingEmail, togMarketingData, togMarketingWhatsapp, togWebhooks,
+      toggleMarketingEmail, toggleMarketingData, toggleMarketingWhatsapp, toggleWebhooks,
+      togProgress, togAlerts, togEmail,
+      togglePanelProgress, togglePanelAlerts, togglePanelEmail,
+      save, saved, saveLabel,
+      notifSections,
+    };
+  }
+}
+</script>
+</body>
+</html>

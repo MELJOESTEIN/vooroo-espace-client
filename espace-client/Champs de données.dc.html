@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/styles.css">
+  <script src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:'Roboto',-apple-system,sans-serif}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
+  </style>
+<script>
+/* Affiché dans le module Paramètres : la coquille de cet écran (rail, en-tête,
+   menu latéral) ferait doublon avec celle du module — on ne garde que le contenu. */
+if (window.self !== window.top) document.documentElement.classList.add('vr-embedded');
+</script>
+<style>
+.vr-embedded .vr-shell-rail,
+.vr-embedded .vr-shell-topbar,
+.vr-embedded .vr-shell-subheader,
+.vr-embedded .vr-shell-subnav{display:none!important}
+.vr-embedded,.vr-embedded body{height:100%}
+</style>
+</helmet>
+
+<div style="display:flex;height:100vh;overflow:hidden;font-family:'Roboto',-apple-system,sans-serif">
+
+  <!-- Rail -->
+  <div class="vr-shell-rail" style="width:46px;background:#1A1B5C;display:flex;flex-direction:column;align-items:center;flex-shrink:0;z-index:20">
+    <div style="height:48px;width:100%;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,0.08)">
+      <img src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/assets/logo-mark-white.png" style="width:22px;object-fit:contain">
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:1px;width:100%">
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="layout-dashboard" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="users" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="bar-chart-2" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="dollar-sign" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="calendar" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="user-circle" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="file-text" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="folder" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;opacity:.45;cursor:pointer" style-hover="opacity:1;background:rgba(255,255,255,0.08)"><i data-lucide="mail" style="width:17px;height:17px;color:#fff"></i></div>
+      <div style="width:100%;height:36px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.12);cursor:pointer"><i data-lucide="settings" style="width:17px;height:17px;color:#35AA47"></i></div>
+    </div>
+    <div style="padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:6px;border-top:1px solid rgba(255,255,255,0.08)">
+      <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,0.3);cursor:pointer;background:#fff;flex-shrink:0"><img src="uploads/logo Axa.png" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+      <div style="width:100%;height:28px;display:flex;align-items:center;justify-content:center;opacity:.4;cursor:pointer" style-hover="opacity:.8"><i data-lucide="more-horizontal" style="width:15px;height:15px;color:#fff"></i></div>
+    </div>
+  </div>
+
+  <!-- Right side -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0">
+
+    <!-- Top bar -->
+    <div class="vr-shell-topbar" style="height:48px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 20px;flex-shrink:0">
+      <span style="font-size:14px;font-weight:600;color:#111111;flex-shrink:0">Paramètres</span>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px">
+        <div style="position:relative;width:min(420px,100%)">
+          <i data-lucide="search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:#9CA3AF;pointer-events:none"></i>
+          <input placeholder="Rechercher dans Vooroo..." style="width:100%;padding:6px 12px 6px 30px;border:1px solid #D1D5DB;border-radius:20px;font-size:12px;font-family:'Roboto',sans-serif;color:#111;background:#fff">
+        </div>
+        <div style="width:28px;height:28px;border-radius:50%;border:1px solid #D1D5DB;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0" style-hover="background:#F9FAFB">
+          <i data-lucide="plus" style="width:14px;height:14px;color:#374151"></i>
+        </div>
+        <div style="position:relative;flex-shrink:0;cursor:pointer">
+          <img src="uploads/Gemini_Generated_Image_k2cip2k2cip2k2ci.png" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid #27A36A;display:block">
+          <div style="position:absolute;bottom:0;right:0;width:8px;height:8px;border-radius:50%;background:#22C55E;border:1.5px solid #fff"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#F3F4F6"><i data-lucide="circle-help" style="width:15px;height:15px;color:#9CA3AF"></i></div>
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative" style-hover="background:#F3F4F6">
+          <i data-lucide="bell" style="width:15px;height:15px;color:#9CA3AF"></i>
+          <div style="position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:#EF4444;border:1px solid #fff"></div>
+        </div>
+        <div style="width:30px;height:30px;border-radius:50%;background:#111111;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;cursor:pointer">H</div>
+      </div>
+    </div>
+
+    <!-- Sub-header -->
+    <div class="vr-shell-subheader" style="height:52px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0">
+      <div style="width:34px;height:34px;border-radius:8px;background:#F3F4F6;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <i data-lucide="settings" style="width:16px;height:16px;color:#6B7280"></i>
+      </div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#111111;line-height:1.2">Paramètres</div>
+        <div style="font-size:12px;color:#9CA3AF;line-height:1.2">Champs de données</div>
+      </div>
+    </div>
+
+    <!-- Content row -->
+    <div style="flex:1;display:flex;overflow:hidden">
+
+      <!-- Settings sidebar -->
+      <div class="vr-shell-subnav" style="width:185px;background:#fff;border-right:1px solid #E5E7EB;overflow-y:auto;flex-shrink:0;display:flex;flex-direction:column">
+        <div style="padding:14px 16px 10px;font-size:14px;font-weight:700;color:#111111">Paramètres</div>
+        <div style="padding:12px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Organisation</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="building-2" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Entreprise</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;background:#F0FDF4;border-left:2px solid #27A36A"><i data-lucide="tag" style="width:16px;height:16px;color:#27A36A;flex-shrink:0"></i><span style="font-size:13px;color:#27A36A;font-weight:500">Champs de données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="user" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Aperçu utilisateur</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Abonnement</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="bar-chart-2" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Utilisation</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="credit-card" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Facturation</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Préférences</span></div>
+        <div style="padding:2px 8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="bell" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Notifications</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="smartphone" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Vos appareils</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="mail" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Synchronisation des e-mails</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="hard-drive" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Google Drive</span></div>
+        </div>
+        <div style="padding:14px 12px 4px"><span style="font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.07em;text-transform:uppercase">Données</span></div>
+        <div style="padding:2px 8px 16px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="download" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Import des données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="upload" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Export des données</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:4px;cursor:pointer;border-left:2px solid transparent" style-hover="background:#F9FAFB"><i data-lucide="rotate-ccw" style="width:16px;height:16px;color:#9CA3AF;flex-shrink:0"></i><span style="font-size:13px;color:#374151">Restauration</span></div>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div style="flex:1;overflow-y:auto;background:#F4F5F7;min-width:0">
+        <div style="max-width:1100px;margin:0 auto;padding:28px 24px">
+
+          <!-- Page title -->
+          <div style="margin-bottom:20px">
+            <h1 style="font-size:22px;font-weight:700;color:#111111;margin-bottom:4px">Champs de données</h1>
+            <p style="font-size:13px;color:#6B7280">Gérez les champs obligatoires et créez des champs personnalisés pour chaque module.</p>
+          </div>
+
+          <!-- Info banner -->
+          <div style="background:#E8F7EB;border:1px solid #B2DFC0;border-radius:6px;padding:10px 16px;display:flex;align-items:center;gap:10px;margin-bottom:20px">
+            <i data-lucide="info" style="width:15px;height:15px;color:#27A36A;flex-shrink:0"></i>
+            <span style="font-size:13px;color:#27A36A;font-weight:500">15 champs personnalisés utilisés sur 300</span>
+          </div>
+
+          <!-- Module tabs -->
+          <div style="display:flex;border-bottom:1px solid #E5E7EB;margin-bottom:20px;background:#fff;border-radius:6px 6px 0 0;padding:0 4px">
+            <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="6">
+              <div onClick="{{ tab.onClick }}" style="display:flex;align-items:center;gap:6px;padding:12px 14px;font-size:13px;font-weight:{{ tab.fw }};color:{{ tab.color }};border-bottom:2px solid {{ tab.border }};cursor:pointer;white-space:nowrap;flex-shrink:0" style-hover="color:#111111">
+                <i data-lucide="{{ tab.icon }}" style="width:13px;height:13px"></i>
+                {{ tab.label }}
+              </div>
+            </sc-for>
+          </div>
+
+          <!-- Obligatoires blocks -->
+          <sc-if value="{{ hasObligatoires }}" hint-placeholder-val="{{ true }}">
+            <sc-for list="{{ obligatoiresBlocks }}" as="block" hint-placeholder-count="1">
+              <div style="background:#fff;border:1px solid #E5E7EB;border-radius:6px;margin-bottom:16px;overflow:hidden">
+                <!-- Block header -->
+                <div style="display:flex;align-items:flex-start;gap:12px;padding:16px 20px 12px;border-bottom:1px solid #F3F4F6">
+                  <div style="display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
+                    <i data-lucide="shield-check" style="width:16px;height:16px;color:#9CA3AF"></i>
+                  </div>
+                  <div>
+                    <div style="font-size:14px;font-weight:600;color:#111111;margin-bottom:2px">{{ block.title }}</div>
+                    <div style="font-size:12px;color:#6B7280">{{ block.subtitle }}</div>
+                  </div>
+                </div>
+                <!-- Fields -->
+                <sc-for list="{{ block.fields }}" as="f" hint-placeholder-count="6">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 20px;border-bottom:1px solid #F9FAFB" style-hover="background:#FAFAFA">
+                    <div>
+                      <div style="font-size:13px;color:#111111;font-weight:500">{{ f.name }}</div>
+                      <sc-if value="{{ f.hasSub }}" hint-placeholder-val="{{ false }}">
+                        <div style="font-size:11px;color:#9CA3AF;margin-top:1px">{{ f.sub }}</div>
+                      </sc-if>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <span style="font-size:12px;font-weight:500;color:{{ f.labelColor }}">{{ f.label }}</span>
+                      <div style="width:36px;height:20px;border-radius:10px;background:{{ f.toggleBg }};position:relative;cursor:pointer;flex-shrink:0">
+                        <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transform:{{ f.toggleTx }};transition:transform .15s"></div>
+                      </div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </sc-if>
+
+          <!-- Champs personnalisés -->
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:6px;margin-bottom:16px;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #F3F4F6">
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                  <i data-lucide="pencil" style="width:15px;height:15px;color:#9CA3AF"></i>
+                </div>
+                <span style="font-size:14px;font-weight:600;color:#111111">Champs personnalisés</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:#27A36A;border-radius:4px;cursor:pointer" style-hover="background:#1f8257">
+                <i data-lucide="plus" style="width:13px;height:13px;color:#fff"></i>
+                <span style="font-size:12px;font-weight:500;color:#fff;white-space:nowrap">Champ personnalisé</span>
+              </div>
+            </div>
+            <sc-if value="{{ emptyPersonnalises }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:32px;text-align:center;color:#9CA3AF;font-size:13px">Aucun champ personnalisé pour l'instant.</div>
+            </sc-if>
+            <sc-if value="{{ hasPersonnalises }}" hint-placeholder-val="{{ true }}">
+              <table style="width:100%;border-collapse:collapse">
+                <thead>
+                  <tr style="background:#F9FAFB;border-bottom:1px solid #E5E7EB">
+                    <th style="padding:9px 20px;text-align:left;font-size:11px;font-weight:600;color:#6B7280;letter-spacing:.04em">Nom du champ</th>
+                    <th style="padding:9px 14px;text-align:left;font-size:11px;font-weight:600;color:#6B7280;letter-spacing:.04em">Type</th>
+                    <th style="padding:9px 14px;text-align:center;font-size:11px;font-weight:600;color:#6B7280;letter-spacing:.04em">Obligatoire</th>
+                    <th style="padding:9px 14px;text-align:right;font-size:11px;font-weight:600;color:#6B7280;letter-spacing:.04em">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{ personnalisesFields }}" as="pf" hint-placeholder-count="3">
+                    <tr style="border-bottom:1px solid #F3F4F6" style-hover="background:#FAFAFA">
+                      <td style="padding:11px 20px;font-size:13px;color:#111111;font-weight:500">{{ pf.name }}</td>
+                      <td style="padding:11px 14px;font-size:12px;color:#6B7280">{{ pf.type }}</td>
+                      <td style="padding:11px 14px;text-align:center">
+                        <div style="width:36px;height:20px;border-radius:10px;background:#D1D5DB;position:relative;cursor:pointer;margin:0 auto">
+                          <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px"></div>
+                        </div>
+                      </td>
+                      <td style="padding:11px 14px;text-align:right">
+                        <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+                          <i data-lucide="pencil" style="width:14px;height:14px;color:#9CA3AF;cursor:pointer" style-hover="color:#27A36A"></i>
+                          <i data-lucide="trash-2" style="width:14px;height:14px;color:#9CA3AF;cursor:pointer" style-hover="color:#EF4444"></i>
+                        </div>
+                      </td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </sc-if>
+          </div>
+
+          <!-- Champs par défaut -->
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:6px;margin-bottom:16px;overflow:hidden">
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:16px 20px;border-bottom:1px solid #F3F4F6">
+              <div style="width:28px;height:28px;border-radius:6px;background:#F9FAFB;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
+                <i data-lucide="align-left" style="width:14px;height:14px;color:#6B7280"></i>
+              </div>
+              <div>
+                <div style="font-size:14px;font-weight:600;color:#111111;margin-bottom:2px">Champs par défaut</div>
+                <div style="font-size:12px;color:#6B7280">Champs standard du module (lecture seule).</div>
+              </div>
+            </div>
+            <table style="width:100%;border-collapse:collapse">
+              <thead>
+                <tr style="background:#F9FAFB;border-bottom:1px solid #E5E7EB">
+                  <th style="padding:9px 20px;text-align:left;font-size:11px;font-weight:600;color:#6B7280;letter-spacing:.04em">Nom du champ</th>
+                  <th style="padding:9px 14px;text-align:left;font-size:11px;font-weight:600;color:#6B7280;letter-spacing:.04em">Type</th>
+                  <th style="padding:9px 14px;text-align:center;font-size:11px;font-weight:600;color:#6B7280;letter-spacing:.04em">Requis</th>
+                </tr>
+              </thead>
+              <tbody>
+                <sc-for list="{{ parDefautFields }}" as="df" hint-placeholder-count="8">
+                  <tr style="border-bottom:1px solid #F3F4F6">
+                    <td style="padding:9px 20px;font-size:13px;color:#374151">{{ df.name }}</td>
+                    <td style="padding:9px 14px;font-size:12px;color:#9CA3AF">{{ df.type }}</td>
+                    <td style="padding:9px 14px;text-align:center;font-size:13px;color:{{ df.reqColor }}">{{ df.reqIcon }}</td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Champs système -->
+          <sc-if value="{{ hasSysteme }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:6px;margin-bottom:16px;overflow:hidden">
+              <div style="display:flex;align-items:flex-start;gap:10px;padding:16px 20px;border-bottom:1px solid #F3F4F6">
+                <div style="display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
+                  <i data-lucide="cpu" style="width:16px;height:16px;color:#9CA3AF"></i>
+                </div>
+                <div>
+                  <div style="font-size:14px;font-weight:600;color:#111111;margin-bottom:2px">Champs système</div>
+                  <div style="font-size:12px;color:#6B7280">Champs personnalisés synchronisés (lecture seule).</div>
+                </div>
+              </div>
+              <table style="width:100%;border-collapse:collapse">
+                <thead>
+                  <tr style="background:#F9FAFB;border-bottom:1px solid #E5E7EB">
+                    <th style="padding:9px 20px;text-align:left;font-size:11px;font-weight:600;color:#6B7280;letter-spacing:.04em">Nom du champ</th>
+                    <th style="padding:9px 14px;text-align:left;font-size:11px;font-weight:600;color:#6B7280;letter-spacing:.04em">Type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{ systemeFields }}" as="sf" hint-placeholder-count="4">
+                    <tr style="border-bottom:1px solid #F3F4F6">
+                      <td style="padding:9px 20px;font-size:13px;color:#374151">{{ sf.name }}</td>
+                      <td style="padding:9px 14px;font-size:12px;color:#9CA3AF">{{ sf.type }}</td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { activeTab: 'prospect' };
+
+  static f(name, sub, req) {
+    return {
+      name, hasSub: !!sub, sub: sub || '',
+      label: req ? 'Obligatoire' : 'Facultatif',
+      labelColor: req ? '#27A36A' : '#9CA3AF',
+      toggleBg: req ? '#27A36A' : '#D1D5DB',
+      toggleTx: req ? 'translateX(16px)' : 'translateX(0px)',
+    };
+  }
+
+  static d(name, type, requis) {
+    return { name, type, reqIcon: requis === true ? '✓' : '—', reqColor: requis === true ? '#27A36A' : '#D1D5DB' };
+  }
+
+  get TAB_DATA() {
+    if (this._td) return this._td;
+    const f = Component.f, d = Component.d;
+    this._td = {
+    prospect: {
+      obligatoiresBlocks: [
+        {
+          title: 'Champs obligatoires — Prospect Particulier',
+          subtitle: 'Activez les champs à renseigner obligatoirement à la création d\'un prospect particulier.',
+          fields: [
+            f('Prénom','',false), f('Nom','',false), f('Offre','Obligatoire par défaut',true),
+            f('Adresse e-mail','',false), f('Téléphone','Obligatoire par défaut',true),
+            f('WhatsApp','',false), f('Profession','',false), f('Fonction','',false),
+            f('Niveau de pouvoir','',false), f('Pays','',false), f('Ville','',false),
+            f('Étiquette','',false), f('Statut','Obligatoire par défaut',true),
+            f('Cause d\'acquisition','',false), f('Valeur espérée','',false), f('Produit/Service sollicité','',false),
+          ]
+        },
+        {
+          title: 'Champs obligatoires — Prospect Organisation',
+          subtitle: 'Activez les champs à renseigner obligatoirement à la création d\'un prospect organisation.',
+          fields: [
+            f('Nom de l\'organisation','Obligatoire par défaut',true), f('Site internet','',false),
+            f('Secteur d\'activité','',false), f('Effectifs','',true), f('Chiffre d\'affaires','',false),
+            f('Pays siège','',true), f('Ville siège','',false), f('Adresse e-mail','',false),
+            f('Téléphone','',false), f('Étiquette','',false),
+            f('Statut','Obligatoire par défaut',true), f('Canal d\'acquisition','',false),
+            f('Valeur espérée','',false), f('Produit/Service sollicité','',false),
+          ]
+        }
+      ],
+      personnalises: [ { name:'Adresse référent', type:'Texte (court)' } ],
+      parDefaut: [
+        d('Référence cliente','Texte (court)',false), d('Prospect Number','Texte (court)',false),
+        d('Titre','Texte (court)',false), d('Prospect Name','Texte (court)',false),
+        d('Prospect Type','Sélection unique',false), d('Identité','Lien utilisateur',false),
+        d('Statut','Lien utilisateur',false), d('Valeur','Lien utilisateur',false),
+        d('Étiquette','Lien utilisateur',false), d('Priorité','Texte (court)',false),
+        d('Nom','Texte (court)',false), d('E-mail (principale)','Texte (court)',false),
+        d('Téléphone principale','Texte (court)',false), d('WhatsApp/E-mail','Autre',false),
+        d('Adresses e-mail','Texte (court)',false), d('Numéros WhatsApp','Autre',false),
+        d('Profession','Texte (court)',false), d('Fonction (poste)','Texte (court)',false),
+        d('Niveau de pouvoir','Texte (court)',false), d('Pays du créateur','Lien utilisateur',false),
+        d('Ville','Texte (court)',false), d('Organisation','Texte (court)',false),
+        d('Canal d\'acquisition','Lien utilisateur',false), d('Produit/Service sollicité','Lien utilisateur',false),
+        d('Valeur espérée','Monétaire (devises)',false), d('Devise','Lien utilisateur',false),
+        d('Créneaux/blx','Texte (court)',false), d('Points focaux','Autre',false),
+        d('Visibilité (personnalisée)','Sélection unique',false), d('Propriétaires','Lien utilisateur',false),
+        d('Créateur','Lien utilisateur',false),
+      ],
+      systeme: null,
+    },
+    personne: {
+      obligatoiresBlocks: [{
+        title: 'Champs obligatoires — Contact Particulier',
+        subtitle: 'Activez les champs à renseigner obligatoirement à la création d\'une personne.',
+        fields: [
+          f('Civilité','Obligatoire par défaut',true), f('Prénom','',false), f('Nom','',false),
+          f('Adresse e-mail','',false), f('Téléphone','Obligatoire par défaut',true),
+          f('Organisation','',false), f('Fonction','',false), f('Profession','',false),
+          f('Niveau de pouvoir','',false), f('Pays','',false), f('Ville','',false),
+          f('Étiquettes','',false),
+        ]
+      }],
+      personnalises: [
+        { name:'N° Contact', type:'Texte (court)' }, { name:'Étiquette', type:'Lien utilisateur' },
+        { name:'Canal d\'origine', type:'Texte (court)' }, { name:'Profession', type:'Texte (court)' },
+        { name:'Niveau de pouvoir', type:'Texte (court)' }, { name:'Pays de résidence', type:'Lien utilisateur' },
+        { name:'Ville', type:'Texte (court)' }, { name:'Tags', type:'Small Text' },
+        { name:'Visibilité', type:'Sélection unique' }, { name:'Abonnés', type:'Table' },
+        { name:'WhatsApp', type:'Téléphone' },
+      ],
+      parDefaut: [
+        d('First Name','Texte (court)',false), d('Middle Name','Texte (court)',false),
+        d('Last Name','Texte (court)',false), d('Full Name','Texte (court)',false),
+        d('Email Address','Texte (court)',false), d('User Id','Lien utilisateur',false),
+        d('Address','Lien utilisateur',false), d('Sync with Google Contacts','Case à cocher',false),
+        d('Status','Sélection unique',false), d('Salutation','Lien utilisateur',false),
+        d('Designation','Texte (court)',false), d('Gender','Lien utilisateur',false),
+        d('Phone','Texte (court)',true), d('Mobile No','Texte (court)',false),
+        d('Company Name','Texte (court)',false), d('Image','Image',false),
+        d('Google Contacts','Lien utilisateur',false), d('Google Contacts Id','Texte (court)',false),
+        d('Pulled from Google Contacts','Case à cocher',false), d('Email IDs','Table',false),
+        d('Contact Numbers','Table',false), d('Links','Table',false),
+        d('Is Primary Contact','Case à cocher',false), d('Department','Texte (court)',false),
+        d('Unsubscribed','Case à cocher',false),
+      ],
+      systeme: [
+        { name:'Étiquette', type:'Lien utilisateur' }, { name:'Canal d\'origine', type:'Texte (court)' },
+        { name:'Profession', type:'Texte (court)' }, { name:'Niveau de pouvoir', type:'Texte (court)' },
+        { name:'Pays de résidence', type:'Lien utilisateur' }, { name:'Ville', type:'Texte (court)' },
+        { name:'Tags', type:'Small Text' }, { name:'Visibilité', type:'Sélection unique' },
+        { name:'Abonnés', type:'Table' }, { name:'Archived', type:'Case à cocher' },
+        { name:'WhatsApp', type:'Téléphone' }, { name:'N° Contact', type:'Texte (court)' },
+      ],
+    },
+    organisation: {
+      obligatoiresBlocks: [{
+        title: 'Champs obligatoires — Contact Organisation',
+        subtitle: 'Activez les champs à renseigner obligatoirement à la création d\'une organisation.',
+        fields: [
+          f('Nom de l\'organisation','Obligatoire par défaut',true), f('Adresse e-mail','',false),
+          f('Téléphone','',false), f('Site internet','',false), f('Secteur d\'activité','',false),
+          f('Nombre d\'employés','',false), f('Revenu annuel (FCFA)','',false),
+          f('Pays siège','',false), f('Ville siège','',false), f('Étiquettes','',false),
+        ]
+      }],
+      personnalises: [
+        { name:'Profil Linkedin', type:'Texte (court)' },
+        { name:'Canal d\'origine', type:'Texte (court)' },
+        { name:'Abonnés', type:'Table' },
+      ],
+      parDefaut: [
+        d('Organization Number','Texte (court)',false), d('Organization Name','Texte (court)',true),
+        d('Raison sociale','Texte (court)',false), d('Organization Type','Sélection unique',false),
+        d('Industry','Texte (court)',false), d('Website','Texte (court)',false),
+        d('Téléphone','Texte (court)',false), d('Email','Texte (court)',false),
+        d('HQ Country','Lien utilisateur',false), d('HQ City','Texte (court)',false),
+        d('HQ Address','Small Text',false), d('Employees Range','Sélection unique',false),
+        d('Annual Revenue','Monétaire (devise)',false), d('RCCM (CI/OHADA)','Texte (court)',false),
+        d('NIF','Texte (court)',false), d('Etiquettes','Table',false),
+        d('Primary Contact','Lien utilisateur',false), d('Lead d\'origine','Lien utilisateur',false),
+        d('Notes','Text Editor',false), d('Legacy Tags','Small Text',false),
+        d('Owner User','Lien utilisateur',false), d('Creator','Lien utilisateur',false),
+        d('Visibility','Sélection unique',false), d('Archived','Case à cocher',false),
+        d('Archived At','Date et heure',false),
+      ],
+      systeme: [
+        { name:'Profil Linkedin', type:'Texte (court)' }, { name:'Canal d\'origine', type:'Texte (court)' },
+        { name:'Abonnés', type:'Table' }, { name:'Archived', type:'Case à cocher' },
+      ],
+    },
+    activite: {
+      obligatoiresBlocks: [{
+        title: 'Champs obligatoires — Activité',
+        subtitle: 'Activez les champs à renseigner obligatoirement à la création d\'une activité.',
+        fields: [
+          f('Nom de l\'activité','Obligatoire par défaut',true), f('Type','',false),
+          f('Date d\'échéance','Obligatoire par défaut',true), f('Heure de début','',false),
+          f('Priorité','',false), f('Attribué à','',false), f('Affaire liée','',false),
+          f('Contact lié','',false), f('Lieu','',false), f('Lien d\'appel vidéo','',false),
+          f('Description','',false), f('Notes internes','',false),
+        ]
+      }],
+      personnalises: [],
+      parDefaut: [
+        d('Activity Name','Texte (court)',true), d('Activity Type','Sélection unique',false),
+        d('Due Date','Date et heure',true), d('Start Time','Date et heure',false),
+        d('Priority','Sélection unique',false), d('Assigned To','Lien utilisateur',false),
+        d('Deal','Lien utilisateur',false), d('Contact','Lien utilisateur',false),
+        d('Location','Texte (court)',false), d('Video Call Link','Texte (court)',false),
+        d('Description','Text Editor',false), d('Internal Notes','Text Editor',false),
+        d('Status','Sélection unique',false), d('Creator','Lien utilisateur',false),
+      ],
+      systeme: null,
+    },
+    produit: {
+      obligatoiresBlocks: [{
+        title: 'Champs obligatoires — Produit',
+        subtitle: 'Activez les champs à renseigner obligatoirement à la création d\'un produit.',
+        fields: [
+          f('Code produit','',false), f('SKU','',false), f('Catégorie','',true),
+          f('Unité','',false), f('Fréquence de facturation','',false),
+          f('Taux de taxe (%)','',false), f('Description','',false),
+        ]
+      }],
+      personnalises: [],
+      parDefaut: [
+        d('Produit/Service','Texte (court)',true), d('Produit (catalogue)','Lien utilisateur',false),
+        d('Description','Small Text',false), d('Quantité','Float',true),
+        d('Prix unitaire HT','Monétaire (devise)',true), d('Remise (%)','Percent',false),
+        d('Montant HT','Monétaire (devise)',false), d('TVA (%)','Percent',false),
+      ],
+      systeme: null,
+    },
+    projet: {
+      obligatoiresBlocks: [],
+      personnalises: [],
+      parDefaut: [
+        d('N° Projet','Texte (court)',false), d('Titre','Texte (court)',true),
+        d('Statut','Sélection unique',true), d('Priorité','Sélection unique',false),
+        d('Phase','Texte (court)',false), d('Date de début','Date',false),
+        d('Date de fin','Date',false), d('Progression','Percent',false),
+        d('Responsable','Lien utilisateur',false), d('Organisation','Texte (court)',false),
+        d('Deal associé','Lien utilisateur',false), d('Description','Text Editor',false),
+        d('Budget','Monétaire (devise)',false), d('Visibilité','Sélection unique',false),
+        d('Labels','Small Text',false), d('Est un modèle','Case à cocher',false),
+        d('Nom du modèle','Texte (court)',false), d('Amended From','Lien utilisateur',false),
+      ],
+      systeme: null,
+    },
+    };
+    return this._td;
+  }
+
+  TAB_META = [
+    { key:'prospect',     label:'Prospect/Affaire', icon:'dollar-sign' },
+    { key:'personne',     label:'Personne',          icon:'user' },
+    { key:'organisation', label:'Organisation',      icon:'building-2' },
+    { key:'activite',     label:'Activité',          icon:'calendar-check' },
+    { key:'produit',      label:'Produit',           icon:'shopping-cart' },
+    { key:'projet',       label:'Projet',            icon:'clipboard' },
+  ];
+
+  componentDidMount()  { if (window.lucide) window.lucide.createIcons(); }
+  componentDidUpdate() { if (window.lucide) window.lucide.createIcons(); }
+
+  renderVals() {
+    const { activeTab } = this.state;
+    const data = this.TAB_DATA[activeTab];
+
+    const tabs = this.TAB_META.map(t => ({
+      ...t,
+      fw: t.key === activeTab ? '600' : '400',
+      color: t.key === activeTab ? '#27A36A' : '#6B7280',
+      border: t.key === activeTab ? '#27A36A' : 'transparent',
+      onClick: () => this.setState({ activeTab: t.key }),
+    }));
+
+    const obligatoiresBlocks = data.obligatoiresBlocks;
+    const hasObligatoires = obligatoiresBlocks.length > 0;
+    const personnalisesFields = data.personnalises;
+    const hasPersonnalises = personnalisesFields.length > 0;
+    const emptyPersonnalises = !hasPersonnalises;
+    const parDefautFields = data.parDefaut;
+    const systemeFields = data.systeme || [];
+    const hasSysteme = !!data.systeme && data.systeme.length > 0;
+
+    return {
+      tabs,
+      hasObligatoires, obligatoiresBlocks,
+      hasPersonnalises, emptyPersonnalises, personnalisesFields,
+      parDefautFields,
+      hasSysteme, systemeFields,
+    };
+  }
+}
+</script>
+</body>
+</html>
