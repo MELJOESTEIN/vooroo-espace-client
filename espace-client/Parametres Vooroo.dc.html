@@ -713,6 +713,7 @@
 
         </div>
       </div>
+      </div><!-- /old entreprise -->
     </sc-if>
 
     <!-- CHAMPS DE DONNÉES -->
@@ -1183,23 +1184,6 @@
         <button style="height:34px;padding:0 20px;border:none;border-radius:5px;background:#16A34A;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:Roboto,sans-serif">Enregistrer</button>
       </div>
     </sc-if>
-            <div class="card" style="overflow:hidden">
-              <div style="padding:14px 18px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:10px">
-                <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ grp.icon }}"/></svg>
-                <span style="font-size:14px;font-weight:700;flex:1">{{ grp.title }}</span>
-                <span style="font-size:12px;color:#9ca3af">{{ grp.subtitle }}</span>
-              </div>
-              <sc-for list="{{ grp.items }}" as="ni" hint-placeholder-count="3">
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 18px;border-bottom:1px solid #f9fafb">
-                  <span style="font-size:13px;color:#374151">{{ ni.label }}</span>
-                  <div class="tgl" onClick="{{ ni.toggle }}" style="background:{{ ni.bg }}"><div class="tgl-knob" style="left:{{ ni.left }}"></div></div>
-                </div>
-              </sc-for>
-            </div>
-          </sc-for>
-        </div>
-      </div>
-    </sc-if>
 
     <!-- DEVIS & FACTURES -->
     <sc-if value="{{ is.facturation }}" hint-placeholder-val="{{ false }}">
@@ -1410,6 +1394,7 @@
           </sc-if>
         </div>
       </div>
+      </div><!-- /old sync -->
     </sc-if>
 
     <!-- IMPORT -->
