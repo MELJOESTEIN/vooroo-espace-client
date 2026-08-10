@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planificateur de rendez-vous — Vooroo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --vg:#16a34a;--vg-dark:#0f7a35;--vg-light:#dcfce7;--vg-bg:#f0fdf4;
+  --navy:#1e2a4a;--slate:#4b5563;--border:#e5e7eb;--bg:#f9fafb;--text:#111827;
+}
+html,body{height:100%;font-family:'Roboto',sans-serif;background:var(--bg);overflow:hidden}
+a{color:var(--vg);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* LAYOUT */
+.page{display:grid;grid-template-columns:1fr 300px;height:100vh;overflow:hidden}
+.left{padding:32px 28px;overflow-y:auto}
+.right{padding:20px 18px;overflow-y:auto;border-left:1px solid var(--border);background:#fff}
+
+/* PAGE HEADER */
+.ph{display:flex;align-items:flex-start;gap:14px;margin-bottom:6px}
+.ph-icon{width:44px;height:44px;background:var(--vg-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ph-icon i{color:var(--vg);font-size:22px}
+.ph h1{font-size:16px;font-weight:700;color:var(--text);line-height:1.2}
+.ph-sub{font-size:13px;color:var(--slate);margin-bottom:20px;padding-left:58px}
+
+/* PUBLIC LINK BOX */
+.link-box{background:var(--vg-bg);border:1px solid #86efac;border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.link-box-icon{width:36px;height:36px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.link-box-icon i{color:var(--vg);font-size:16px}
+.link-box-info{flex:1;min-width:0}
+.link-box-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.link-box-url{font-size:12px;color:var(--vg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.link-box-actions{display:flex;gap:8px;flex-shrink:0}
+
+/* TABS */
+.tabs{display:flex;align-items:center;gap:2px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:4px;margin-bottom:22px}
+.tab-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;border:none;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;background:none;color:var(--slate);transition:all .15s;font-family:'Roboto',sans-serif;white-space:nowrap}
+.tab-btn i{font-size:15px}
+.tab-btn:hover{background:#f3f4f6;color:var(--text)}
+.tab-btn.active{background:var(--vg);color:#fff}
+.tab-btn.active:hover{background:var(--vg-dark)}
+
+/* BUTTONS */
+.btn-primary{background:var(--vg);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:background .15s;font-family:'Roboto',sans-serif}
+.btn-primary:hover{background:var(--vg-dark)}
+.btn-outline{background:#fff;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 13px;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s;font-family:'Roboto',sans-serif}
+.btn-outline:hover{border-color:var(--vg);color:var(--vg)}
+.btn-sm{padding:5px 11px;font-size:12px}
+
+/* EVENT CARD */
+.panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.panel-count{font-size:13px;color:var(--slate)}
+.ev-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .15s;margin-bottom:8px}
+.ev-card:hover{border-color:var(--vg);box-shadow:0 2px 8px rgba(22,163,74,.08)}
+.ev-stripe{width:4px;border-radius:3px;align-self:stretch;min-height:36px;flex-shrink:0}
+.ev-body{flex:1;min-width:0}
+.ev-name-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.ev-name{font-size:14px;font-weight:600;color:var(--text)}
+.badge-active{background:var(--vg-light);color:var(--vg-dark);font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+.badge-draft{background:#f3f4f6;color:var(--slate);font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+.badge-paused{background:#fef9c3;color:#92400e;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+.ev-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ev-meta span{font-size:12px;color:var(--slate);display:flex;align-items:center;gap:4px}
+.ev-meta i{font-size:13px}
+.ev-menu{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#9ca3af;font-size:18px;border:none;background:none;transition:all .12s;flex-shrink:0}
+.ev-menu:hover{background:#f3f4f6;color:var(--text)}
+
+/* STAT CARDS */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px}
+.stat-val{font-size:28px;font-weight:700;color:var(--text);line-height:1.1}
+.stat-label{font-size:12px;color:var(--slate);margin-top:4px}
+
+/* SUB TABS (underline style) */
+.subtabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:16px}
+.subtab{display:flex;align-items:center;gap:5px;padding:8px 16px;font-size:13px;font-weight:500;color:var(--slate);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;font-family:'Roboto',sans-serif}
+.subtab:hover{color:var(--text)}
+.subtab.active{color:var(--vg);border-bottom-color:var(--vg)}
+.subtab-badge{background:#f3f4f6;color:var(--slate);font-size:11px;font-weight:600;padding:1px 6px;border-radius:10px;line-height:1.4}
+.subtab.active .subtab-badge{background:var(--vg-light);color:var(--vg-dark)}
+
+/* RDV LIST */
+.rdv-item{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;cursor:pointer;transition:border-color .15s}
+.rdv-item:hover{border-color:var(--vg)}
+.rdv-stripe{width:3px;border-radius:3px;align-self:stretch;min-height:32px;flex-shrink:0}
+.rdv-body{flex:1;min-width:0}
+.rdv-email{font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px}
+.rdv-time{font-size:12px;color:var(--slate);display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.rdv-time i{font-size:12px}
+.rdv-tags{display:flex;gap:6px;flex-wrap:wrap}
+.rdv-tag{font-size:11px;font-weight:500;padding:2px 9px;border-radius:20px;background:var(--vg-light);color:var(--vg-dark)}
+.rdv-tag.noshow{background:#fee2e2;color:#dc2626}
+
+/* DISPO */
+.dispo-wrap{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
+.dispo-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px}
+.dispo-sub{font-size:12px;color:var(--slate);margin-bottom:20px}
+.day-row{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid #f3f4f6}
+.day-row:last-child{border-bottom:none}
+.day-toggle-wrap{display:flex;align-items:center;gap:10px;padding-top:2px;flex-shrink:0;width:130px}
+.day-name{font-size:13px;font-weight:500;color:var(--text);min-width:60px}
+.day-off{font-size:12px;color:#9ca3af;padding-top:2px}
+.day-slots{flex:1;display:flex;flex-direction:column;gap:6px}
+.time-row{display:flex;align-items:center;gap:8px}
+.time-input{width:100px;border:1px solid var(--border);border-radius:8px;padding:7px 10px;font-size:13px;color:var(--text);background:#fff;outline:none;font-family:'Roboto',sans-serif;-webkit-appearance:none}
+.time-input:focus{border-color:var(--vg);box-shadow:0 0 0 3px rgba(22,163,74,.08)}
+.time-sep{font-size:14px;color:var(--slate)}
+.add-plage{font-size:12px;color:var(--vg);cursor:pointer;background:none;border:none;font-family:'Roboto',sans-serif;padding:0;display:inline-flex;align-items:center;gap:4px;margin-top:2px}
+.add-plage:hover{text-decoration:underline}
+
+/* TOGGLE */
+.toggle{width:40px;height:22px;border-radius:22px;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;border:none;padding:0}
+.toggle.on{background:var(--vg)}
+.toggle.off{background:#d1d5db}
+.toggle::after{content:'';position:absolute;width:17px;height:17px;border-radius:50%;background:#fff;top:2.5px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle.on::after{left:20.5px}
+.toggle.off::after{left:2.5px}
+
+/* NOTIF SECTIONS */
+.notif-section{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:12px}
+.notif-section-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.notif-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #f3f4f6}
+.notif-row:last-child{border-bottom:none}
+.notif-label{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px}
+.notif-desc{font-size:12px;color:var(--slate)}
+.badge-auto{background:#e0f2fe;color:#0369a1;font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;white-space:nowrap}
+.form-label{font-size:12px;font-weight:600;color:var(--slate);margin-bottom:5px;display:block}
+.form-input{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);background:#fff;outline:none;font-family:'Roboto',sans-serif;transition:border-color .15s}
+.form-input:focus{border-color:var(--vg);box-shadow:0 0 0 3px rgba(22,163,74,.08)}
+.form-textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);background:#fff;outline:none;font-family:'Roboto',sans-serif;resize:vertical;min-height:80px;transition:border-color .15s}
+.form-textarea:focus{border-color:var(--vg);box-shadow:0 0 0 3px rgba(22,163,74,.08)}
+.form-row{margin-bottom:14px}
+
+/* SAVE BAR */
+.save-bar{position:sticky;bottom:0;background:var(--bg);padding:14px 0 4px;display:flex;justify-content:flex-end}
+
+/* DISPO HEADER ROW */
+.dispo-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.dispo-sub-tabs{display:flex;gap:2px;background:#f3f4f6;border-radius:8px;padding:3px}
+.dispo-stab{padding:7px 14px;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;background:none;color:var(--slate);transition:all .15s;font-family:'Roboto',sans-serif}
+.dispo-stab.active{background:#fff;color:var(--vg);box-shadow:0 1px 4px rgba(0,0,0,.09)}
+.open-toggle-row{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--text)}
+
+/* RIGHT COL */
+.rc-section{border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px;background:#fff}
+.rc-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.rc-title i{font-size:16px;color:var(--slate)}
+.gcal-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.gcal-icon{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:17px;font-weight:700;color:#4285F4;font-family:sans-serif}
+.gcal-body{flex:1;min-width:0}
+.gcal-name{font-size:13px;font-weight:600;color:var(--text)}
+.gcal-sub{font-size:11px;color:var(--slate);margin-top:2px}
+.badge-connected{background:var(--vg-light);color:var(--vg-dark);font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.rc-link{font-size:12px;color:var(--vg);cursor:pointer;background:none;border:none;font-family:'Roboto',sans-serif;padding:0;margin-bottom:12px;display:block}
+.rc-link:hover{text-decoration:underline}
+.rc-divider{height:1px;background:var(--border);margin:10px 0}
+.visio-row{display:flex;align-items:flex-start;gap:10px}
+.visio-icon{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;font-weight:700;color:#4285F4}
+.visio-text{font-size:12px;color:var(--slate);line-height:1.5}
+.visio-text strong{color:var(--text)}
+.code-block{background:#111827;color:#86efac;font-size:11px;padding:10px 12px;border-radius:8px;font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:8px}
+.rc-embed-desc{font-size:12px;color:var(--slate);margin-bottom:10px}
+.un-lien-row{display:flex;align-items:flex-start;gap:10px}
+.un-lien-icon{width:32px;height:32px;border-radius:50%;background:var(--vg-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.un-lien-icon i{color:var(--vg);font-size:15px}
+.un-lien-text{font-size:12px;color:var(--slate);line-height:1.5}
+.rc-subtitle{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.rc-subtitle i{font-size:14px;color:var(--slate)}
+
+/* PANELS */
+.panel{display:none}
+.panel.active{display:block}
+
+h1,h2,h3{font-family:'Roboto','Helvetica Neue',sans-serif;letter-spacing:normal}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:3px}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;border-radius:10px;padding:11px 20px;font-size:13px;display:flex;align-items:center;gap:8px;z-index:100;opacity:0;transition:all .3s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- LEFT COLUMN -->
+  <div class="left">
+
+    <!-- PAGE HEADER -->
+    <div class="ph">
+      <div class="ph-icon"><i class="ti ti-calendar-clock"></i></div>
+      <h1>Planificateur de rendez-vous</h1>
+    </div>
+    <p class="ph-sub">Partagez un lien de réservation public. Chaque réservation se synchronise avec votre Google Calendar.</p>
+
+    <!-- PUBLIC LINK BOX -->
+    <div class="link-box">
+      <div class="link-box-icon"><i class="ti ti-link"></i></div>
+      <div class="link-box-info">
+        <div class="link-box-title">Page de réservation publique</div>
+        <div class="link-box-url">https://vooroo.com/rdv/sophie-martin</div>
+      </div>
+      <div class="link-box-actions">
+        <button class="btn-outline btn-sm" onclick="showToast('Lien copié !')"><i class="ti ti-copy"></i> Copier</button>
+        <button class="btn-primary btn-sm"><i class="ti ti-external-link"></i> Aperçu</button>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('events',this)"><i class="ti ti-layout-grid"></i> Types d'événements</button>
+      <button class="tab-btn" onclick="switchTab('rdvs',this)"><i class="ti ti-calendar"></i> Rendez-vous</button>
+      <button class="tab-btn" onclick="switchTab('dispo',this)"><i class="ti ti-clock"></i> Disponibilités</button>
+      <button class="tab-btn" onclick="switchTab('notifs',this)"><i class="ti ti-bell"></i> Notifications</button>
+    </div>
+
+    <!-- PANEL: TYPES D'ÉVÉNEMENTS -->
+    <div class="panel active" id="panel-events">
+      <div class="panel-header">
+        <span class="panel-count">1 type de rendez-vous</span>
+        <button class="btn-primary btn-sm"><i class="ti ti-plus"></i> Nouveau type</button>
+      </div>
+      <div class="ev-card">
+        <div class="ev-stripe" style="background:#16a34a"></div>
+        <div class="ev-body">
+          <div class="ev-name-row">
+            <span class="ev-name">30 minutes</span>
+            <span class="badge-active">Actif</span>
+          </div>
+          <div class="ev-meta">
+            <span><i class="ti ti-clock"></i> 30 min</span>
+            <span><svg width="13" height="13" viewBox="0 0 24 24" style="display:inline;vertical-align:middle" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Google Meet</span>
+            <span><i class="ti ti-calendar"></i> 5 réservations</span>
+          </div>
+        </div>
+        <button class="ev-menu"><i class="ti ti-dots-vertical"></i></button>
+      </div>
+    </div>
+
+    <!-- PANEL: RENDEZ-VOUS -->
+    <div class="panel" id="panel-rdvs">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-val">3</div>
+          <div class="stat-label">Ce mois-ci</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">0</div>
+          <div class="stat-label">Aujourd'hui</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">75%</div>
+          <div class="stat-label">Taux de présence</div>
+        </div>
+      </div>
+      <div class="subtabs">
+        <button class="subtab" onclick="switchRdvTab('today',this)">Aujourd'hui</button>
+        <button class="subtab" onclick="switchRdvTab('upcoming',this)">À venir</button>
+        <button class="subtab active" onclick="switchRdvTab('past',this)">Passés <span class="subtab-badge">4</span></button>
+        <button class="subtab" onclick="switchRdvTab('cancelled',this)">Annulés <span class="subtab-badge">1</span></button>
+      </div>
+      <div id="rdv-list">
+        <div class="rdv-item">
+          <div class="rdv-stripe" style="background:#16a34a"></div>
+          <div class="rdv-body">
+            <div class="rdv-email">hebacav130@luxudata.com</div>
+            <div class="rdv-time"><i class="ti ti-clock"></i> 6 juil. 2026 à 06:32 <i class="ti ti-brand-google" style="color:#4285F4"></i> Google Meet</div>
+            <div class="rdv-tags"><span class="rdv-tag">30 minutes</span></div>
+          </div>
+          <button class="ev-menu"><i class="ti ti-dots-vertical"></i></button>
+        </div>
+        <div class="rdv-item">
+          <div class="rdv-stripe" style="background:#16a34a"></div>
+          <div class="rdv-body">
+            <div class="rdv-email">hebacav130@luxudata.com</div>
+            <div class="rdv-time"><i class="ti ti-clock"></i> 5 juil. 2026 à 09:32 <i class="ti ti-brand-google" style="color:#4285F4"></i> Google Meet</div>
+            <div class="rdv-tags"><span class="rdv-tag">30 minutes</span></div>
+          </div>
+          <button class="ev-menu"><i class="ti ti-dots-vertical"></i></button>
+        </div>
+        <div class="rdv-item">
+          <div class="rdv-stripe" style="background:#16a34a"></div>
+          <div class="rdv-body">
+            <div class="rdv-email">hebacav130@luxudata.com</div>
+            <div class="rdv-time"><i class="ti ti-clock"></i> 2 juil. 2026 à 06:32 <i class="ti ti-brand-google" style="color:#4285F4"></i> Google Meet</div>
+            <div class="rdv-tags"><span class="rdv-tag">30 minutes</span></div>
+          </div>
+          <button class="ev-menu"><i class="ti ti-dots-vertical"></i></button>
+        </div>
+        <div class="rdv-item">
+          <div class="rdv-stripe" style="background:#ef4444"></div>
+          <div class="rdv-body">
+            <div class="rdv-email">hebacav130@luxudata.com</div>
+            <div class="rdv-time"><i class="ti ti-clock"></i> 30 juin 2026 à 06:32 <i class="ti ti-brand-google" style="color:#4285F4"></i> Google Meet</div>
+            <div class="rdv-tags"><span class="rdv-tag">30 minutes</span><span class="rdv-tag noshow">No-show</span></div>
+          </div>
+          <button class="ev-menu"><i class="ti ti-dots-vertical"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL: DISPONIBILITÉS -->
+    <div class="panel" id="panel-dispo">
+      <div class="dispo-header">
+        <div class="dispo-sub-tabs">
+          <button class="dispo-stab active" onclick="switchDispoTab('horaires',this)">Horaires</button>
+          <button class="dispo-stab" onclick="switchDispoTab('blocked',this)">Jours bloqués</button>
+          <button class="dispo-stab" onclick="switchDispoTab('rules',this)">Règles</button>
+        </div>
+        <div class="open-toggle-row">
+          Réservations ouvertes
+          <button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+        </div>
+      </div>
+
+      <div id="spanel-horaires">
+        <div class="dispo-wrap">
+          <div class="dispo-title">Horaires de disponibilité</div>
+          <div class="dispo-sub">Ajoutez une ou plusieurs plages par jour (ex. matin 9h-12h et après-midi 14h-17h). Les créneaux évitent vos événements Google Calendar.</div>
+          <!-- Mon–Fri ON, Sam–Dim OFF -->
+          <div id="days-list"></div>
+        </div>
+      </div>
+
+      <div id="spanel-blocked" style="display:none">
+        <div class="dispo-wrap">
+          <div class="dispo-title">Jours bloqués</div>
+          <div class="dispo-sub">Ajoutez des périodes où vous n'êtes pas disponible (congés, jours fériés…)</div>
+          <button class="btn-primary btn-sm" style="margin-top:4px"><i class="ti ti-plus"></i> Ajouter une période</button>
+        </div>
+      </div>
+
+      <div id="spanel-rules" style="display:none">
+        <div class="dispo-wrap">
+          <div class="dispo-title">Règles de réservation</div>
+          <div class="dispo-sub">Définissez les délais minimum, l'horizon de réservation et les créneaux disponibles.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
+            <div>
+              <label class="form-label">Délai minimum (heures)</label>
+              <input class="form-input" type="number" value="2" min="0">
+            </div>
+            <div>
+              <label class="form-label">Durée du créneau (min)</label>
+              <select class="form-input">
+                <option>15 min</option>
+                <option selected>30 min</option>
+                <option>45 min</option>
+                <option>60 min</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="save-bar">
+        <button class="btn-primary" onclick="showToast('✓ Disponibilités enregistrées')"><i class="ti ti-check"></i> Enregistrer les disponibilités</button>
+      </div>
+    </div>
+
+    <!-- PANEL: NOTIFICATIONS -->
+    <div class="panel" id="panel-notifs">
+
+      <div class="notif-section">
+        <div class="notif-section-title">Rappels aux clients</div>
+        <div class="notif-row">
+          <div>
+            <div class="notif-label">Confirmation de réservation</div>
+            <div class="notif-desc">E-mail immédiat après la réservation</div>
+          </div>
+          <span class="badge-auto">Automatique</span>
+        </div>
+        <div class="notif-row">
+          <div>
+            <div class="notif-label">Rappel 24h avant</div>
+            <div class="notif-desc">E-mail automatique la veille du RDV</div>
+          </div>
+          <button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+        </div>
+        <div class="notif-row">
+          <div>
+            <div class="notif-label">Rappel 1h avant</div>
+            <div class="notif-desc">E-mail automatique 1h avant le RDV</div>
+          </div>
+          <button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+        </div>
+        <div class="notif-row">
+          <div>
+            <div class="notif-label">E-mail d'annulation</div>
+            <div class="notif-desc">Envoyé à l'invité si vous annulez le RDV</div>
+          </div>
+          <button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+        </div>
+      </div>
+
+      <div class="notif-section">
+        <div class="notif-section-title">Vos notifications</div>
+        <div class="notif-row">
+          <div>
+            <div class="notif-label">Nouvelle réservation</div>
+            <div class="notif-desc">Alerte dès qu'un RDV est pris</div>
+          </div>
+          <span class="badge-auto">Automatique</span>
+        </div>
+        <div class="notif-row">
+          <div>
+            <div class="notif-label">Récapitulatif quotidien</div>
+            <div class="notif-desc">Résumé de vos RDV du jour par e-mail</div>
+          </div>
+          <button class="toggle off" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+        </div>
+      </div>
+
+      <div class="notif-section" style="border-color:#fcd34d">
+        <div class="notif-section-title" style="color:#92400e"><i class="ti ti-alert-triangle" style="color:#f59e0b"></i> Relance des no-show</div>
+        <div class="notif-row">
+          <div>
+            <div class="notif-label">E-mail automatique aux invités marqués « absent »</div>
+            <div class="notif-desc">Pour reprendre rendez-vous.</div>
+          </div>
+          <button class="toggle off" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+        </div>
+      </div>
+
+      <div class="notif-section">
+        <div class="notif-section-title">Expéditeur</div>
+        <div class="form-row">
+          <label class="form-label">Nom affiché</label>
+          <input class="form-input" type="text" placeholder="Ex : Sophie · Vooroo">
+        </div>
+        <div class="form-row" style="margin-bottom:0">
+          <label class="form-label">Signature e-mail</label>
+          <textarea class="form-textarea" placeholder="Cordialement,&#10;Sophie Martin&#10;Vooroo"></textarea>
+          <div style="font-size:11px;color:#9ca3af;margin-top:5px">La signature est ajoutée au bas des rappels, relances et récapitulatifs.</div>
+        </div>
+      </div>
+
+      <div class="save-bar">
+        <button class="btn-primary" onclick="showToast('✓ Notifications enregistrées')"><i class="ti ti-check"></i> Enregistrer les notifications</button>
+      </div>
+    </div>
+
+  </div><!-- /left -->
+
+  <!-- RIGHT COLUMN -->
+  <div class="right">
+
+    <!-- INTÉGRATIONS -->
+    <div class="rc-section">
+      <div class="rc-title"><i class="ti ti-plug"></i> Intégrations</div>
+      <div class="gcal-row">
+        <div class="gcal-icon">G</div>
+        <div class="gcal-body">
+          <div class="gcal-name">Google Calendar</div>
+          <div class="gcal-sub">Synchronisation bidirectionnelle active</div>
+        </div>
+        <span class="badge-connected">Connecté</span>
+      </div>
+      <button class="rc-link">Déconnecter</button>
+      <div class="rc-divider"></div>
+      <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:8px">Visioconférence</div>
+      <div class="visio-row">
+        <div class="gcal-icon" style="width:32px;height:32px;font-size:14px">G</div>
+        <div class="visio-text">Lien <strong>Google Meet</strong> généré automatiquement, ou lien/numéro manuel (Zoom, Teams, WhatsApp, téléphone, présentiel) — au choix par type de rendez-vous.</div>
+      </div>
+    </div>
+
+    <!-- INTÉGRER SUR VOTRE SITE -->
+    <div class="rc-section">
+      <div class="rc-title"><i class="ti ti-code"></i> Intégrer sur votre site</div>
+      <div class="rc-embed-desc">Collez ce code pour afficher votre page de réservation en iframe.</div>
+      <div class="code-block">&lt;iframe src="https://vooroo.com/rdv/sophie-martin" ...&gt;</div>
+      <button class="btn-outline" style="width:100%;justify-content:center" onclick="showToast('Code copié !')"><i class="ti ti-copy"></i> Copier le code</button>
+    </div>
+
+    <!-- UN LIEN PAR TYPE -->
+    <div class="rc-section" style="background:var(--vg-bg);border-color:#86efac">
+      <div class="un-lien-row">
+        <div class="un-lien-icon"><i class="ti ti-link"></i></div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">Un lien par type</div>
+          <div class="un-lien-text">Partagez le lien général de réservation, ou le lien propre à un type via son menu « Aperçu public ».</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /right -->
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// DAYS
+const DAYS = [
+  {key:'lun',label:'Lundi',on:true},
+  {key:'mar',label:'Mardi',on:true},
+  {key:'mer',label:'Mercredi',on:true},
+  {key:'jeu',label:'Jeudi',on:true},
+  {key:'ven',label:'Vendredi',on:true},
+  {key:'sam',label:'Samedi',on:false},
+  {key:'dim',label:'Dimanche',on:false},
+];
+
+function renderDays() {
+  const list = document.getElementById('days-list');
+  list.innerHTML = '';
+  DAYS.forEach((d, i) => {
+    const row = document.createElement('div');
+    row.className = 'day-row';
+    row.innerHTML = `
+      <div class="day-toggle-wrap">
+        <button class="toggle ${d.on?'on':'off'}" onclick="toggleDay(${i})"></button>
+        <span class="day-name" style="color:${d.on?'var(--text)':'#9ca3af'}">${d.label}</span>
+      </div>
+      <div class="day-slots" id="slots-${d.key}">
+        ${d.on
+          ? `<div class="time-row">
+               <input class="time-input" type="time" value="09:00">
+               <span class="time-sep">–</span>
+               <input class="time-input" type="time" value="17:00">
+             </div>
+             <button class="add-plage" onclick="addPlage('${d.key}')"><i class="ti ti-plus" style="font-size:11px"></i> Ajouter une plage</button>`
+          : `<span class="day-off">Indisponible</span>`
+        }
+      </div>`;
+    list.appendChild(row);
+  });
+}
+
+function toggleDay(i) {
+  DAYS[i].on = !DAYS[i].on;
+  renderDays();
+}
+
+function addPlage(key) {
+  const container = document.getElementById('slots-'+key);
+  const row = document.createElement('div');
+  row.className = 'time-row';
+  row.innerHTML = `<input class="time-input" type="time" value="14:00"><span class="time-sep">–</span><input class="time-input" type="time" value="18:00">`;
+  container.insertBefore(row, container.querySelector('.add-plage'));
+}
+
+// TABS
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
+}
+
+function switchRdvTab(tab, btn) {
+  document.querySelectorAll('.subtab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function switchDispoTab(tab, btn) {
+  document.querySelectorAll('.dispo-stab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['horaires','blocked','rules'].forEach(t => {
+    document.getElementById('spanel-'+t).style.display = t===tab ? 'block' : 'none';
+  });
+}
+
+// TOAST
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.innerHTML = '<i class="ti ti-check" style="color:#4ade80"></i> ' + msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+renderDays();
+</script>
+</body>
+</html>

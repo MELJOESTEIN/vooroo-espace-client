@@ -1,48 +1,40 @@
-# Vooroo — Espace client
+# Vooroo — Espace client (handoff design)
 
-Pages de handoff design déployées via GitHub Pages.
-Version du **26 juillet 2026** (messagerie : 25 juillet 2026).
+Maquettes de conception de l'espace client Vooroo, publiées pour le handoff développement.
 
-👉 **Accueil : https://meljoestein.github.io/vooroo-espace-client/**
+**En ligne :** https://meljoestein.github.io/vooroo-espace-client/
 
-## Espace client
+Version du **8 août 2026** — 14 modules montés dans une coquille CRM commune.
 
-L'application complète (sidebar + header + les 8 menus montés directement dedans) :
+## Contenu
 
-- **[CRM — application complète](https://meljoestein.github.io/vooroo-espace-client/espace-client/crm.dc.html)**
-
-Les mêmes pages en accès direct :
-
-| Page | Lien |
+| Chemin | Rôle |
 |---|---|
-| Contacts | [contacts.dc.html](https://meljoestein.github.io/vooroo-espace-client/espace-client/contacts.dc.html) |
-| Prospects | [prospects.dc.html](https://meljoestein.github.io/vooroo-espace-client/espace-client/prospects.dc.html) |
-| Affaires | [affaires.dc.html](https://meljoestein.github.io/vooroo-espace-client/espace-client/affaires.dc.html) |
-| Projets | [projets.dc.html](https://meljoestein.github.io/vooroo-espace-client/espace-client/projets.dc.html) |
-| Produits | [produits.dc.html](https://meljoestein.github.io/vooroo-espace-client/espace-client/produits.dc.html) |
-| Activités | [activites.dc.html](https://meljoestein.github.io/vooroo-espace-client/espace-client/activites.dc.html) |
-| Devis & Factures | [devis-factures.dc.html](https://meljoestein.github.io/vooroo-espace-client/espace-client/devis-factures.dc.html) |
-| Équipe | [equipe.dc.html](https://meljoestein.github.io/vooroo-espace-client/espace-client/equipe.dc.html) |
+| `index.html` | Portail de handoff : liens vers l'application et vers chaque écran |
+| `espace-client/CRM Vooroo.dc.html` | Coquille de l'application (sidebar + header + montage des modules) |
+| `espace-client/*.dc.html` | Les 20 composants d'écran |
+| `espace-client/support.js` | Runtime `dc` : parsing des composants, chargement à la demande, rendu React |
+| `espace-client/_ds/` | Design system Vooroo — tokens (couleurs, typographie, espacements, effets), styles et bundle JS |
+| `espace-client/uploads/` | Illustrations et icônes référencées par les écrans |
+| `.nojekyll` | Requis : sans ce fichier GitHub Pages ignorerait `_ds/` (dossier préfixé par `_`) |
 
-## Messagerie de vente
+## Modules
 
-- [Messagerie de vente](https://meljoestein.github.io/vooroo-espace-client/messagerie/messagerie-de-vente.dc.html)
+**Métier** — Affaires · Prospects · Contacts · Produits · Activités · Projets · Devis & Factures
 
-## Paramètres — Devis & Factures
+**Collaboration & pilotage** — Statistiques · Messagerie · Planificateur · Équipe · Documents
 
-- [Paramètres Devis & Factures](https://meljoestein.github.io/vooroo-espace-client/parametres-facturation/parametres-devis-factures.dc.html)
+**Paramètres & aide** — Paramètres · Entreprise · Devis & Factures · Champs de données · Guide d'utilisation
 
----
+## Fonctionnement
 
-## Notes techniques
+Chaque fichier `.dc.html` est à la fois une page autonome et un composant importable. La coquille CRM déclare ses modules via `<dc-import name="…">` ; `support.js` récupère alors le fichier correspondant par requête réseau et le monte dans la page.
 
-- Les pages sont les exports bruts de l'outil de design (format `.dc.html`) : elles sont servies
-  telles quelles, le runtime `support.js` les rend côté navigateur.
-- Chaque dossier embarque **son propre `support.js`** (les versions diffèrent entre les livraisons)
-  et **uniquement les images réellement utilisées** par les pages.
-- Le CRM monte les autres pages en DOM direct via `<dc-import>`, qui va chercher le fichier frère
-  `<nom>.dc.html`. Les fichiers ont donc été renommés en ASCII (`Activités Vooroo.dc.html` →
-  `activites.dc.html`) et les `dc-import` du CRM mis à jour en conséquence, pour éviter les URLs
-  encodées.
-- Deux ajustements par rapport à l'export d'origine : le renommage ci-dessus, et l'ajout du libellé
-  `equipe: 'Équipe'` manquant dans `MENU_LABELS` du CRM (le header affichait `equipe` en minuscules).
+Deux conséquences pratiques :
+
+- **Il faut servir les fichiers par HTTP.** Ouvrir un `.dc.html` directement depuis le disque (`file://`) échoue : les requêtes de chargement des composants sont bloquées. En local : `python3 -m http.server` à la racine, puis http://localhost:8000/.
+- **Une connexion internet est nécessaire.** React 18 et ReactDOM viennent d'unpkg, les polices de Google Fonts.
+
+## Portée
+
+Maquettes de conception : les données affichées sont fictives, il n'y a ni backend ni persistance. Les interactions se limitent à la navigation et aux états d'interface.

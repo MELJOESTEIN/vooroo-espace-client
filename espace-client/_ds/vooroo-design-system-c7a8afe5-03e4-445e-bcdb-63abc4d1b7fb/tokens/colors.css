@@ -1,0 +1,60 @@
+:root {
+  /* Base palette */
+  --green-vooroo: #35AA47;
+  --green-vooroo-dark: #2A8C39;
+  --green-vooroo-light: #4DC45E;
+  --green-vooroo-subtle: #E8F7EB;
+  --noir-vooroo: #111111;
+  --noir-vooroo-soft: #1A1A1A;
+  --white: #FFFFFF;
+  --grey-mid: #8A8A8A;
+  --grey-light: #F2F2F2;
+  --grey-border: #E0E0E0;
+  --grey-dark: #3A3A3A;
+
+  /* Product UI — real app shell colors (from product screenshot) */
+  --color-rail: #111111;          /* icon rail sidebar bg */
+  --color-nav-text: #3A3A3A;      /* secondary sidebar inactive text */
+  --color-nav-active: #35AA47;    /* active nav item text/icon */
+  --color-nav-active-bg: #E8F7EB; /* active nav item bg */
+
+  /* Semantic — primary */
+  --color-primary: var(--green-vooroo);
+  --color-primary-hover: var(--green-vooroo-dark);
+  --color-primary-active: #247030;
+  --color-primary-subtle: var(--green-vooroo-subtle);
+  --color-on-primary: var(--white);
+
+  /* Semantic — secondary */
+  --color-secondary: var(--noir-vooroo);
+  --color-secondary-hover: var(--noir-vooroo-soft);
+  --color-on-secondary: var(--white);
+
+  /* Semantic — surfaces */
+  --color-bg: var(--white);
+  --color-bg-subtle: var(--grey-light);
+  --color-bg-dark: var(--noir-vooroo);
+  --color-bg-green: var(--green-vooroo);
+  --color-surface: var(--white);
+
+  /* Semantic — text */
+  --color-text: var(--noir-vooroo);
+  --color-text-muted: var(--grey-mid);
+  --color-text-inverse: var(--white);
+  --color-text-primary: var(--green-vooroo);
+
+  /* Semantic — borders */
+  --color-border: var(--grey-border);
+  --color-border-strong: var(--grey-mid);
+  --color-border-primary: var(--green-vooroo);
+
+  /* Semantic — status */
+  --color-success: var(--green-vooroo);
+  --color-success-subtle: var(--green-vooroo-subtle);
+  --color-warning: #8A8A8A;
+  --color-warning-subtle: #F2F2F2;
+  --color-error: #3A3A3A;
+  --color-error-subtle: #F2F2F2;
+  --color-info: var(--green-vooroo);
+  --color-info-subtle: var(--green-vooroo-subtle);
+}

@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/effects.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/styles.css">
+  <script src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/_ds_bundle.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--font-body); background: var(--color-surface); }
+    a { color: var(--color-primary); text-decoration: none; }
+    @keyframes fIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes slideRight { from { transform:translateX(100%); } to { transform:translateX(0); } }
+    .eq-table { width:100%; border-collapse:collapse; }
+    .eq-table th { position:sticky; top:0; z-index:5; background:var(--color-surface); }
+    .eq-sticky-r { position:sticky; right:0; background:var(--color-surface); }
+    .eq-sticky-l { position:sticky; left:0; background:var(--color-surface); }
+    h1,h2,h3{font-family:var(--font-body)!important;letter-spacing:normal;font-size:18px} body,td,th,p,div,span,input,select,textarea,button{font-size:14px}
+  </style>
+</helmet>
+
+<div style="display:flex;flex-direction:column;height:100vh;overflow:hidden;background:var(--color-surface)">
+
+  <!-- TOP BAR -->
+  <div style="padding:16px 24px 0;flex-shrink:0">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px">
+      <div>
+        <h1 style="font-size:22px;font-weight:700;color:var(--color-text);margin:0 0 3px">Équipe</h1>
+        <div style="font-size:12px;color:var(--color-text-muted);display:flex;align-items:center;gap:6px">
+          <span>{{ totalCollabs }} collaborateurs</span>
+          <span>·</span>
+          <span>{{ totalActifs }} actifs</span>
+          <span>·</span>
+          <span style="color:var(--color-primary);cursor:pointer;font-weight:500">Admin panel</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div style="display:flex;align-items:center;border-bottom:1.5px solid var(--color-border);margin-top:12px;gap:0">
+      <button onClick="{{ goUtilisateurs }}" style="display:flex;align-items:center;gap:6px;height:38px;padding:0 4px;border:none;border-bottom:2px solid {{ tabBorderU }};margin-bottom:-1.5px;background:transparent;font-size:14px;font-weight:{{ tabWeightU }};color:{{ tabColorU }};cursor:pointer;margin-right:22px;font-family:var(--font-body)">
+        Utilisateurs <span style="background:{{ tabBadgeBgU }};color:{{ tabBadgeColorU }};font-size:10px;font-weight:700;padding:1px 6px;border-radius:var(--radius-lg)">{{ totalCollabs }}</span>
+      </button>
+      <button onClick="{{ goRoles }}" style="display:flex;align-items:center;gap:6px;height:38px;padding:0 4px;border:none;border-bottom:2px solid {{ tabBorderR }};margin-bottom:-1.5px;background:transparent;font-size:14px;font-weight:{{ tabWeightR }};color:{{ tabColorR }};cursor:pointer;margin-right:22px;font-family:var(--font-body)">
+        Rôles <span style="background:{{ tabBadgeBgR }};color:{{ tabBadgeColorR }};font-size:10px;font-weight:700;padding:1px 6px;border-radius:var(--radius-lg)">5</span>
+      </button>
+      <button onClick="{{ goJournaux }}" style="display:flex;align-items:center;gap:6px;height:38px;padding:0 4px;border:none;border-bottom:2px solid {{ tabBorderJ }};margin-bottom:-1.5px;background:transparent;font-size:14px;font-weight:{{ tabWeightJ }};color:{{ tabColorJ }};cursor:pointer;margin-right:22px;font-family:var(--font-body)">
+        Journaux <span style="background:{{ tabBadgeBgJ }};color:{{ tabBadgeColorJ }};font-size:10px;font-weight:700;padding:1px 6px;border-radius:var(--radius-lg)">8</span>
+      </button>
+      <button onClick="{{ goPermissions }}" style="display:flex;align-items:center;gap:6px;height:38px;padding:0 4px;border:none;border-bottom:2px solid {{ tabBorderP }};margin-bottom:-1.5px;background:transparent;font-size:14px;font-weight:{{ tabWeightP }};color:{{ tabColorP }};cursor:pointer;margin-right:22px;font-family:var(--font-body)">
+        Permissions
+      </button>
+      <button onClick="{{ goGroupes }}" style="display:flex;align-items:center;gap:6px;height:38px;padding:0 4px;border:none;border-bottom:2px solid {{ tabBorderG }};margin-bottom:-1.5px;background:transparent;font-size:14px;font-weight:{{ tabWeightG }};color:{{ tabColorG }};cursor:pointer;font-family:var(--font-body)">
+        Groupes <span style="background:{{ tabBadgeBgG }};color:{{ tabBadgeColorG }};font-size:10px;font-weight:700;padding:1px 6px;border-radius:var(--radius-lg)">4</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTENT AREA -->
+  <div style="flex:1;overflow:hidden;position:relative;min-height:0">
+
+    <!-- ===== UTILISATEURS ===== -->
+    <div style="display:{{ showUtilisateurs }};position:absolute;inset:0;flex-direction:column;overflow:hidden">
+      <!-- Subtitle -->
+      <div style="padding:12px 24px;border-bottom:1px solid #f0f2f4;flex-shrink:0">
+        <p style="margin:0;font-size:12.5px;color:var(--color-text-muted)">Gérez les collaborateurs de votre agence — invitations, rôles, accès et performance.</p>
+      </div>
+      <!-- Stats cards -->
+      <div style="display:flex;padding:14px 24px;gap:12px;flex-shrink:0">
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">EFFECTIF TOTAL</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">6</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">collaborateurs</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">ACTIFS</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">4</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">connectés ce mois</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">INVITATIONS EN ATTENTE</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">1</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">non acceptées</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">RATIO COLLAB/CLIENTS</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">1/2</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">clients par commercial</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">COMPLÉTION PROFILS</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">72%</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">en moyenne</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">2FA ACTIVÉE</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">50%</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">de l'équipe sécurisée</div>
+        </div>
+      </div>
+      <!-- Table header bar -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 24px 8px;flex-shrink:0">
+        <span style="font-size:14px;font-weight:600;color:var(--color-text)">{{ totalCollabs }} collaborateurs</span>
+        <button onClick="{{ openInviteDrawer }}" style="display:flex;align-items:center;gap:6px;height:34px;padding:0 14px;border:none;border-radius:var(--radius-md);background:var(--color-text);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-secondary-hover)">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          Inviter un collaborateur
+        </button>
+      </div>
+      <!-- Table -->
+      <div style="flex:1;overflow:auto">
+        <table class="eq-table">
+          <thead>
+            <tr style="border-bottom:1.5px solid var(--color-border)">
+              <th style="padding:8px 24px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em;width:36px"><input type="checkbox" /></th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">COLLABORATEUR</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">EMAIL</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">RÔLE</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">STATUT</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">2FA</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">DERNIÈRE CONNEXION</th>
+              <th style="padding:8px 12px;text-align:right;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">CLIENTS</th>
+              <th style="padding:8px 12px;text-align:right;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">CA</th>
+              <th class="eq-sticky-r" style="padding:8px 16px;text-align:right;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em;border-left:1px solid #f0f2f4">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ usersRows }}" as="u" hint-placeholder-count="6">
+              <tr style="border-bottom:1px solid #f3f4f6;cursor:pointer" style-hover="background:var(--color-bg-subtle)">
+                <td style="padding:10px 24px"><input type="checkbox" /></td>
+                <td style="padding:10px 12px">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:36px;height:36px;border-radius:50%;background:{{ u.avatarBg }};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;position:relative;flex-shrink:0">
+                      {{ u.initials }}
+                      <div style="position:absolute;bottom:1px;right:1px;width:9px;height:9px;border-radius:50%;background:{{ u.dotColor }};border:1.5px solid #fff"></div>
+                    </div>
+                    <div>
+                      <div style="font-size:14px;font-weight:600;color:var(--color-text)">{{ u.nom }}</div>
+                      <div style="font-size:11px;color:var(--color-text-muted)">{{ u.userId }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="padding:10px 12px;font-size:12.5px;color:var(--noir-vooroo-soft)">{{ u.email }}</td>
+                <td style="padding:10px 12px">
+                  <span style="font-size:11.5px;font-weight:600;color:{{ u.roleBadgeColor }};background:{{ u.roleBadgeBg }};padding:3px 10px;border-radius:20px">{{ u.role }}</span>
+                </td>
+                <td style="padding:10px 12px">
+                  <span style="font-size:12px;font-weight:600;color:{{ u.statutColor }}">{{ u.statut }}</span>
+                </td>
+                <td style="padding:10px 12px">
+                  <span style="font-size:11.5px;font-weight:600;color:{{ u.tfaColor }};border:1.5px solid {{ u.tfaBorder }};padding:2px 9px;border-radius:20px">{{ u.tfa }}</span>
+                </td>
+                <td style="padding:10px 12px;font-size:12.5px;color:var(--noir-vooroo-soft)">{{ u.lastLogin }}</td>
+                <td style="padding:10px 12px;text-align:right;font-size:12.5px;color:var(--noir-vooroo-soft);font-weight:500">{{ u.clients }}</td>
+                <td style="padding:10px 12px;text-align:right;font-size:12.5px;font-weight:700;color:var(--color-primary)">{{ u.ca }}</td>
+                <td class="eq-sticky-r" style="padding:10px 16px;border-left:1px solid #f0f2f4">
+                  <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end">
+                    <button data-action="edit-user" data-id="{{ u.id }}" onClick="{{ onUserTableClick }}" style="width:28px;height:28px;border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--color-bg-subtle)" title="Modifier">
+                      <svg width="12" height="12" fill="none" stroke="var(--noir-vooroo-soft)" stroke-width="1.5" viewBox="0 0 24 24" style="pointer-events:none"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487z"/></svg>
+                    </button>
+                    <button data-action="disable-user" data-id="{{ u.id }}" onClick="{{ onUserTableClick }}" style="width:28px;height:28px;border:1px solid var(--grey-light);border-radius:var(--radius-sm);background:var(--color-surface);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--grey-light)" title="Désactiver">
+                      <svg width="12" height="12" fill="none" stroke="var(--grey-dark)" stroke-width="1.5" viewBox="0 0 24 24" style="pointer-events:none"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M6 6l12 12"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== RÔLES ===== -->
+    <div style="display:{{ showRoles }};position:absolute;inset:0;flex-direction:column;overflow:hidden">
+      <div style="padding:12px 24px;border-bottom:1px solid #f0f2f4;flex-shrink:0">
+        <p style="margin:0;font-size:12.5px;color:var(--color-text-muted)">Définissez les rôles et leurs permissions pour structurer votre organisation.</p>
+      </div>
+      <!-- Stats -->
+      <div style="display:flex;padding:14px 24px;gap:12px;flex-shrink:0">
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">RÔLES DÉFINIS</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">5</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">dans votre agence</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">RÔLE LE PLUS ATTRIBUÉ</div>
+          <div style="font-size:20px;font-weight:700;color:var(--color-text);line-height:1.2;margin-top:4px">Commerciale</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">2 membres</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">UTILISATEURS SANS RÔLE</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">0</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">tous assignés</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">RÔLES PERSONNALISÉS</div>
+          <div style="font-size:26px;font-weight:700;color:var(--grey-dark);line-height:1.1">4</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">créés par vous</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">ACCÈS FINANCIERS</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">2</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">rôles avec accès finances</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">DERNIÈRE RÉVISION</div>
+          <div style="font-size:22px;font-weight:700;color:var(--color-text);line-height:1.2;margin-top:4px">27 avr.</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">structure des rôles</div>
+        </div>
+      </div>
+      <!-- Table header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 24px;flex-shrink:0">
+        <span style="font-size:14px;font-weight:600;color:var(--color-text)">{{ rolesRows.length }} rôles</span>
+        <button onClick="{{ openCreateRole }}" style="display:flex;align-items:center;gap:6px;height:34px;padding:0 14px;border:none;border-radius:var(--radius-md);background:var(--color-text);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-secondary-hover)">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          Créer un rôle
+        </button>
+      </div>
+      <div style="flex:1;overflow:auto">
+        <table class="eq-table">
+          <thead>
+            <tr style="border-bottom:1.5px solid var(--color-border)">
+              <th style="padding:8px 24px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">RÔLE</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">DESCRIPTION</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">MEMBRES</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">CATÉGORIE</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">MENUS ACTIVÉS</th>
+              <th class="eq-sticky-r" style="padding:8px 16px;text-align:right;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em;border-left:1px solid #f0f2f4">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ rolesRows }}" as="r" hint-placeholder-count="5">
+              <tr style="border-bottom:1px solid #f3f4f6" style-hover="background:var(--color-bg-subtle)">
+                <td style="padding:12px 24px">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:4px;height:36px;border-radius:2px;background:{{ r.roleColor }};flex-shrink:0"></div>
+                    <div>
+                      <div style="font-size:14px;font-weight:600;color:var(--color-text)">{{ r.nom }}</div>
+                      <div style="font-size:11px;color:var(--color-text-muted)">{{ r.roleId }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="padding:12px 12px;font-size:12.5px;color:var(--noir-vooroo-soft);max-width:280px">{{ r.description }}</td>
+                <td style="padding:12px 12px">
+                  <span style="font-size:12.5px;color:var(--noir-vooroo-soft);font-weight:500">{{ r.membres }}</span>
+                  <span style="font-size:12px;color:var(--color-text-muted)"> membres</span>
+                </td>
+                <td style="padding:12px 12px">
+                  <span style="font-size:11.5px;font-weight:600;color:{{ r.catColor }};background:{{ r.catBg }};padding:3px 10px;border-radius:20px">{{ r.categorie }}</span>
+                </td>
+                <td style="padding:12px 12px">
+                  <div style="display:flex;flex-wrap:wrap;gap:4px">
+                    <sc-for list="{{ r.modulesBadges }}" as="mb" hint-placeholder-count="4">
+                      <span style="font-size:11px;color:var(--noir-vooroo-soft);background:var(--color-bg-subtle);border:1px solid var(--color-border);padding:2px 8px;border-radius:20px;white-space:nowrap">{{ mb }}</span>
+                    </sc-for>
+                  </div>
+                </td>
+                <td class="eq-sticky-r" style="padding:12px 16px;border-left:1px solid #f0f2f4">
+                  <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end">
+                    <button data-action="edit-role" data-id="{{ r.id }}" onClick="{{ onRoleTableClick }}" style="width:28px;height:28px;border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--color-bg-subtle)" title="Modifier">
+                      <svg width="12" height="12" fill="none" stroke="var(--noir-vooroo-soft)" stroke-width="1.5" viewBox="0 0 24 24" style="pointer-events:none"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487z"/></svg>
+                    </button>
+                    <button data-action="dup-role" data-id="{{ r.id }}" onClick="{{ onRoleTableClick }}" style="width:28px;height:28px;border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--color-bg-subtle)" title="Dupliquer">
+                      <svg width="12" height="12" fill="none" stroke="var(--noir-vooroo-soft)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== JOURNAUX ===== -->
+    <div style="display:{{ showJournaux }};position:absolute;inset:0;flex-direction:column;overflow:hidden">
+      <div style="padding:12px 24px;border-bottom:1px solid #f0f2f4;flex-shrink:0">
+        <p style="margin:0;font-size:12.5px;color:var(--color-text-muted)">Auditez toutes les actions effectuées sur votre espace partenaire.</p>
+      </div>
+      <!-- Stats -->
+      <div style="display:flex;padding:14px 24px;gap:12px;flex-shrink:0">
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">ÉVÉNEMENTS (24H)</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">8</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">toutes catégories</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">ERREURS DE CONNEXION</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">1</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">sur 24h</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">UTILISATEUR + ACTIF</div>
+          <div style="font-size:18px;font-weight:700;color:var(--color-text);line-height:1.2;margin-top:4px">Marie Koné</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">le plus d'actions</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">ACTION LA + FRÉQUENTE</div>
+          <div style="font-size:18px;font-weight:700;color:var(--color-text);line-height:1.2;margin-top:4px">Consultation</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">client</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">ALERTES SÉCURITÉ</div>
+          <div style="font-size:26px;font-weight:700;color:var(--grey-dark);line-height:1.1">3</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">à vérifier</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">CONNEXIONS HORS HORAIRES</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">1</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">détectées</div>
+        </div>
+      </div>
+      <!-- Filter chips + export -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 24px;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:12px;color:var(--color-text-muted);display:flex;align-items:center;gap:4px"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"/></svg> Gravité</span>
+          <sc-for list="{{ graviteFilters }}" as="gf" hint-placeholder-count="4">
+            <button onClick="{{ gf.select }}" style="height:28px;padding:0 12px;border:1.5px solid {{ gf.border }};border-radius:20px;background:{{ gf.bg }};color:{{ gf.color }};font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-body)">{{ gf.label }}</button>
+          </sc-for>
+        </div>
+        <button style="display:flex;align-items:center;gap:5px;height:30px;padding:0 12px;border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface);font-size:12px;color:var(--noir-vooroo-soft);cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-bg-subtle)">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+          Exporter CSV
+        </button>
+      </div>
+      <!-- Table -->
+      <div style="flex:1;overflow:auto">
+        <table class="eq-table">
+          <thead>
+            <tr style="border-bottom:1.5px solid var(--color-border)">
+              <th style="padding:8px 24px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">HORODATAGE</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">UTILISATEUR</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">ACTION</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">RESSOURCE</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">STATUT</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">GRAVITÉ</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">IP / VILLE</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">CATÉGORIE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ logsRows2 }}" as="l" hint-placeholder-count="8">
+              <tr onClick="{{ l.onClick }}" style="border-bottom:1px solid #f3f4f6;cursor:pointer" style-hover="background:var(--color-bg-subtle)">
+                <td style="padding:10px 24px">
+                  <div style="font-size:12px;font-weight:600;color:var(--color-text);font-family:'Roboto Mono',monospace">{{ l.date }}</div>
+                  <div style="font-size:11px;color:var(--color-text-muted)">{{ l.evtId }}</div>
+                </td>
+                <td style="padding:10px 12px">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <div style="width:30px;height:30px;border-radius:50%;background:{{ l.avatarBg }};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0">{{ l.initials }}</div>
+                    <div>
+                      <div style="font-size:12.5px;font-weight:600;color:var(--color-text)">{{ l.nom }}</div>
+                      <div style="font-size:11px;color:var(--color-text-muted)">{{ l.role }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="padding:10px 12px;font-size:12.5px;color:var(--noir-vooroo-soft)">{{ l.action }}</td>
+                <td style="padding:10px 12px;font-size:12.5px;color:var(--noir-vooroo-soft)">{{ l.ressource }}</td>
+                <td style="padding:10px 12px">
+                  <span style="font-size:11.5px;font-weight:600;color:{{ l.statutColor }};background:{{ l.statutBg }};padding:2px 9px;border-radius:20px">{{ l.statut }}</span>
+                </td>
+                <td style="padding:10px 12px">
+                  <span style="font-size:11.5px;font-weight:600;color:{{ l.graviteColor }};border:1.5px solid {{ l.graviteBorder }};padding:2px 9px;border-radius:20px">{{ l.gravite }}</span>
+                </td>
+                <td style="padding:10px 12px">
+                  <div style="font-size:12px;color:var(--noir-vooroo-soft);font-family:'Roboto Mono',monospace">{{ l.ip }}</div>
+                  <div style="font-size:11px;color:var(--color-text-muted)">{{ l.ville }}</div>
+                </td>
+                <td style="padding:10px 12px">
+                  <span style="font-size:11.5px;color:var(--noir-vooroo-soft);border:1px solid var(--color-border);padding:2px 9px;border-radius:20px">{{ l.categorie }}</span>
+                </td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== PERMISSIONS ===== -->
+    <div style="display:{{ showPermissions }};position:absolute;inset:0;flex-direction:column;overflow:hidden">
+      <div style="padding:12px 24px;border-bottom:1px solid #f0f2f4;flex-shrink:0">
+        <p style="margin:0;font-size:12.5px;color:var(--color-text-muted)">Configurez finement les droits d'accès par rôle et ajoutez des exceptions individuelles.</p>
+      </div>
+      <!-- Stats -->
+      <div style="display:flex;padding:14px 24px;gap:12px;flex-shrink:0">
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">UTILISATEURS DROITS MODIF.</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">33%</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">de l'équipe</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">ACCÈS FINANCIERS TOTAUX</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">1</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">rôles avec retrait</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">RESTRICTIONS IP ACTIVES</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">0</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">aucune restriction</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">DEMANDES SPÉCIALES</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">0</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">en attente</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">INDEX DE RISQUE</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">69/100</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">distribution droits</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">DERNIÈRE RÉVISION</div>
+          <div style="font-size:22px;font-weight:700;color:var(--color-text);line-height:1.2;margin-top:4px">27 avr.</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">permissions globales</div>
+        </div>
+      </div>
+      <!-- Role tabs -->
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 24px;flex-shrink:0">
+        <sc-for list="{{ permRoleTabs }}" as="pt" hint-placeholder-count="5">
+          <button onClick="{{ pt.select }}" style="height:30px;padding:0 14px;border:1.5px solid {{ pt.border }};border-radius:20px;background:{{ pt.bg }};color:{{ pt.color }};font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--font-body)">{{ pt.label }}</button>
+        </sc-for>
+      </div>
+      <!-- Permission matrix -->
+      <div style="flex:1;overflow-y:auto;min-height:0">
+        <div style="padding:0 24px 24px">
+          <div style="border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:clip">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1.5px solid var(--color-border);background:var(--color-bg-subtle)">
+              <span style="font-size:14px;font-weight:700;color:var(--color-text)">Matrice de permissions — <span style="color:var(--color-text);font-style:italic">{{ activePermRole }}</span></span>
+              <div style="display:flex;gap:8px">
+                <button onClick="{{ toutAutoriser }}" style="height:30px;padding:0 14px;border:1.5px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-bg-subtle);color:var(--noir-vooroo-soft);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-bg-subtle)">Tout autoriser</button>
+                <button onClick="{{ toutInterdire }}" style="height:30px;padding:0 14px;border:1.5px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-bg-subtle);color:var(--color-text);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--grey-light)">Tout interdire</button>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 160px 120px 120px 120px 120px 120px;border-bottom:1.5px solid var(--color-border);padding:8px 20px">
+              <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em">MODULE</div>
+              <div style="font-size:10px;font-weight:700;color:var(--grey-mid);text-transform:uppercase;letter-spacing:.06em">PORTÉE</div>
+              <div style="font-size:10px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.06em;text-align:center">VOIR</div>
+              <div style="font-size:10px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.06em;text-align:center">CRÉER</div>
+              <div style="font-size:10px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.06em;text-align:center">MODIFIER</div>
+              <div style="font-size:10px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.06em;text-align:center">SUPPRIMER</div>
+              <div style="font-size:10px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.06em;text-align:center">EXPORTER</div>
+            </div>
+            <sc-for list="{{ permModules }}" as="pm" hint-placeholder-count="10">
+              <div style="display:grid;grid-template-columns:1fr 160px 120px 120px 120px 120px 120px;padding:10px 20px;border-bottom:1px solid #f3f4f6" style-hover="background:var(--color-bg-subtle)">
+                <div style="font-size:14px;color:var(--color-text);display:flex;align-items:center">{{ pm.module }}</div>
+                <!-- PORTÉE -->
+                <div style="display:flex;align-items:center">
+                  <sc-if value="{{ pm.showScope }}" hint-placeholder-val="{{ true }}">
+                    <select onChange="{{ pm.onScopeChange }}" style="height:24px;font-size:11px;font-weight:600;color:{{ pm.scopeColor }};background:{{ pm.scopeBg }};border:1px solid {{ pm.scopeColor }};border-radius:20px;padding:0 8px;outline:none;cursor:pointer;font-family:var(--font-body);max-width:148px">
+                      <option value="personnel">Personnel</option>
+                      <option value="equipe">Équipe</option>
+                      <option value="equipe_cascade">Équipe + sous-groupes</option>
+                      <option value="entreprise">Toute l'entreprise</option>
+                    </select>
+                  </sc-if>
+                  <sc-if value="{{ pm.hideScope }}" hint-placeholder-val="{{ false }}">
+                    <span style="font-size:11px;color:var(--color-border)">—</span>
+                  </sc-if>
+                </div>
+                <div style="display:flex;justify-content:center;align-items:center"><div onClick="{{ pm.toggleVoir }}" style="width:44px;height:24px;border-radius:var(--radius-lg);background:{{ pm.voirBg }};position:relative;cursor:pointer;transition:.2s"><div style="position:absolute;top:3px;left:{{ pm.voirKnob }};width:18px;height:18px;border-radius:50%;background:var(--color-surface);box-shadow:0 1px 3px rgba(0,0,0,.2);transition:.2s"></div></div></div>
+                <div style="display:flex;justify-content:center;align-items:center"><div onClick="{{ pm.toggleCreer }}" style="width:44px;height:24px;border-radius:var(--radius-lg);background:{{ pm.creerBg }};position:relative;cursor:pointer;transition:.2s"><div style="position:absolute;top:3px;left:{{ pm.creerKnob }};width:18px;height:18px;border-radius:50%;background:var(--color-surface);box-shadow:0 1px 3px rgba(0,0,0,.2);transition:.2s"></div></div></div>
+                <div style="display:flex;justify-content:center;align-items:center"><div onClick="{{ pm.toggleModifier }}" style="width:44px;height:24px;border-radius:var(--radius-lg);background:{{ pm.modifierBg }};position:relative;cursor:pointer;transition:.2s"><div style="position:absolute;top:3px;left:{{ pm.modifierKnob }};width:18px;height:18px;border-radius:50%;background:var(--color-surface);box-shadow:0 1px 3px rgba(0,0,0,.2);transition:.2s"></div></div></div>
+                <div style="display:flex;justify-content:center;align-items:center"><div onClick="{{ pm.toggleSupprimer }}" style="width:44px;height:24px;border-radius:var(--radius-lg);background:{{ pm.supprimerBg }};position:relative;cursor:pointer;transition:.2s"><div style="position:absolute;top:3px;left:{{ pm.supprimerKnob }};width:18px;height:18px;border-radius:50%;background:var(--color-surface);box-shadow:0 1px 3px rgba(0,0,0,.2);transition:.2s"></div></div></div>
+                <div style="display:flex;justify-content:center;align-items:center"><div onClick="{{ pm.toggleExporter }}" style="width:44px;height:24px;border-radius:var(--radius-lg);background:{{ pm.exporterBg }};position:relative;cursor:pointer;transition:.2s"><div style="position:absolute;top:3px;left:{{ pm.exporterKnob }};width:18px;height:18px;border-radius:50%;background:var(--color-surface);box-shadow:0 1px 3px rgba(0,0,0,.2);transition:.2s"></div></div></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ===== GROUPES ===== -->
+    <div style="display:{{ showGroupes }};position:absolute;inset:0;flex-direction:column;overflow:hidden">
+      <div style="padding:12px 24px;border-bottom:1px solid #f0f2f4;flex-shrink:0">
+        <p style="margin:0;font-size:12.5px;color:var(--color-text-muted)">Organisez vos collaborateurs en équipes de travail pour filtrer les données et attribuer automatiquement les prospects.</p>
+      </div>
+      <!-- Stats -->
+      <div style="display:flex;padding:14px 24px;gap:12px;flex-shrink:0">
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">GROUPES ACTIFS</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">4</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">dans votre organisation</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">MEMBRES ASSIGNÉS</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">6</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">tous assignés</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">ROUND-ROBIN ACTIF</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">2</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">groupes en rotation</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">GROUPES HIÉRARCHIQUES</div>
+          <div style="font-size:26px;font-weight:700;color:var(--color-text);line-height:1.1">1</div>
+          <div style="font-size:11px;color:var(--color-text-muted);margin-top:3px">avec groupe parent</div>
+        </div>
+      </div>
+      <!-- Header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 24px;flex-shrink:0">
+        <span style="font-size:14px;font-weight:600;color:var(--color-text)">4 groupes</span>
+        <button onClick="{{ openCreateGroup }}" style="display:flex;align-items:center;gap:6px;height:34px;padding:0 14px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);color:var(--noir-vooroo-soft);font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-bg-subtle)">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          Créer un groupe
+        </button>
+      </div>
+      <!-- Groups grid -->
+      <div style="flex:1;overflow:auto;padding:0 24px 24px">
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px">
+          <sc-for list="{{ groupesRows }}" as="g" hint-placeholder-count="4">
+            <div style="border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;background:var(--color-surface)" style-hover="border-color:var(--color-border);box-shadow:var(--shadow-sm)">
+              <div style="display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid #f0f2f4">
+                <div style="width:10px;height:10px;border-radius:50%;background:{{ g.couleur }};flex-shrink:0"></div>
+                <div style="flex:1">
+                  <div style="font-size:14px;font-weight:700;color:var(--color-text)">{{ g.nom }}</div>
+                  <div style="font-size:11px;color:var(--color-text-muted);margin-top:1px">{{ g.groupId }}</div>
+                </div>
+                <div style="display:flex;gap:5px">
+                  <button data-action="edit-group" data-id="{{ g.id }}" onClick="{{ onGroupCardClick }}" style="width:26px;height:26px;border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--color-bg-subtle)">
+                    <svg width="11" height="11" fill="none" stroke="var(--noir-vooroo-soft)" stroke-width="1.5" viewBox="0 0 24 24" style="pointer-events:none"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487z"/></svg>
+                  </button>
+                  <button data-action="del-group" data-id="{{ g.id }}" onClick="{{ onGroupCardClick }}" style="width:26px;height:26px;border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--grey-light)">
+                    <svg width="11" height="11" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m7.5 4.5v5.25m3-5.25v5.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div style="padding:14px 18px">
+                <div style="font-size:12px;color:var(--color-text-muted);margin-bottom:10px">{{ g.description }}</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                  <div style="font-size:11px;font-weight:600;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em">Responsable</div>
+                  <div style="display:flex;align-items:center;gap:6px">
+                    <div style="width:20px;height:20px;border-radius:50%;background:{{ g.respBg }};display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff">{{ g.respInit }}</div>
+                    <span style="font-size:12px;color:var(--noir-vooroo-soft)">{{ g.responsable }}</span>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                  <div style="font-size:11px;font-weight:600;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em">Membres</div>
+                  <div style="display:flex;align-items:center;gap:6px">
+                    <div style="display:flex">
+                      <sc-for list="{{ g.avatars }}" as="av" hint-placeholder-count="2">
+                        <div style="width:22px;height:22px;border-radius:50%;background:{{ av.bg }};display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;border:2px solid #fff;margin-right:-5px">{{ av.init }}</div>
+                      </sc-for>
+                    </div>
+                    <span style="font-size:12px;color:var(--noir-vooroo-soft);margin-left:8px">{{ g.nbMembres }} membres</span>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div style="font-size:11px;font-weight:600;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em">Round-robin</div>
+                  <div style="width:34px;height:18px;border-radius:9px;background:{{ g.rrBg }};position:relative">
+                    <div style="position:absolute;top:2px;left:{{ g.rrKnob }};width:14px;height:14px;border-radius:50%;background:var(--color-surface);box-shadow:0 1px 2px rgba(0,0,0,.2)"></div>
+                  </div>
+                </div>
+                <sc-if value="{{ g.hasParent }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px">
+                    <div style="font-size:11px;font-weight:600;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em">Groupe parent</div>
+                    <span style="font-size:12px;color:var(--noir-vooroo-soft)">{{ g.parent }}</span>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end CONTENT AREA -->
+
+  <!-- EDIT USER DRAWER -->
+  <sc-if value="{{ showEditUserDrawer }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeEditUserDrawer }}" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100"></div>
+    <div style="position:fixed;top:0;right:0;width:440px;height:100vh;background:var(--color-surface);z-index:101;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.15);animation:slideRight .25s ease">
+      <div style="padding:18px 22px;border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--noir-vooroo-soft);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">{{ editUserData.initials }}</div>
+          <h2 style="font-size:18px;font-weight:700;color:var(--color-text);margin:0">{{ editUserData.nom }}</h2>
+        </div>
+        <button onClick="{{ closeEditUserDrawer }}" style="width:28px;height:28px;border:none;background:var(--color-bg-subtle);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--color-text-muted)" style-hover="background:var(--color-border)">×</button>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px 22px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Prénom</label><input type="text" value="{{ editUserData.nom }}" style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box" /></div>
+          <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Email</label><input type="email" value="{{ editUserData.email }}" style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box" /></div>
+        </div>
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Rôle</label><select style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box;background:var(--color-surface)"><option>{{ editUserData.role }}</option><option>Admin</option><option>Commerciale Senior</option><option>Commerciale</option><option>Commercial Junior</option><option>Support Client</option></select></div>
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Statut</label><select style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box;background:var(--color-surface)"><option>Actif</option><option>Inactif</option><option>Suspendu</option></select></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--color-border);border-radius:var(--radius-md)">
+          <div><div style="font-size:14px;font-weight:600;color:var(--color-text)">Double authentification (2FA)</div><div style="font-size:12px;color:var(--color-text-muted);margin-top:2px">Recommandée pour les comptes Admin</div></div>
+          <div style="width:44px;height:24px;border-radius:var(--radius-lg);background:var(--color-text);position:relative;cursor:pointer"><div style="position:absolute;top:3px;left:22px;width:18px;height:18px;border-radius:50%;background:var(--color-surface);box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+        </div>
+        <div style="border-top:1px solid var(--color-border);padding-top:14px">
+          <div style="font-size:11px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Actions rapides</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <button style="height:34px;padding:0 14px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);font-size:12px;color:var(--noir-vooroo-soft);cursor:pointer;font-family:var(--font-body);text-align:left" style-hover="background:var(--color-bg-subtle)">🔑 Réinitialiser le mot de passe</button>
+            <button style="height:34px;padding:0 14px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);font-size:12px;color:var(--noir-vooroo-soft);cursor:pointer;font-family:var(--font-body);text-align:left" style-hover="background:var(--color-bg-subtle)">🚪 Forcer la déconnexion</button>
+            <button style="height:34px;padding:0 14px;border:1px solid var(--grey-light);border-radius:var(--radius-md);background:var(--color-surface);font-size:12px;color:var(--grey-dark);cursor:pointer;font-family:var(--font-body);text-align:left" style-hover="background:var(--grey-light)">🗑 Transférer et supprimer le compte</button>
+          </div>
+        </div>
+      </div>
+      <div style="padding:14px 22px;border-top:1px solid var(--color-border);display:flex;justify-content:flex-end;gap:8px;flex-shrink:0">
+        <button onClick="{{ closeEditUserDrawer }}" style="height:36px;padding:0 16px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);font-size:14px;color:var(--noir-vooroo-soft);cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-bg-subtle)">Annuler</button>
+        <button onClick="{{ saveEditUser }}" style="height:36px;padding:0 16px;border:none;border-radius:var(--radius-md);background:var(--color-text);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-secondary-hover)">Enregistrer</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- CONFIRM DISABLE -->
+  <sc-if value="{{ showConfirmDisable }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeConfirmDisable }}" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;display:flex;align-items:center;justify-content:center">
+      <div onClick="{{ closeConfirmDisable }}" style="position:absolute;inset:0"></div>
+      <div style="position:relative;background:var(--color-surface);border-radius:var(--radius-lg);padding:28px 28px 22px;width:400px;box-shadow:0 20px 60px rgba(0,0,0,.2)">
+        <h3 style="font-size:18px;font-weight:700;color:var(--color-text);margin:0 0 10px">Désactiver {{ confirmDisableName }} ?</h3>
+        <p style="font-size:14px;color:var(--color-text-muted);margin:0 0 20px;line-height:1.5">Cet utilisateur ne pourra plus se connecter. Ses données et historique sont conservés. Vous pouvez le réactiver à tout moment.</p>
+        <div style="display:flex;justify-content:flex-end;gap:8px">
+          <button onClick="{{ closeConfirmDisable }}" style="height:34px;padding:0 14px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);font-size:14px;color:var(--noir-vooroo-soft);cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-bg-subtle)">Annuler</button>
+          <button onClick="{{ doDisableUser }}" style="height:34px;padding:0 14px;border:none;border-radius:var(--radius-md);background:var(--grey-dark);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--noir-vooroo-soft)">Désactiver</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- CREATE ROLE DRAWER -->
+  <sc-if value="{{ showCreateRoleDrawer }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeCreateRole }}" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100"></div>
+    <div style="position:fixed;top:0;right:0;width:520px;height:100vh;background:var(--color-surface);z-index:101;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.15);animation:slideRight .25s ease">
+      <div style="padding:18px 22px;border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <h2 style="font-size:18px;font-weight:700;color:var(--color-text);margin:0">Créer un nouveau rôle</h2>
+        <button onClick="{{ closeCreateRole }}" style="width:28px;height:28px;border:none;background:var(--color-bg-subtle);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--color-text-muted)" style-hover="background:var(--color-border)">×</button>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px 22px;display:flex;flex-direction:column;gap:14px">
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Nom du rôle *</label><input type="text" placeholder="Ex: Responsable commercial" style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box" /></div>
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Description</label><textarea placeholder="Décrivez les responsabilités de ce rôle..." style="width:100%;height:72px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:8px 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;resize:none;font-family:var(--font-body);box-sizing:border-box"></textarea></div>
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Catégorie</label><select style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box;background:var(--color-surface)"><option>Vente</option><option>Support</option><option>Admin</option><option>Finance</option></select></div>
+        <div style="border-top:1px solid var(--color-border);padding-top:14px">
+          <div style="font-size:11px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Permissions</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <span style="font-size:14px;color:var(--noir-vooroo-soft)">Accès aux Finances</span>
+              <div style="width:44px;height:24px;border-radius:var(--radius-lg);background:var(--color-border);position:relative;cursor:pointer"><div style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--color-surface);box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <span style="font-size:14px;color:var(--noir-vooroo-soft)">Accès aux Clients</span>
+              <div style="width:44px;height:24px;border-radius:var(--radius-lg);background:var(--color-text);position:relative;cursor:pointer"><div style="position:absolute;top:3px;left:22px;width:18px;height:18px;border-radius:50%;background:var(--color-surface);box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <span style="font-size:14px;color:var(--noir-vooroo-soft)">Accès au Support</span>
+              <div style="width:44px;height:24px;border-radius:var(--radius-lg);background:var(--color-border);position:relative;cursor:pointer"><div style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--color-surface);box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <span style="font-size:14px;color:var(--noir-vooroo-soft)">Export des données</span>
+              <div style="width:44px;height:24px;border-radius:var(--radius-lg);background:var(--color-border);position:relative;cursor:pointer"><div style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--color-surface);box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:14px 22px;border-top:1px solid var(--color-border);display:flex;justify-content:flex-end;gap:8px;flex-shrink:0">
+        <button onClick="{{ closeCreateRole }}" style="height:36px;padding:0 16px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);font-size:14px;color:var(--noir-vooroo-soft);cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-bg-subtle)">Annuler</button>
+        <button onClick="{{ closeCreateRole }}" style="height:36px;padding:0 16px;border:none;border-radius:var(--radius-md);background:var(--color-text);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-secondary-hover)">Créer le rôle</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- EDIT ROLE DRAWER -->
+  <sc-if value="{{ showEditRoleDrawer }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeEditRoleDrawer }}" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100"></div>
+    <div style="position:fixed;top:0;right:0;width:520px;height:100vh;background:var(--color-surface);z-index:101;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.15);animation:slideRight .25s ease">
+      <div style="padding:18px 22px;border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <h2 style="font-size:18px;font-weight:700;color:var(--color-text);margin:0">Modifier le rôle — {{ editRoleData.nom }}</h2>
+        <button onClick="{{ closeEditRoleDrawer }}" style="width:28px;height:28px;border:none;background:var(--color-bg-subtle);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--color-text-muted)" style-hover="background:var(--color-border)">×</button>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px 22px;display:flex;flex-direction:column;gap:14px">
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Nom du rôle</label><input type="text" value="{{ editRoleData.nom }}" style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box" /></div>
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Description</label><textarea style="width:100%;height:64px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:8px 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;resize:none;font-family:var(--font-body);box-sizing:border-box">{{ editRoleData.description }}</textarea></div>
+        <div style="border-top:1px solid var(--color-border);padding-top:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="font-size:11px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em">Menus activés</div>
+            <span style="font-size:11px;color:var(--color-text-muted)">Modifiable dans <span style="color:var(--noir-vooroo-soft);font-weight:600">Permissions</span></span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <sc-for list="{{ editRoleModules }}" as="em" hint-placeholder-count="4">
+              <span style="font-size:12px;color:var(--noir-vooroo-soft);background:var(--color-bg-subtle);border:1px solid var(--color-border);padding:4px 10px;border-radius:20px">{{ em }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      <div style="padding:14px 22px;border-top:1px solid var(--color-border);display:flex;justify-content:flex-end;gap:8px;flex-shrink:0">
+        <button onClick="{{ closeEditRoleDrawer }}" style="height:36px;padding:0 16px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);font-size:14px;color:var(--noir-vooroo-soft);cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-bg-subtle)">Annuler</button>
+        <button onClick="{{ saveEditRole }}" style="height:36px;padding:0 16px;border:none;border-radius:var(--radius-md);background:var(--color-text);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-secondary-hover)">Enregistrer</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- LOG DETAIL PANEL -->
+  <sc-if value="{{ showLogDetail }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeLogDetail }}" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100"></div>
+    <div style="position:fixed;top:0;right:0;width:480px;height:100vh;background:var(--color-surface);z-index:101;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.15);animation:slideRight .25s ease">
+      <div style="padding:18px 22px;border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <div>
+          <h2 style="font-size:15px;font-weight:700;color:var(--color-text);margin:0 0 3px">Détail de l'événement</h2>
+          <div style="font-size:11px;color:var(--color-text-muted)">{{ logDetail.evtId }}</div>
+        </div>
+        <button onClick="{{ closeLogDetail }}" style="width:28px;height:28px;border:none;background:var(--color-bg-subtle);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--color-text-muted)" style-hover="background:var(--color-border)">×</button>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px 22px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 14px"><div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Horodatage</div><div style="font-size:14px;color:var(--color-text);font-weight:600">{{ logDetail.date }}</div></div>
+          <div style="border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 14px"><div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Utilisateur</div><div style="font-size:14px;color:var(--color-text);font-weight:600">{{ logDetail.nom }}</div><div style="font-size:11px;color:var(--color-text-muted)">{{ logDetail.role }}</div></div>
+          <div style="border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 14px"><div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Action</div><div style="font-size:14px;color:var(--color-text)">{{ logDetail.action }}</div></div>
+          <div style="border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 14px"><div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Ressource</div><div style="font-size:14px;color:var(--color-text)">{{ logDetail.ressource }}</div></div>
+          <div style="border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 14px"><div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Statut</div><span style="font-size:12px;font-weight:600;color:{{ logDetail.statutColor }};background:{{ logDetail.statutBg }};padding:2px 9px;border-radius:20px">{{ logDetail.statut }}</span></div>
+          <div style="border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 14px"><div style="font-size:10px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Adresse IP</div><div style="font-size:14px;color:var(--color-text);font-family:'Roboto Mono',monospace">{{ logDetail.ip }}</div><div style="font-size:11px;color:var(--color-text-muted)">{{ logDetail.ville }}</div></div>
+        </div>
+        <div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden">
+          <div style="padding:10px 14px;background:var(--color-bg-subtle);border-bottom:1px solid var(--color-border);font-size:11px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em">Gravité & Catégorie</div>
+          <div style="padding:14px;display:flex;align-items:center;gap:10px">
+            <span style="font-size:12px;font-weight:600;color:{{ logDetail.graviteColor }};border:1.5px solid {{ logDetail.graviteBorder }};padding:3px 12px;border-radius:20px">{{ logDetail.gravite }}</span>
+            <span style="font-size:12px;color:var(--noir-vooroo-soft);border:1px solid var(--color-border);padding:3px 12px;border-radius:20px">{{ logDetail.categorie }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- CREATE GROUP DRAWER -->
+  <sc-if value="{{ showCreateGroupDrawer }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeCreateGroup }}" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100"></div>
+    <div style="position:fixed;top:0;right:0;width:480px;height:100vh;background:var(--color-surface);z-index:101;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.15);animation:slideRight .25s ease">
+      <div style="padding:18px 22px;border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <div>
+          <h2 style="font-size:18px;font-weight:700;color:var(--color-text);margin:0 0 2px">Créer un groupe</h2>
+          <p style="font-size:12px;color:var(--color-text-muted);margin:0">Organisez vos collaborateurs en équipes de travail</p>
+        </div>
+        <button onClick="{{ closeCreateGroup }}" style="width:28px;height:28px;border:none;background:var(--color-bg-subtle);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--color-text-muted)" style-hover="background:var(--color-border)">×</button>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px 22px;display:flex;flex-direction:column;gap:16px">
+        <!-- Identité -->
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:11px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em">Identité du groupe</div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <label style="font-size:11px;font-weight:600;color:var(--noir-vooroo-soft)">Couleur</label>
+              <div style="display:flex;gap:6px">
+                <div style="width:24px;height:24px;border-radius:50%;background:var(--color-text);cursor:pointer;border:2px solid var(--color-text)"></div>
+                <div style="width:24px;height:24px;border-radius:50%;background:var(--grey-dark);cursor:pointer"></div>
+                <div style="width:24px;height:24px;border-radius:50%;background:var(--grey-dark);cursor:pointer"></div>
+                <div style="width:24px;height:24px;border-radius:50%;background:var(--grey-mid);cursor:pointer"></div>
+                <div style="width:24px;height:24px;border-radius:50%;background:var(--color-primary);cursor:pointer"></div>
+                <div style="width:24px;height:24px;border-radius:50%;background:var(--grey-dark);cursor:pointer"></div>
+              </div>
+            </div>
+          </div>
+          <div><label style="display:block;font-size:11px;font-weight:600;color:var(--noir-vooroo-soft);margin-bottom:5px">Nom du groupe *</label><input type="text" placeholder="Ex: Ventes Abidjan Nord" style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box" /></div>
+          <div><label style="display:block;font-size:11px;font-weight:600;color:var(--noir-vooroo-soft);margin-bottom:5px">Description</label><textarea placeholder="Décrivez les missions de ce groupe..." style="width:100%;height:64px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:8px 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;resize:none;font-family:var(--font-body);box-sizing:border-box"></textarea></div>
+        </div>
+        <!-- Organisation -->
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:11px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em">Organisation</div>
+          <div><label style="display:block;font-size:11px;font-weight:600;color:var(--noir-vooroo-soft);margin-bottom:5px">Responsable du groupe *</label><select style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box;background:var(--color-surface)"><option value="">Choisir un responsable...</option><option>Marie Koné</option><option>Jean Tra</option><option>Aïcha Bah</option><option>Koffi Addo</option><option>Sophie D.</option></select></div>
+          <div><label style="display:block;font-size:11px;font-weight:600;color:var(--noir-vooroo-soft);margin-bottom:5px">Groupe parent (hiérarchie, optionnel)</label><select style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box;background:var(--color-surface)"><option value="">Aucun groupe parent</option><option>Ventes Abidjan</option><option>Direction</option><option>Support Client</option></select></div>
+        </div>
+        <!-- Membres -->
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:11px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em">Membres du groupe</div>
+          <sc-if value="{{ hasSelectedMembers }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ selectedMemberBadges }}" as="mb" hint-placeholder-count="2">
+                <div style="display:flex;align-items:center;gap:5px;height:28px;padding:0 8px 0 6px;background:var(--color-bg-subtle);border:1px solid var(--color-border);border-radius:20px">
+                  <div style="width:18px;height:18px;border-radius:50%;background:{{ mb.avatarBg }};display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;flex-shrink:0">{{ mb.initials }}</div>
+                  <span style="font-size:12px;color:var(--color-text);font-weight:500">{{ mb.nom }}</span>
+                  <span onClick="{{ mb.remove }}" style="font-size:14px;color:var(--color-text-muted);cursor:pointer;line-height:1;margin-left:2px" style-hover="color:var(--noir-vooroo-soft)">×</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <div style="position:relative">
+            <input onInput="{{ onMemberSearch }}" value="{{ memberSearchVal }}" type="text" placeholder="Rechercher un collaborateur à ajouter…" style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px 0 32px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box" />
+            <svg width="13" height="13" fill="none" stroke="var(--color-text-muted)" stroke-width="1.8" viewBox="0 0 24 24" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);pointer-events:none"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+          </div>
+          <sc-if value="{{ showMemberDropdown }}" hint-placeholder-val="{{ false }}">
+            <div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-surface);box-shadow:var(--shadow-md)">
+              <sc-for list="{{ memberSearchResults }}" as="mr" hint-placeholder-count="3">
+                <div onClick="{{ mr.add }}" style="display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;border-bottom:1px solid #f3f4f6" style-hover="background:var(--color-bg-subtle)">
+                  <div style="width:28px;height:28px;border-radius:50%;background:{{ mr.avatarBg }};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0">{{ mr.initials }}</div>
+                  <div style="flex:1"><div style="font-size:14px;font-weight:600;color:var(--color-text)">{{ mr.nom }}</div><div style="font-size:11px;color:var(--color-text-muted)">{{ mr.role }}</div></div>
+                  <svg width="14" height="14" fill="none" stroke="var(--color-text-muted)" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                </div>
+              </sc-for>
+              <sc-if value="{{ noMemberResults }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:12px;text-align:center;font-size:14px;color:var(--color-text-muted)">Aucun résultat</div>
+              </sc-if>
+            </div>
+          </sc-if>
+          <div style="font-size:12px;color:var(--color-text-muted)">{{ selectedMembersCount }} membre(s) sélectionné(s)</div>
+        </div>
+        <!-- Options -->
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:11px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.05em">Options avancées</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--color-border);border-radius:var(--radius-md)">
+            <div><div style="font-size:14px;font-weight:600;color:var(--color-text)">Attribution automatique (Round-Robin)</div><div style="font-size:12px;color:var(--color-text-muted);margin-top:2px">Répartition équitable des nouveaux prospects entre les membres</div></div>
+            <div style="width:44px;height:24px;border-radius:var(--radius-lg);background:var(--color-border);position:relative;cursor:pointer"><div style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--color-surface);box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+          </div>
+          <div style="background:var(--color-bg-subtle);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 14px;font-size:12px;color:var(--color-text-muted);display:flex;align-items:flex-start;gap:8px">
+            <svg width="14" height="14" fill="none" stroke="var(--color-text-muted)" stroke-width="1.8" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 8v4m0 4h.01"/></svg>
+            Le responsable de ce groupe deviendra automatiquement l'ancrage de la portée "Équipe" dans les permissions — il verra les données de tous les membres du groupe.
+          </div>
+        </div>
+      </div>
+      <div style="padding:14px 22px;border-top:1px solid var(--color-border);display:flex;justify-content:flex-end;gap:8px;flex-shrink:0">
+        <button onClick="{{ closeCreateGroup }}" style="height:36px;padding:0 16px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);font-size:14px;color:var(--noir-vooroo-soft);cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-bg-subtle)">Annuler</button>
+        <button onClick="{{ closeCreateGroup }}" style="height:36px;padding:0 16px;border:none;border-radius:var(--radius-md);background:var(--color-text);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-secondary-hover)">Créer le groupe</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- EDIT GROUP DRAWER -->
+  <sc-if value="{{ showEditGroupDrawer }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeEditGroupDrawer }}" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100"></div>
+    <div style="position:fixed;top:0;right:0;width:440px;height:100vh;background:var(--color-surface);z-index:101;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.15);animation:slideRight .25s ease">
+      <div style="padding:18px 22px;border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <h2 style="font-size:18px;font-weight:700;color:var(--color-text);margin:0">Modifier — {{ editGroupData.nom }}</h2>
+        <button onClick="{{ closeEditGroupDrawer }}" style="width:28px;height:28px;border:none;background:var(--color-bg-subtle);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--color-text-muted)" style-hover="background:var(--color-border)">×</button>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px 22px;display:flex;flex-direction:column;gap:14px">
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Nom du groupe</label><input type="text" value="{{ editGroupData.nom }}" style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box" /></div>
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Description</label><textarea style="width:100%;height:72px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:8px 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;resize:none;font-family:var(--font-body);box-sizing:border-box">{{ editGroupData.description }}</textarea></div>
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Responsable</label><select style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box;background:var(--color-surface)"><option>{{ editGroupData.responsable }}</option><option>Marie Koné</option><option>Jean Tra</option><option>Koffi Addo</option></select></div>
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Groupe parent (optionnel)</label><select style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box;background:var(--color-surface)"><option>Aucun</option><option>Ventes Abidjan</option><option>Direction</option></select></div>
+        <!-- Membres -->
+        <div>
+          <label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Membres du groupe</label>
+          <!-- Selected member badges -->
+          <sc-if value="{{ hasSelectedMembers }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">
+              <sc-for list="{{ selectedMemberBadges }}" as="mb" hint-placeholder-count="2">
+                <div style="display:flex;align-items:center;gap:6px;height:28px;padding:0 8px 0 6px;background:var(--color-bg-subtle);border:1px solid var(--color-border);border-radius:20px">
+                  <div style="width:18px;height:18px;border-radius:50%;background:{{ mb.avatarBg }};display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;flex-shrink:0">{{ mb.initials }}</div>
+                  <span style="font-size:12px;color:var(--color-text);font-weight:500">{{ mb.nom }}</span>
+                  <span onClick="{{ mb.remove }}" style="font-size:14px;color:var(--color-text-muted);cursor:pointer;line-height:1;margin-left:2px" style-hover="color:var(--noir-vooroo-soft)">×</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <!-- Search input -->
+          <div style="position:relative">
+            <input onInput="{{ onMemberSearch }}" value="{{ memberSearchVal }}" type="text" placeholder="Rechercher un collaborateur à ajouter…" style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px 0 32px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box" />
+            <svg width="13" height="13" fill="none" stroke="var(--color-text-muted)" stroke-width="1.8" viewBox="0 0 24 24" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);pointer-events:none"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+          </div>
+          <!-- Dropdown results -->
+          <sc-if value="{{ showMemberDropdown }}" hint-placeholder-val="{{ false }}">
+            <div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;margin-top:4px;background:var(--color-surface);box-shadow:var(--shadow-md)">
+              <sc-for list="{{ memberSearchResults }}" as="mr" hint-placeholder-count="3">
+                <div onClick="{{ mr.add }}" style="display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;border-bottom:1px solid #f3f4f6" style-hover="background:var(--color-bg-subtle)">
+                  <div style="width:28px;height:28px;border-radius:50%;background:{{ mr.avatarBg }};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0">{{ mr.initials }}</div>
+                  <div style="flex:1">
+                    <div style="font-size:14px;font-weight:600;color:var(--color-text)">{{ mr.nom }}</div>
+                    <div style="font-size:11px;color:var(--color-text-muted)">{{ mr.role }}</div>
+                  </div>
+                  <svg width="14" height="14" fill="none" stroke="var(--color-text-muted)" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                </div>
+              </sc-for>
+              <sc-if value="{{ noMemberResults }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:12px;text-align:center;font-size:14px;color:var(--color-text-muted)">Aucun résultat pour "{{ memberSearchVal }}"</div>
+              </sc-if>
+            </div>
+          </sc-if>
+          <div style="font-size:12px;color:var(--color-text-muted);margin-top:6px">{{ selectedMembersCount }} membre(s) sélectionné(s)</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--color-border);border-radius:var(--radius-md)">
+          <div><div style="font-size:14px;font-weight:600;color:var(--color-text)">Attribution automatique (Round-Robin)</div><div style="font-size:12px;color:var(--color-text-muted);margin-top:2px">Répartition équitable des nouveaux prospects</div></div>
+          <div style="width:44px;height:24px;border-radius:var(--radius-lg);background:var(--color-text);position:relative;cursor:pointer"><div style="position:absolute;top:3px;left:22px;width:18px;height:18px;border-radius:50%;background:var(--color-surface);box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+        </div>
+      </div>
+      <div style="padding:14px 22px;border-top:1px solid var(--color-border);display:flex;justify-content:flex-end;gap:8px;flex-shrink:0">
+        <button onClick="{{ closeEditGroupDrawer }}" style="height:36px;padding:0 16px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);font-size:14px;color:var(--noir-vooroo-soft);cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-bg-subtle)">Annuler</button>
+        <button onClick="{{ saveEditGroup }}" style="height:36px;padding:0 16px;border:none;border-radius:var(--radius-md);background:var(--color-text);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-secondary-hover)">Enregistrer</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- INVITE DRAWER -->
+  <sc-if value="{{ showInviteDrawer }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeInviteDrawer }}" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100"></div>
+    <div style="position:fixed;top:0;right:0;width:440px;height:100vh;background:var(--color-surface);z-index:101;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.15);animation:slideRight .25s ease">
+      <div style="padding:18px 22px;border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <h2 style="font-size:18px;font-weight:700;color:var(--color-text);margin:0">Inviter un collaborateur</h2>
+        <button onClick="{{ closeInviteDrawer }}" style="width:28px;height:28px;border:none;background:var(--color-bg-subtle);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--color-text-muted)" style-hover="background:var(--color-border)">×</button>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px 22px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Prénom *</label><input type="text" placeholder="Marie" style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box" /></div>
+          <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Nom *</label><input type="text" placeholder="Koné" style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box" /></div>
+        </div>
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Email professionnel *</label><input type="email" placeholder="marie.kone@agence.ci" style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box" /></div>
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Téléphone</label><input type="tel" placeholder="+225 07 00 00 00 00" style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box" /></div>
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Rôle *</label><select style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box;background:var(--color-surface)"><option>Commerciale</option><option>Commerciale Senior</option><option>Commercial Junior</option><option>Support Client</option><option>Admin</option></select></div>
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Groupe(s)</label><select style="width:100%;height:36px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:0 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;font-family:var(--font-body);box-sizing:border-box;background:var(--color-surface)"><option>Aucun groupe</option><option>Ventes Abidjan</option><option>Support Nord</option><option>Équipe Direction</option></select></div>
+        <div><label style="display:block;font-size:11px;font-weight:700;color:var(--noir-vooroo-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Message d'invitation</label><textarea placeholder="Bienvenue dans notre équipe ! Vous pouvez rejoindre notre CRM via ce lien..." style="width:100%;height:80px;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:8px 10px;font-size:14px;color:var(--noir-vooroo-soft);outline:none;resize:none;font-family:var(--font-body);box-sizing:border-box"></textarea></div>
+        <div style="background:var(--color-bg-subtle);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 14px;font-size:12px;color:var(--color-text-muted);display:flex;align-items:flex-start;gap:8px">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 8v4m0 4h.01"/></svg>
+          Un email d'activation valable 72h sera envoyé. L'utilisateur apparaîtra immédiatement avec le statut "Invité".
+        </div>
+      </div>
+      <div style="padding:14px 22px;border-top:1px solid var(--color-border);display:flex;justify-content:flex-end;gap:8px;flex-shrink:0">
+        <button onClick="{{ closeInviteDrawer }}" style="height:36px;padding:0 16px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);font-size:14px;color:var(--noir-vooroo-soft);cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-bg-subtle)">Annuler</button>
+        <button style="height:36px;padding:0 16px;border:none;border-radius:var(--radius-md);background:var(--color-text);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-secondary-hover)">Envoyer l'invitation</button>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  GROUPES = [
+    { id:'GRP-001', nom:'Ventes Abidjan',   description:'Équipe commerciale basée à Abidjan — prospects et affaires zone sud.', responsable:'Marie Koné',  respBg:'var(--noir-vooroo-soft)', respInit:'MK', nbMembres:3, couleur:'var(--color-text)', roundRobin:true,  parent:null,         avatars:[{bg:'var(--noir-vooroo-soft)',init:'MK'},{bg:'var(--grey-mid)',init:'AB'},{bg:'var(--grey-dark)',init:'KA'}] },
+    { id:'GRP-002', nom:'Support Client',   description:'Gestion des tickets et réclamations clients sur toute la zone.', responsable:'Jean Tra',    respBg:'var(--grey-dark)', respInit:'JT', nbMembres:1, couleur:'var(--grey-dark)', roundRobin:false, parent:null,         avatars:[{bg:'var(--grey-dark)',init:'JT'}] },
+    { id:'GRP-003', nom:'Direction',        description:'Accès complet — reporting, finances et administration du compte.', responsable:'Sophie D.',   respBg:'var(--color-secondary-hover)', respInit:'So', nbMembres:1, couleur:'var(--color-secondary-hover)', roundRobin:false, parent:null,         avatars:[{bg:'var(--color-secondary-hover)',init:'So'}] },
+    { id:'GRP-004', nom:'Ventes Abidjan Nord', description:'Sous-groupe de Ventes Abidjan — zone nord de la ville.', responsable:'Koffi Addo',  respBg:'var(--color-text-muted)', respInit:'Ko', nbMembres:1, couleur:'var(--color-text-muted)', roundRobin:true,  parent:'Ventes Abidjan', avatars:[{bg:'var(--color-text-muted)',init:'Ko'}] },
+  ];
+
+  state = {
+    tab: 'utilisateurs',
+    graviteFilter: 'tous',
+    activePermRole: 'Admin',
+    scopes: {
+      'Admin':             { 'Guide d\'utilisation':'entreprise','Statistiques':'entreprise','Prospects':'entreprise','Pipeline Affaires':'entreprise','Activités':'entreprise','Contacts':'entreprise','Devis & Factures':'entreprise','Projets':'entreprise','Produits':'entreprise','Documents':'entreprise','Équipe':'entreprise','Paramètres':'entreprise' },
+      'Commerciale Senior':{ 'Guide d\'utilisation':'personnel','Statistiques':'equipe','Prospects':'equipe_cascade','Pipeline Affaires':'equipe_cascade','Activités':'equipe','Contacts':'equipe','Devis & Factures':'equipe','Projets':'equipe','Produits':'entreprise','Documents':'personnel','Équipe':'personnel','Paramètres':'personnel' },
+      'Commerciale':       { 'Guide d\'utilisation':'personnel','Statistiques':'personnel','Prospects':'personnel','Pipeline Affaires':'personnel','Activités':'personnel','Contacts':'personnel','Devis & Factures':'personnel','Projets':'personnel','Produits':'entreprise','Documents':'personnel','Équipe':'personnel','Paramètres':'personnel' },
+      'Commercial Junior': { 'Guide d\'utilisation':'personnel','Statistiques':'personnel','Prospects':'personnel','Pipeline Affaires':'personnel','Activités':'personnel','Contacts':'personnel','Devis & Factures':'personnel','Projets':'personnel','Produits':'entreprise','Documents':'personnel','Équipe':'personnel','Paramètres':'personnel' },
+      'Support Client':    { 'Guide d\'utilisation':'personnel','Statistiques':'personnel','Prospects':'personnel','Pipeline Affaires':'personnel','Activités':'equipe','Contacts':'equipe','Devis & Factures':'personnel','Projets':'personnel','Produits':'entreprise','Documents':'equipe','Équipe':'personnel','Paramètres':'personnel' },
+    },
+    showInviteDrawer: false,
+    editUserDrawer: null,
+    editRoleDrawer: null,
+    createRoleDrawer: false,
+    logDetailRow: null,
+    editGroupDrawer: null,
+    createGroupDrawer: false,
+    selectedMembers: [],
+    memberSearch: '',
+    confirmDisableUser: null,
+    openMenuId: null,
+    users: null,
+    roles: null,
+    groupes: null,
+    perms: {
+      Admin: {
+        'Guide d\'utilisation': {v:1,c:1,m:1,s:1,e:1},
+        'Statistiques': {v:1,c:1,m:1,s:1,e:1},
+        'Prospects': {v:1,c:1,m:1,s:1,e:1},
+        'Pipeline Affaires': {v:1,c:1,m:1,s:1,e:1},
+        'Activités': {v:1,c:1,m:1,s:1,e:1},
+        'Contacts': {v:1,c:1,m:1,s:1,e:1},
+        'Devis & Factures': {v:1,c:1,m:1,s:1,e:1},
+        'Projets': {v:1,c:1,m:1,s:1,e:1},
+        'Produits': {v:1,c:1,m:1,s:1,e:1},
+        'Documents': {v:1,c:1,m:1,s:1,e:1},
+        'Équipe': {v:1,c:1,m:1,s:1,e:1},
+        'Paramètres': {v:1,c:1,m:1,s:1,e:1},
+        'Mon Compte': {v:1,c:1,m:1,s:1,e:0},
+        'Planificateur de rendez-vous': {v:1,c:1,m:1,s:1,e:0},
+        'Messagerie de vente': {v:1,c:1,m:1,s:1,e:0},
+        'Vooroo Academy': {v:1,c:0,m:0,s:0,e:0},
+        'Importer des données': {v:1,c:1,m:0,s:0,e:0},
+        'Exporter des données': {v:1,c:1,m:0,s:0,e:1},
+        'Restaurer des données': {v:1,c:0,m:0,s:0,e:0},
+      },
+      'Commerciale Senior': {
+        'Guide d\'utilisation': {v:1,c:0,m:0,s:0,e:1},
+        'Statistiques': {v:1,c:0,m:0,s:0,e:1},
+        'Prospects': {v:1,c:1,m:1,s:0,e:1},
+        'Pipeline Affaires': {v:1,c:1,m:1,s:1,e:1},
+        'Activités': {v:1,c:1,m:1,s:0,e:0},
+        'Contacts': {v:1,c:1,m:1,s:0,e:1},
+        'Devis & Factures': {v:1,c:1,m:1,s:0,e:1},
+        'Projets': {v:1,c:0,m:0,s:0,e:0},
+        'Produits': {v:1,c:0,m:0,s:0,e:0},
+        'Documents': {v:1,c:1,m:0,s:0,e:1},
+        'Équipe': {v:0,c:0,m:0,s:0,e:0},
+        'Paramètres': {v:0,c:0,m:0,s:0,e:0},
+        'Mon Compte': {v:1,c:0,m:1,s:0,e:0},
+        'Planificateur de rendez-vous': {v:1,c:1,m:1,s:0,e:0},
+        'Messagerie de vente': {v:1,c:1,m:1,s:0,e:0},
+        'Vooroo Academy': {v:1,c:0,m:0,s:0,e:0},
+        'Importer des données': {v:0,c:1,m:0,s:0,e:0},
+        'Exporter des données': {v:0,c:0,m:0,s:0,e:1},
+        'Restaurer des données': {v:0,c:0,m:0,s:0,e:0},
+      },
+      'Commerciale': {
+        'Guide d\'utilisation': {v:1,c:0,m:0,s:0,e:0},
+        'Statistiques': {v:1,c:0,m:0,s:0,e:0},
+        'Prospects': {v:1,c:1,m:1,s:0,e:0},
+        'Pipeline Affaires': {v:1,c:1,m:1,s:0,e:0},
+        'Activités': {v:1,c:1,m:1,s:0,e:0},
+        'Contacts': {v:1,c:1,m:1,s:0,e:0},
+        'Devis & Factures': {v:1,c:1,m:0,s:0,e:0},
+        'Projets': {v:1,c:0,m:0,s:0,e:0},
+        'Produits': {v:1,c:0,m:0,s:0,e:0},
+        'Documents': {v:1,c:0,m:0,s:0,e:0},
+        'Équipe': {v:0,c:0,m:0,s:0,e:0},
+        'Paramètres': {v:0,c:0,m:0,s:0,e:0},
+        'Mon Compte': {v:1,c:0,m:1,s:0,e:0},
+        'Planificateur de rendez-vous': {v:1,c:1,m:1,s:0,e:0},
+        'Messagerie de vente': {v:1,c:1,m:0,s:0,e:0},
+        'Vooroo Academy': {v:1,c:0,m:0,s:0,e:0},
+        'Importer des données': {v:0,c:0,m:0,s:0,e:0},
+        'Exporter des données': {v:0,c:0,m:0,s:0,e:0},
+        'Restaurer des données': {v:0,c:0,m:0,s:0,e:0},
+      },
+      'Commercial Junior': {
+        'Guide d\'utilisation': {v:1,c:0,m:0,s:0,e:0},
+        'Statistiques': {v:0,c:0,m:0,s:0,e:0},
+        'Prospects': {v:1,c:1,m:0,s:0,e:0},
+        'Pipeline Affaires': {v:1,c:0,m:0,s:0,e:0},
+        'Activités': {v:1,c:1,m:0,s:0,e:0},
+        'Contacts': {v:1,c:0,m:0,s:0,e:0},
+        'Devis & Factures': {v:0,c:0,m:0,s:0,e:0},
+        'Projets': {v:0,c:0,m:0,s:0,e:0},
+        'Produits': {v:1,c:0,m:0,s:0,e:0},
+        'Documents': {v:0,c:0,m:0,s:0,e:0},
+        'Équipe': {v:0,c:0,m:0,s:0,e:0},
+        'Paramètres': {v:0,c:0,m:0,s:0,e:0},
+        'Mon Compte': {v:1,c:0,m:1,s:0,e:0},
+        'Planificateur de rendez-vous': {v:1,c:0,m:0,s:0,e:0},
+        'Messagerie de vente': {v:0,c:0,m:0,s:0,e:0},
+        'Vooroo Academy': {v:1,c:0,m:0,s:0,e:0},
+        'Importer des données': {v:0,c:0,m:0,s:0,e:0},
+        'Exporter des données': {v:0,c:0,m:0,s:0,e:0},
+        'Restaurer des données': {v:0,c:0,m:0,s:0,e:0},
+      },
+      'Support Client': {
+        'Guide d\'utilisation': {v:1,c:0,m:0,s:0,e:0},
+        'Statistiques': {v:0,c:0,m:0,s:0,e:0},
+        'Prospects': {v:0,c:0,m:0,s:0,e:0},
+        'Pipeline Affaires': {v:0,c:0,m:0,s:0,e:0},
+        'Activités': {v:1,c:1,m:1,s:0,e:0},
+        'Contacts': {v:1,c:1,m:1,s:0,e:1},
+        'Devis & Factures': {v:0,c:0,m:0,s:0,e:0},
+        'Projets': {v:0,c:0,m:0,s:0,e:0},
+        'Produits': {v:1,c:0,m:0,s:0,e:0},
+        'Documents': {v:1,c:1,m:0,s:0,e:0},
+        'Équipe': {v:0,c:0,m:0,s:0,e:0},
+        'Paramètres': {v:0,c:0,m:0,s:0,e:0},
+        'Mon Compte': {v:1,c:0,m:1,s:0,e:0},
+        'Planificateur de rendez-vous': {v:0,c:0,m:0,s:0,e:0},
+        'Messagerie de vente': {v:1,c:1,m:1,s:0,e:0},
+        'Vooroo Academy': {v:1,c:0,m:0,s:0,e:0},
+        'Importer des données': {v:0,c:0,m:0,s:0,e:0},
+        'Exporter des données': {v:0,c:0,m:0,s:0,e:0},
+        'Restaurer des données': {v:0,c:0,m:0,s:0,e:0},
+      },
+    },
+  };
+
+  USERS = [
+    { id:'USR-001', nom:'Marie Koné',   email:'marie.kone@novabiz.ci',  role:'Commerciale Senior', roleColor:'var(--color-primary)', roleBg:'var(--color-primary-subtle)', statut:'Actif',    statutColor:'var(--color-primary)', tfa:'Activée', tfaColor:'var(--color-primary)', tfaBorder:'var(--color-primary)', lastLogin:'Il y a 2h',   clients:12, ca:'5 800 000 FCFA', avatarBg:'var(--color-primary)', dotColor:'var(--color-primary)', initials:'Ma' },
+    { id:'USR-002', nom:'Jean Tra',     email:'jean.tra@novabiz.ci',     role:'Support Client',     roleColor:'var(--grey-dark)', roleBg:'var(--grey-light)', statut:'Actif',    statutColor:'var(--color-primary)', tfa:'Activée', tfaColor:'var(--color-primary)', tfaBorder:'var(--color-primary)', lastLogin:"Aujourd'hui", clients:8,  ca:'3 200 000 FCFA', avatarBg:'var(--grey-dark)', dotColor:'var(--color-primary)', initials:'Je' },
+    { id:'USR-003', nom:'Aïcha Bah',    email:'aicha.bah@novabiz.ci',   role:'Commerciale',        roleColor:'var(--grey-mid)', roleBg:'var(--grey-light)', statut:'Actif',    statutColor:'var(--color-primary)', tfa:'Inactif', tfaColor:'var(--grey-dark)', tfaBorder:'#fca5a5', lastLogin:'Il y a 3j',   clients:9,  ca:'4 500 000 FCFA', avatarBg:'var(--grey-mid)', dotColor:'var(--color-primary)', initials:'Aï' },
+    { id:'USR-004', nom:'Koffi Addo',   email:'koffi.addo@novabiz.ci',  role:'Commercial Junior',  roleColor:'var(--grey-dark)', roleBg:'var(--grey-light)', statut:'Actif',    statutColor:'var(--color-primary)', tfa:'Inactif', tfaColor:'var(--grey-dark)', tfaBorder:'#fca5a5', lastLogin:'Il y a 1j',   clients:5,  ca:'2 100 000 FCFA', avatarBg:'var(--grey-dark)', dotColor:'var(--color-primary)', initials:'Ko' },
+    { id:'USR-005', nom:'Sophie D.',    email:'sophie.d@novabiz.ci',    role:'Admin',              roleColor:'var(--noir-vooroo-soft)', roleBg:'var(--color-bg-subtle)', statut:'Inactif',  statutColor:'var(--color-text-muted)', tfa:'Activée', tfaColor:'var(--color-primary)', tfaBorder:'var(--color-primary)', lastLogin:'Il y a 14j',  clients:0,  ca:'—',              avatarBg:'var(--noir-vooroo-soft)', dotColor:'var(--color-text-muted)', initials:'So' },
+    { id:'USR-006', nom:'Léa M.',       email:'lea.m@novabiz.ci',       role:'Commerciale',        roleColor:'var(--grey-mid)', roleBg:'var(--grey-light)', statut:'Invité',   statutColor:'var(--grey-mid)', tfa:'Inactif', tfaColor:'var(--grey-dark)', tfaBorder:'#fca5a5', lastLogin:'—',           clients:0,  ca:'—',              avatarBg:'var(--color-text-muted)', dotColor:'var(--grey-mid)', initials:'Lé' },
+  ];
+
+  ROLES = [
+    { id:'ROLE-001', nom:'Admin',             description:'Accès total à tous les modules et paramètres',         membres:1, categorie:'Admin',   catColor:'var(--noir-vooroo-soft)', catBg:'var(--color-bg-subtle)', roleColor:'var(--grey-dark)', modulesBadges:['Guide','Statistiques','Prospects','Affaires','Activités','Contacts','Devis & Factures','Projets','Produits','Documents','Équipe','Paramètres'] },
+    { id:'ROLE-002', nom:'Commerciale Senior', description:'Gestion complète des ventes et du parc clients',      membres:1, categorie:'Vente',   catColor:'var(--color-primary)', catBg:'var(--color-primary-subtle)', roleColor:'var(--color-primary)', modulesBadges:['Statistiques','Prospects','Affaires','Activités','Contacts','Devis & Factures','Projets','Documents'] },
+    { id:'ROLE-003', nom:'Commerciale',        description:'Suivi des clients et prospection',                    membres:2, categorie:'Vente',   catColor:'var(--color-primary)', catBg:'var(--color-primary-subtle)', roleColor:'var(--grey-mid)', modulesBadges:['Prospects','Affaires','Activités','Contacts','Devis & Factures'] },
+    { id:'ROLE-004', nom:'Commercial Junior',  description:'Accès limité en lecture / pipeline uniquement',      membres:1, categorie:'Vente',   catColor:'var(--color-primary)', catBg:'var(--color-primary-subtle)', roleColor:'var(--grey-dark)', modulesBadges:['Prospects','Affaires','Activités','Contacts'] },
+    { id:'ROLE-005', nom:'Support Client',     description:'Gestion des tickets et des réclamations clients',    membres:1, categorie:'Support', catColor:'var(--grey-dark)', catBg:'var(--grey-light)', roleColor:'var(--grey-dark)', modulesBadges:['Activités','Contacts','Documents','Produits'] },
+  ];
+
+  LOGS = [
+    { id:'EVT-0441', date:'27 avr. 2026 14:32:08', nom:'Marie Koné',  role:'Commerciale Senior', action:'Consultation fiche client',      ressource:'TechCorp SA (VR-0042)', statut:'Succès', statutColor:'var(--color-primary)', statutBg:'var(--color-primary-subtle)', gravite:'Info',     graviteColor:'var(--grey-dark)', graviteBorder:'#bfdbfe', ip:'102.89.1.45', ville:'Abidjan, CI', categorie:'Client',    avatarBg:'var(--color-primary)', initials:'MK' },
+    { id:'EVT-0440', date:'27 avr. 2026 14:15:44', nom:'Jean Tra',    role:'Support Client',     action:'Ticket #TK-8815 mis à jour',     ressource:'Ticket #TK-8815',       statut:'Succès', statutColor:'var(--color-primary)', statutBg:'var(--color-primary-subtle)', gravite:'Info',     graviteColor:'var(--grey-dark)', graviteBorder:'#bfdbfe', ip:'102.89.1.46', ville:'Abidjan, CI', categorie:'Support',   avatarBg:'var(--grey-dark)', initials:'JT' },
+    { id:'EVT-0439', date:'27 avr. 2026 13:58:20', nom:'Vous',        role:'Admin',              action:'Retrait de fonds initié',        ressource:'Solde — $2 400',        statut:'Succès', statutColor:'var(--color-primary)', statutBg:'var(--color-primary-subtle)', gravite:'Warning',  graviteColor:'var(--grey-mid)', graviteBorder:'#fcd34d', ip:'102.89.1.44', ville:'Abidjan, CI', categorie:'Finances',  avatarBg:'var(--noir-vooroo-soft)', initials:'NB' },
+    { id:'EVT-0438', date:'27 avr. 2026 13:02:11', nom:'Koffi Addo',  role:'Commercial Junior',  action:'Tentative accès Finances',       ressource:'Menu Finances',         statut:'Échec',  statutColor:'var(--grey-dark)', statutBg:'var(--grey-light)', gravite:'Warning',  graviteColor:'var(--grey-mid)', graviteBorder:'#fcd34d', ip:'102.89.1.49', ville:'Abidjan, CI', categorie:'Sécurité', avatarBg:'var(--grey-dark)', initials:'KA' },
+    { id:'EVT-0437', date:'27 avr. 2026 11:45:33', nom:'Aïcha Bah',   role:'Commerciale',        action:'Export CSV liste clients',       ressource:'Parc Clients',          statut:'Succès', statutColor:'var(--color-primary)', statutBg:'var(--color-primary-subtle)', gravite:'Info',     graviteColor:'var(--grey-dark)', graviteBorder:'#bfdbfe', ip:'102.89.1.48', ville:'Abidjan, CI', categorie:'Client',    avatarBg:'var(--grey-mid)', initials:'AB' },
+    { id:'EVT-0436', date:'27 avr. 2026 10:22:05', nom:'Marie Koné',  role:'Commerciale Senior', action:'Démo programmée',               ressource:'RDV Groupe Omega',      statut:'Succès', statutColor:'var(--color-primary)', statutBg:'var(--color-primary-subtle)', gravite:'Info',     graviteColor:'var(--grey-dark)', graviteBorder:'#bfdbfe', ip:'102.89.1.45', ville:'Abidjan, CI', categorie:'Démo',      avatarBg:'var(--color-primary)', initials:'MK' },
+    { id:'EVT-0435', date:'27 avr. 2026 09:14:57', nom:'Vous',        role:'Admin',              action:'Invitation envoyée',            ressource:'lea.m@novabiz.ci',      statut:'Succès', statutColor:'var(--color-primary)', statutBg:'var(--color-primary-subtle)', gravite:'Info',     graviteColor:'var(--grey-dark)', graviteBorder:'#bfdbfe', ip:'102.89.1.44', ville:'Abidjan, CI', categorie:'Admin',     avatarBg:'var(--noir-vooroo-soft)', initials:'NB' },
+    { id:'EVT-0434', date:'26 avr. 2026 18:30:12', nom:'Sophie D.',   role:'Admin',              action:'Connexion hors horaires',       ressource:'Espace Partenaire',     statut:'Succès', statutColor:'var(--color-primary)', statutBg:'var(--color-primary-subtle)', gravite:'Critique', graviteColor:'var(--grey-dark)', graviteBorder:'#fca5a5', ip:'197.x.x.x',  ville:'Paris, FR',   categorie:'Sécurité', avatarBg:'var(--noir-vooroo-soft)', initials:'SD' },
+  ];
+
+  MODULES = ['Guide d\'utilisation','Statistiques','Prospects','Pipeline Affaires','Activités','Contacts','Devis & Factures','Projets','Produits','Documents','Équipe','Paramètres','Mon Compte','Planificateur de rendez-vous','Messagerie de vente','Vooroo Academy','Importer des données','Exporter des données','Restaurer des données'];
+
+  PERM_ROLES = ['Admin','Commerciale Senior','Commerciale','Commercial Junior','Support Client'];
+
+  SCOPE_LABELS = { personnel:'Personnel', equipe:'Équipe', equipe_cascade:'Équipe + sous-groupes', entreprise:'Toute l\'entreprise' };
+  SCOPE_COLORS = { personnel:'var(--color-text-muted)', equipe:'var(--grey-dark)', equipe_cascade:'var(--grey-mid)', entreprise:'var(--color-primary)' };
+  SCOPE_BG     = { personnel:'var(--color-bg-subtle)', equipe:'var(--grey-light)', equipe_cascade:'var(--grey-light)', entreprise:'var(--color-primary-subtle)' };
+
+  setScope(role, mod, val) {
+    const s = JSON.parse(JSON.stringify(this.state.scopes || {}));
+    if (!s[role]) s[role] = {};
+    s[role][mod] = val;
+    this.setState({ scopes: s });
+  }
+
+  toggle(role, module, field) {
+    const p = JSON.parse(JSON.stringify(this.state.perms));
+    p[role][module][field] = p[role][module][field] ? 0 : 1;
+    this.setState({ perms: p });
+  }
+
+  renderVals() {
+    const s = this.state;
+    const isU = s.tab === 'utilisateurs';
+    const isR = s.tab === 'roles';
+    const isJ = s.tab === 'journaux';
+    const isP = s.tab === 'permissions';
+    const tab = (active) => ({
+      border: active ? 'var(--color-text)' : 'transparent',
+      color: active ? 'var(--color-text)' : 'var(--color-text-muted)',
+      weight: active ? '700' : '400',
+      badgeBg: active ? 'var(--color-bg-subtle)' : 'var(--color-bg-subtle)',
+      badgeColor: active ? 'var(--color-text)' : 'var(--color-text-muted)',
+    });
+    const tu = tab(isU), tr = tab(isR), tj = tab(isJ), tp = tab(isP);
+
+    const graviteOpts = ['tous','Info','Warning','Critique'];
+    const filteredLogs = s.graviteFilter === 'tous' ? this.LOGS : this.LOGS.filter(l => l.gravite === s.graviteFilter);
+
+    const role = s.activePermRole;
+    const rolePerm = (this.state.perms[role] || this.state.perms['Admin']);
+
+    return {
+      totalCollabs: this.USERS.length,
+      totalActifs: this.USERS.filter(u => u.statut === 'Actif').length,
+
+      // Tabs
+      showUtilisateurs: isU ? 'flex' : 'none',
+      showRoles:        isR ? 'flex' : 'none',
+      showJournaux:     isJ ? 'flex' : 'none',
+      showPermissions:  isP ? 'flex' : 'none',
+      showGroupes:      s.tab === 'groupes' ? 'flex' : 'none',
+      goUtilisateurs: () => this.setState({ tab:'utilisateurs' }),
+      goRoles:        () => this.setState({ tab:'roles' }),
+      goJournaux:     () => this.setState({ tab:'journaux' }),
+      goPermissions:  () => this.setState({ tab:'permissions' }),
+      goGroupes:      () => this.setState({ tab:'groupes' }),
+      tabBorderU: tu.border, tabColorU: tu.color, tabWeightU: tu.weight, tabBadgeBgU: tu.badgeBg, tabBadgeColorU: tu.badgeColor,
+      tabBorderR: tr.border, tabColorR: tr.color, tabWeightR: tr.weight, tabBadgeBgR: tr.badgeBg, tabBadgeColorR: tr.badgeColor,
+      tabBorderJ: tj.border, tabColorJ: tj.color, tabWeightJ: tj.weight, tabBadgeBgJ: tj.badgeBg, tabBadgeColorJ: tj.badgeColor,
+      tabBorderP: tp.border, tabColorP: tp.color, tabWeightP: tp.weight,
+      tabBorderG: s.tab==='groupes' ? 'var(--color-text)' : 'transparent', tabColorG: s.tab==='groupes' ? 'var(--color-text)' : 'var(--color-text-muted)', tabWeightG: s.tab==='groupes' ? '700' : '400', tabBadgeBgG: s.tab==='groupes' ? 'var(--color-bg-subtle)' : 'var(--color-bg-subtle)', tabBadgeColorG: s.tab==='groupes' ? 'var(--color-text)' : 'var(--color-text-muted)',
+
+      // Utilisateurs
+      usersRows: (s.users || this.USERS).map(u => {
+        const self = this;
+        return {
+          ...u,
+          onEdit: function(e){ e.stopPropagation(); self.setState({ editUserDrawer: { ...u } }); },
+          onDisable: function(e){ e.stopPropagation(); self.setState({ confirmDisableUser: u }); },
+        };
+      }),
+      openInviteDrawer: () => this.setState({ showInviteDrawer: true }),
+      showInviteDrawer: s.showInviteDrawer,
+      closeInviteDrawer: () => this.setState({ showInviteDrawer: false }),
+      showEditUserDrawer: !!s.editUserDrawer,
+      editUserData: s.editUserDrawer || {},
+      closeEditUserDrawer: () => this.setState({ editUserDrawer: null }),
+      saveEditUser: () => {
+        const updated = (s.users || this.USERS).map(u => u.id === s.editUserDrawer.id ? { ...s.editUserDrawer } : u);
+        this.setState({ users: updated, editUserDrawer: null });
+      },
+      showConfirmDisable: !!s.confirmDisableUser,
+      confirmDisableName: s.confirmDisableUser ? s.confirmDisableUser.nom : '',
+      closeConfirmDisable: () => this.setState({ confirmDisableUser: null }),
+      doDisableUser: () => {
+        const uid = s.confirmDisableUser && s.confirmDisableUser.id;
+        const updated = (s.users || this.USERS).map(u => u.id === uid ? { ...u, statut:'Inactif', statutColor:'var(--color-text-muted)', dotColor:'var(--color-text-muted)' } : u);
+        this.setState({ users: updated, confirmDisableUser: null });
+      },
+
+      onUserTableClick: (e) => {
+        const btn = e.target.closest('[data-action]');
+        if (!btn) return;
+        const id = btn.getAttribute('data-id');
+        const action = btn.getAttribute('data-action');
+        const users = this.state.users || this.USERS;
+        const u = users.find(x => x.id === id);
+        if (!u) return;
+        if (action === 'edit-user') this.setState({ editUserDrawer: { ...u } });
+        else if (action === 'disable-user') this.setState({ confirmDisableUser: u });
+      },
+      onGroupCardClick: (e) => {
+        const btn = e.target.closest('[data-action]');
+        if (!btn) return;
+        const id = btn.getAttribute('data-id');
+        const action = btn.getAttribute('data-action');
+        const groups = this.state.groupes || this.GROUPES;
+        const g = groups.find(x => x.id === id);
+        if (action === 'edit-group' && g) this.setState({ editGroupDrawer: { ...g }, selectedMembers: (g.avatars || []).map((a,i) => (this.USERS[i]||{}).id).filter(Boolean) });
+        else if (action === 'del-group') this.setState({ groupes: groups.filter(x => x.id !== id) });
+      },
+      onRoleTableClick: (e) => {
+        const btn = e.target.closest('[data-action]');
+        if (!btn) return;
+        const id = btn.getAttribute('data-id');
+        const action = btn.getAttribute('data-action');
+        const roles = this.state.roles || this.ROLES;
+        if (action === 'edit-role') {
+          const r = roles.find(x => x.id === id);
+          if (r) this.setState({ editRoleDrawer: { ...r } });
+        } else if (action === 'dup-role') {
+          const r = roles.find(x => x.id === id);
+          if (r) { const copy = { ...r, id:'ROLE-00'+(roles.length+1), nom:r.nom+' (copie)', roleId:'ROLE-00'+(roles.length+1) }; this.setState({ roles: [...roles, copy] }); }
+        }
+      },
+      editRoleById: (id) => {
+        const roles = this.state.roles || this.ROLES;
+        const r = roles.find(x => x.id === id);
+        if (r) this.setState({ editRoleDrawer: { ...r } });
+      },
+      duplicateRoleById: (id) => {
+        const roles = this.state.roles || this.ROLES;
+        const r = roles.find(x => x.id === id);
+        if (!r) return;
+        const copy = { ...r, id:'ROLE-00'+(roles.length+1), nom:r.nom+' (copie)', roleId:'ROLE-00'+(roles.length+1) };
+        this.setState({ roles: [...roles, copy] });
+      },
+      // Rôles
+      rolesRows: (s.roles || this.ROLES).map(r => ({ ...r })),
+      showCreateRoleDrawer: s.createRoleDrawer,
+      openCreateRole: () => this.setState({ createRoleDrawer: true }),
+      closeCreateRole: () => this.setState({ createRoleDrawer: false }),
+      showEditRoleDrawer: !!s.editRoleDrawer,
+      editRoleData: s.editRoleDrawer || {},
+      closeEditRoleDrawer: () => this.setState({ editRoleDrawer: null }),
+      saveEditRole: () => {
+        const updated = (s.roles || this.ROLES).map(r => r.id === s.editRoleDrawer.id ? { ...s.editRoleDrawer } : r);
+        this.setState({ roles: updated, editRoleDrawer: null });
+      },
+      editRoleModules: s.editRoleDrawer ? (s.editRoleDrawer.modulesBadges || []) : [],
+      allModuleToggles: this.MODULES.map(mod => {
+        const active = s.editRoleDrawer && (s.editRoleDrawer.modulesBadges || []).includes(mod);
+        const self = this;
+        return {
+          label: mod,
+          bg: active ? 'var(--color-text)' : 'var(--color-border)',
+          knob: active ? '22px' : '3px',
+          toggle: function(){
+            if (!self.state.editRoleDrawer) return;
+            const cur = self.state.editRoleDrawer.modulesBadges || [];
+            const next = cur.includes(mod) ? cur.filter(x => x !== mod) : [...cur, mod];
+            self.setState({ editRoleDrawer: { ...self.state.editRoleDrawer, modulesBadges: next } });
+          },
+        };
+      }),
+
+      // Groupes
+      groupesRows: (s.groupes || this.GROUPES).map(g => {
+        const self = this;
+        return {
+          ...g,
+          groupId: g.id,
+          hasParent: !!g.parent,
+          rrBg: g.roundRobin ? 'var(--color-text)' : 'var(--color-border)',
+          rrKnob: g.roundRobin ? '17px' : '2px',
+          onEdit: function(e){ e.stopPropagation(); self.setState({ editGroupDrawer: { ...g } }); },
+          onDelete: function(e){ e.stopPropagation(); self.setState({ groupes: (self.state.groupes || self.GROUPES).filter(x => x.id !== g.id) }); },
+        };
+      }),
+      showCreateGroupDrawer: s.createGroupDrawer,
+      openCreateGroup: () => this.setState({ createGroupDrawer: true, selectedMembers: [], memberSearch: '' }),
+      closeCreateGroup: () => this.setState({ createGroupDrawer: false }),
+      allUsersForGroup: (s.users || this.USERS).map(u => {
+        const sel = s.selectedMembers.includes(u.id);
+        const self = this;
+        return {
+          ...u,
+          selected: sel,
+          rowBg: sel ? 'var(--color-primary-subtle)' : 'var(--color-surface)',
+          checkBg: sel ? 'var(--color-text)' : 'var(--color-surface)',
+          checkBorder: sel ? 'var(--color-text)' : 'var(--color-border)',
+          toggle: function(){ const cur = self.state.selectedMembers; self.setState({ selectedMembers: cur.includes(u.id) ? cur.filter(x=>x!==u.id) : [...cur, u.id] }); },
+        };
+      }),
+      selectedMembersCount: s.selectedMembers.length,
+      hasSelectedMembers: s.selectedMembers.length > 0,
+      memberSearchVal: s.memberSearch,
+      onMemberSearch: (e) => this.setState({ memberSearch: e.target.value }),
+      showMemberDropdown: s.memberSearch.length > 0,
+      noMemberResults: s.memberSearch.length > 0 && (this.state.users || this.USERS).filter(u => !s.selectedMembers.includes(u.id) && (u.nom.toLowerCase().includes(s.memberSearch.toLowerCase()) || u.role.toLowerCase().includes(s.memberSearch.toLowerCase()))).length === 0,
+      memberSearchResults: s.memberSearch.length > 0 ? (this.state.users || this.USERS).filter(u => !s.selectedMembers.includes(u.id) && (u.nom.toLowerCase().includes(s.memberSearch.toLowerCase()) || u.role.toLowerCase().includes(s.memberSearch.toLowerCase()))).map(u => {
+        const self = this;
+        return { ...u, add: function(){ self.setState({ selectedMembers: [...self.state.selectedMembers, u.id], memberSearch: '' }); } };
+      }) : [],
+      selectedMemberBadges: s.selectedMembers.map(id => {
+        const u = (this.state.users || this.USERS).find(x => x.id === id) || {};
+        const self = this;
+        return { ...u, remove: function(){ self.setState({ selectedMembers: self.state.selectedMembers.filter(x => x !== id) }); } };
+      }),
+      showEditGroupDrawer: !!s.editGroupDrawer,
+      editGroupData: s.editGroupDrawer || {},
+      closeEditGroupDrawer: () => this.setState({ editGroupDrawer: null }),
+      saveEditGroup: () => {
+        const updated = (s.groupes || this.GROUPES).map(g => g.id === s.editGroupDrawer.id ? { ...s.editGroupDrawer } : g);
+        this.setState({ groupes: updated, editGroupDrawer: null });
+      },
+
+      // Roles
+      rolesRows: this.ROLES,
+
+      // Journaux
+      logsRows2: filteredLogs.map(l => ({ ...l, onClick: () => this.setState({ logDetailRow: l }) })),
+      showLogDetail: !!s.logDetailRow,
+      logDetail: s.logDetailRow || {},
+      closeLogDetail: () => this.setState({ logDetailRow: null }),
+      graviteFilters: graviteOpts.map(g => ({
+        label: g === 'tous' ? 'Tous' : g,
+        active: s.graviteFilter === g,
+        border: s.graviteFilter === g ? 'var(--color-primary)' : 'var(--color-border)',
+        bg: s.graviteFilter === g ? 'var(--color-primary)' : 'var(--color-surface)',
+        color: s.graviteFilter === g ? 'var(--color-surface)' : 'var(--noir-vooroo-soft)',
+        select: () => this.setState({ graviteFilter: g }),
+      })),
+      logsRows: filteredLogs,
+
+      // Permissions
+      toutAutoriser: () => {
+        const p = JSON.parse(JSON.stringify(this.state.perms));
+        const mods = this.MODULES;
+        mods.forEach(mod => { p[role][mod] = {v:1,c:1,m:1,s:1,e:1}; });
+        this.setState({ perms: p });
+      },
+      toutInterdire: () => {
+        const p = JSON.parse(JSON.stringify(this.state.perms));
+        const mods = this.MODULES;
+        mods.forEach(mod => { p[role][mod] = {v:0,c:0,m:0,s:0,e:0}; });
+        this.setState({ perms: p });
+      },
+      activePermRole: role,
+      permRoleTabs: this.PERM_ROLES.map(r => ({
+        label: r,
+        active: role === r,
+        border: role === r ? 'var(--color-primary)' : 'var(--color-border)',
+        bg: role === r ? 'var(--color-primary)' : 'var(--color-surface)',
+        color: role === r ? 'var(--color-surface)' : 'var(--noir-vooroo-soft)',
+        select: () => this.setState({ activePermRole: r }),
+      })),
+      permModules: this.MODULES.map(mod => {
+        const p = rolePerm[mod] || {v:0,c:0,m:0,s:0,e:0};
+        const self = this;
+        const scopeVal = ((s.scopes || this.state.scopes || {})[role] || {})[mod] || 'personnel';
+        const scopeLabel = this.SCOPE_LABELS[scopeVal] || scopeVal;
+        const scopeColor = this.SCOPE_COLORS[scopeVal] || 'var(--color-text-muted)';
+        const scopeBg    = this.SCOPE_BG[scopeVal] || 'var(--color-bg-subtle)';
+        const scopeOpts  = ['personnel','equipe','equipe_cascade','entreprise'];
+        const hasVoir = p.v === 1;
+        return {
+          module: mod,
+          voirBg: hasVoir ? 'var(--color-text)' : 'var(--color-border)', voirKnob: hasVoir ? '22px' : '3px',
+          creerBg: p.c ? 'var(--color-text)' : 'var(--color-border)',    creerKnob: p.c ? '22px' : '3px',
+          modifierBg: p.m ? 'var(--color-text)' : 'var(--color-border)', modifierKnob: p.m ? '22px' : '3px',
+          supprimerBg: p.s ? 'var(--color-text)' : 'var(--color-border)',supprimerKnob: p.s ? '22px' : '3px',
+          exporterBg: p.e ? 'var(--color-text)' : 'var(--color-border)', exporterKnob: p.e ? '22px' : '3px',
+          scopeLabel, scopeColor, scopeBg, scopeVal, hasVoir,
+          showScope: hasVoir,
+          hideScope: !hasVoir,
+          scopeIsPerso: scopeVal === 'personnel',
+          scopeIsEquipe: scopeVal === 'equipe',
+          scopeIsCascade: scopeVal === 'equipe_cascade',
+          scopeIsEntreprise: scopeVal === 'entreprise',
+          onScopeChange: function(e){ self.setScope(self.state.activePermRole, mod, e.target.value); },
+          toggleVoir:     function(){ self.toggle(self.state.activePermRole, mod, 'v'); },
+          toggleCreer:    function(){ self.toggle(self.state.activePermRole, mod, 'c'); },
+          toggleModifier: function(){ self.toggle(self.state.activePermRole, mod, 'm'); },
+          toggleSupprimer:function(){ self.toggle(self.state.activePermRole, mod, 's'); },
+          toggleExporter: function(){ self.toggle(self.state.activePermRole, mod, 'e'); },
+        };
+      }),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

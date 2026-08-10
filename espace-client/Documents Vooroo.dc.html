@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/effects.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/styles.css">
+  <script src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/_ds_bundle.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Roboto',sans-serif}
+    body{background:var(--color-bg-subtle)}
+    @keyframes fIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+    .th{font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;padding:10px 14px;text-align:left;white-space:nowrap;position:sticky;top:0;background:#f9fafb;border-bottom:2px solid #e5e7eb}
+    .td{padding:10px 14px;font-size:13px;color:#374151;vertical-align:middle;border-bottom:1px solid #f3f4f6}
+    .tab-btn{padding:10px 14px;border:none;background:transparent;font-size:13px;cursor:pointer;border-bottom:2px solid transparent;color:#6b7280;font-weight:500;white-space:nowrap;font-family:'Roboto',sans-serif}
+    .tab-btn.active{color:#111827;border-bottom-color:var(--color-primary);font-weight:700}
+    .btn-prim{height:32px;padding:0 16px;background:var(--color-primary);color:#fff;border:none;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Roboto',sans-serif;display:inline-flex;align-items:center;gap:6px}
+    .btn-prim:hover{background:var(--color-primary-hover)}
+    .btn-sec{height:32px;padding:0 12px;background:#fff;color:#374151;border:1px solid #e5e7eb;border-radius:5px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Roboto',sans-serif;display:inline-flex;align-items:center;gap:6px}
+    .btn-sec:hover{background:#f9fafb}
+    .drop-panel{position:absolute;top:calc(100% + 4px);right:0;background:#fff;border:1px solid #e5e7eb;border-radius:6px;box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:200;min-width:200px;animation:fIn .12s ease}
+    .drop-item{display:flex;align-items:center;gap:8px;padding:8px 14px;font-size:13px;color:#374151;cursor:pointer}
+    .drop-item:hover{background:#f9fafb}
+    .badge-type{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+    tr:hover td{background:#fafafa}
+    .checkbox-col{width:40px;position:sticky;left:0;background:#fff}
+    tr:hover .checkbox-col{background:#fafafa}
+  </style>
+</helmet>
+
+<div style="display:flex;flex-direction:column;height:100%;background:var(--color-bg-subtle)">
+
+  <!-- Header -->
+  <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:30px;height:30px;display:flex;align-items:center;justify-content:center">
+        <svg width="20" height="20" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+      </div>
+      <span style="font-size:18px;font-weight:700;color:#111827">Documents</span>
+      <svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="position:relative">
+        <svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24" style="position:absolute;left:10px;top:50%;transform:translateY(-50%)"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803M10.5 7.5v6m3-3h-6"/></svg>
+        <input placeholder="Rechercher un document…" style="height:32px;width:280px;padding:0 12px 0 32px;border:1px solid #e5e7eb;border-radius:5px;font-size:13px;font-family:'Roboto',sans-serif;color:#374151;outline:none"/>
+      </div>
+      <div style="position:relative">
+        <button onClick="{{ toggleUploadDrop }}" class="btn-prim">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          Nouveau
+          <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+        </button>
+        <sc-if value="{{ showUploadDrop }}" hint-placeholder-val="{{ false }}">
+          <div class="drop-panel" style="right:0;min-width:230px">
+            <div class="drop-item" onClick="{{ openImportFile }}"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>Importer un document</div>
+            <div class="drop-item" onClick="{{ openImportLink }}"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>Importer via un lien</div>
+          </div>
+        </sc-if>
+
+        <!-- Modal: Importer un document -->
+        <sc-if value="{{ showImportFileModal }}" hint-placeholder-val="{{ false }}">
+          <div style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;display:flex;align-items:center;justify-content:center" onClick="{{ closeModals }}">
+            <div style="background:#fff;border-radius:8px;width:520px;box-shadow:0 8px 40px rgba(0,0,0,.18);overflow:hidden" onClick="{{ stopProp }}">
+              <div style="padding:20px 24px 16px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between">
+                <h2 style="font-size:16px;font-weight:700;color:#111827;margin:0">Importer un document</h2>
+                <button onClick="{{ closeModals }}" style="background:transparent;border:none;cursor:pointer;color:#9ca3af;display:flex;align-items:center" style-hover="color:#374151">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+              <div style="padding:24px">
+                <!-- Drop zone -->
+                <div style="border:2px dashed #d1d5db;border-radius:8px;padding:40px 24px;text-align:center;background:#f9fafb;cursor:pointer;margin-bottom:20px" style-hover="border-color:var(--color-primary);background:#f0fdf4">
+                  <svg width="32" height="32" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 10px"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                  <div style="font-size:14px;font-weight:600;color:#374151;margin-bottom:4px">Glissez-déposez votre fichier ici</div>
+                  <div style="font-size:12px;color:#9ca3af;margin-bottom:12px">PDF, DOCX, PPTX, XLSX, images — max 50 Mo</div>
+                  <button style="height:32px;padding:0 16px;background:var(--color-primary);color:#fff;border:none;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Roboto',sans-serif">Parcourir les fichiers</button>
+                </div>
+                <!-- Metadata -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+                  <div>
+                    <label style="font-size:12px;font-weight:600;color:#374151;display:block;margin-bottom:4px">Nom du document</label>
+                    <input placeholder="ex : Contrat de prestation" style="width:100%;height:34px;border:1px solid #e5e7eb;border-radius:5px;padding:0 10px;font-size:13px;font-family:'Roboto',sans-serif;color:#374151;outline:none"/>
+                  </div>
+                  <div>
+                    <label style="font-size:12px;font-weight:600;color:#374151;display:block;margin-bottom:4px">Type</label>
+                    <select style="width:100%;height:34px;border:1px solid #e5e7eb;border-radius:5px;padding:0 10px;font-size:13px;font-family:'Roboto',sans-serif;color:#374151;outline:none;background:#fff">
+                      <option>Contrat</option><option>Proposition commerciale</option><option>Présentation</option><option>Facture</option><option>Devis</option><option>Rapport</option><option>Autre</option>
+                    </select>
+                  </div>
+                </div>
+                <div style="margin-bottom:14px">
+                  <label style="font-size:12px;font-weight:600;color:#374151;display:block;margin-bottom:4px">Associé à (affaire, contact ou prospect)</label>
+                  <input placeholder="Rechercher une affaire, un contact…" style="width:100%;height:34px;border:1px solid #e5e7eb;border-radius:5px;padding:0 10px;font-size:13px;font-family:'Roboto',sans-serif;color:#374151;outline:none"/>
+                </div>
+                <div style="margin-bottom:20px">
+                  <label style="font-size:12px;font-weight:600;color:#374151;display:block;margin-bottom:4px">Propriétaire</label>
+                  <select style="width:100%;height:34px;border:1px solid #e5e7eb;border-radius:5px;padding:0 10px;font-size:13px;font-family:'Roboto',sans-serif;color:#374151;outline:none;background:#fff">
+                    <option>Mel Jay (vous)</option><option>Koffi Amani</option><option>Awa Touré</option><option>Jean-Baptiste N.</option>
+                  </select>
+                </div>
+                <div style="display:flex;justify-content:flex-end;gap:10px">
+                  <button onClick="{{ closeModals }}" style="height:34px;padding:0 16px;border:1px solid #e5e7eb;border-radius:5px;background:#fff;font-size:13px;color:#374151;cursor:pointer;font-family:'Roboto',sans-serif">Annuler</button>
+                  <button style="height:34px;padding:0 16px;border:none;border-radius:5px;background:var(--color-primary);font-size:13px;color:#fff;font-weight:600;cursor:pointer;font-family:'Roboto',sans-serif">Importer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- Modal: Importer via un lien -->
+        <sc-if value="{{ showImportLinkModal }}" hint-placeholder-val="{{ false }}">
+          <div style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;display:flex;align-items:center;justify-content:center" onClick="{{ closeModals }}">
+            <div style="background:#fff;border-radius:8px;width:500px;box-shadow:0 8px 40px rgba(0,0,0,.18);overflow:hidden" onClick="{{ stopProp }}">
+              <div style="padding:20px 24px 16px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between">
+                <h2 style="font-size:16px;font-weight:700;color:#111827;margin:0">Importer via un lien</h2>
+                <button onClick="{{ closeModals }}" style="background:transparent;border:none;cursor:pointer;color:#9ca3af" style-hover="color:#374151">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+              <div style="padding:24px">
+                <div style="margin-bottom:16px">
+                  <label style="font-size:12px;font-weight:600;color:#374151;display:block;margin-bottom:6px">URL du document</label>
+                  <input placeholder="https://docs.google.com/… ou tout autre lien" style="width:100%;height:36px;border:1px solid #e5e7eb;border-radius:5px;padding:0 12px;font-size:13px;font-family:'Roboto',sans-serif;color:#374151;outline:none"/>
+                  <div style="font-size:11px;color:#9ca3af;margin-top:4px">Compatible avec Google Drive, Dropbox, OneDrive, Notion…</div>
+                </div>
+                <div style="margin-bottom:16px">
+                  <label style="font-size:12px;font-weight:600;color:#374151;display:block;margin-bottom:4px">Nom du document</label>
+                  <input placeholder="ex : Présentation commerciale Q3" style="width:100%;height:34px;border:1px solid #e5e7eb;border-radius:5px;padding:0 10px;font-size:13px;font-family:'Roboto',sans-serif;color:#374151;outline:none"/>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+                  <div>
+                    <label style="font-size:12px;font-weight:600;color:#374151;display:block;margin-bottom:4px">Type</label>
+                    <select style="width:100%;height:34px;border:1px solid #e5e7eb;border-radius:5px;padding:0 10px;font-size:13px;font-family:'Roboto',sans-serif;color:#374151;outline:none;background:#fff">
+                      <option>Contrat</option><option>Proposition commerciale</option><option>Présentation</option><option>Facture</option><option>Devis</option><option>Rapport</option><option>Autre</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style="font-size:12px;font-weight:600;color:#374151;display:block;margin-bottom:4px">Associé à</label>
+                    <input placeholder="Affaire, contact…" style="width:100%;height:34px;border:1px solid #e5e7eb;border-radius:5px;padding:0 10px;font-size:13px;font-family:'Roboto',sans-serif;color:#374151;outline:none"/>
+                  </div>
+                </div>
+                <div style="margin-bottom:20px">
+                  <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+                    <input type="checkbox" checked style="width:14px;height:14px;accent-color:var(--color-primary)"/>
+                    <span style="font-size:13px;color:#374151">Synchroniser automatiquement les modifications</span>
+                  </label>
+                </div>
+                <div style="display:flex;justify-content:flex-end;gap:10px">
+                  <button onClick="{{ closeModals }}" style="height:34px;padding:0 16px;border:1px solid #e5e7eb;border-radius:5px;background:#fff;font-size:13px;color:#374151;cursor:pointer;font-family:'Roboto',sans-serif">Annuler</button>
+                  <button style="height:34px;padding:0 16px;border:none;border-radius:5px;background:var(--color-primary);font-size:13px;color:#fff;font-weight:600;cursor:pointer;font-family:'Roboto',sans-serif">Importer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sous menus onglets -->
+  <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:0 24px;display:flex;align-items:stretch;flex-shrink:0">
+    <button onClick="{{ goTabDocs }}" class="tab-btn {{ tabClsDocs }}">Tous les documents</button>
+    <button onClick="{{ goTabShared }}" class="tab-btn {{ tabClsShared }}">Partagés avec moi</button>
+    <button onClick="{{ goTabRecent }}" class="tab-btn {{ tabClsRecent }}">Récents</button>
+    <button onClick="{{ goTabFavoris }}" class="tab-btn {{ tabClsFavoris }}">Favoris</button>
+    <button onClick="{{ goTabArchive }}" class="tab-btn {{ tabClsArchive }}">Archivés</button>
+  </div>
+
+  <!-- Toolbar filtres -->
+  <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:8px 24px;display:flex;align-items:center;gap:10px;flex-shrink:0">
+    <span style="font-size:12px;color:#6b7280">{{ totalDocs }} documents</span>
+    <div style="width:1px;height:18px;background:#e5e7eb"></div>
+
+    <!-- Type filter -->
+    <div style="position:relative">
+      <button onClick="{{ toggleTypeDrop }}" class="btn-sec" style="font-size:12px;height:28px">
+        {{ typeLabel }}
+        <svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+      </button>
+      <sc-if value="{{ showTypeDrop }}" hint-placeholder-val="{{ false }}">
+        <div class="drop-panel" style="left:0;min-width:180px">
+          <div class="drop-item" onClick="{{ setTypeAll }}">Tous les types</div>
+          <div class="drop-item" onClick="{{ setTypeContrat }}">Contrat</div>
+          <div class="drop-item" onClick="{{ setTypeProposal }}">Proposition commerciale</div>
+          <div class="drop-item" onClick="{{ setTypePresent }}">Présentation</div>
+          <div class="drop-item" onClick="{{ setTypeFacture }}">Facture</div>
+          <div class="drop-item" onClick="{{ setTypeDevis }}">Devis</div>
+          <div class="drop-item" onClick="{{ setTypeRapport }}">Rapport</div>
+          <div class="drop-item" onClick="{{ setTypeAutre }}">Autre</div>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- Owner filter -->
+    <div style="position:relative">
+      <button onClick="{{ toggleOwnerDrop }}" class="btn-sec" style="font-size:12px;height:28px">
+        {{ ownerLabel }}
+        <svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+      </button>
+      <sc-if value="{{ showOwnerDrop }}" hint-placeholder-val="{{ false }}">
+        <div class="drop-panel" style="left:0;min-width:200px">
+          <div class="drop-item" onClick="{{ setOwnerAll }}">Tout le monde</div>
+          <div style="height:1px;background:#f3f4f6;margin:4px 0"></div>
+          <div class="drop-item" onClick="{{ setOwnerMe }}">Mel Jay (vous)</div>
+          <div class="drop-item">Koffi Amani</div>
+          <div class="drop-item">Awa Touré</div>
+          <div class="drop-item">Jean-Baptiste N.</div>
+        </div>
+      </sc-if>
+    </div>
+
+    <div style="flex:1"></div>
+
+    <!-- cremaillere -->
+    <button class="btn-sec" style="height:28px;width:28px;padding:0;justify-content:center">
+      <svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/></svg>
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div style="flex:1;overflow:auto;background:#fff">
+    <table style="width:100%;border-collapse:collapse;min-width:900px">
+      <thead>
+        <tr>
+          <th class="th checkbox-col" style="padding:10px 12px"><input type="checkbox" style="width:14px;height:14px;accent-color:var(--color-primary)"/></th>
+          <th class="th" style="min-width:260px">Nom du document</th>
+          <th class="th" style="min-width:130px">Type</th>
+          <th class="th" style="min-width:130px">Associé à</th>
+          <th class="th" style="min-width:130px">Propriétaire</th>
+          <th class="th" style="min-width:110px">Dernière modif.</th>
+          <th class="th" style="min-width:80px">Taille</th>
+          <th class="th" style="min-width:80px">Vues</th>
+          <th class="th" style="width:80px;position:sticky;right:0;background:#f9fafb">
+            <svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/></svg>
+          </th>
+        </tr>
+      </thead>
+      <sc-for list="{{ documents }}" as="doc" hint-placeholder-count="8">
+        <tr>
+          <td class="td checkbox-col"><input type="checkbox" style="width:14px;height:14px;accent-color:var(--color-primary)"/></td>
+          <td class="td">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:32px;height:32px;border-radius:5px;background:{{ doc.iconBg }};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <span style="font-size:9px;font-weight:700;color:{{ doc.iconColor }}">{{ doc.ext }}</span>
+              </div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#111827;cursor:pointer">{{ doc.name }}</div>
+                <div style="font-size:11px;color:#9ca3af;margin-top:1px">{{ doc.subline }}</div>
+              </div>
+            </div>
+          </td>
+          <td class="td">
+            <span class="badge-type" style="background:#f3f4f6;color:#374151">{{ doc.type }}</span>
+          </td>
+          <td class="td">
+            <div style="font-size:13px;color:#374151">{{ doc.linkedTo }}</div>
+          </td>
+          <td class="td">
+            <div style="display:flex;align-items:center;gap:7px">
+              <div style="width:22px;height:22px;border-radius:50%;background:{{ doc.ownerBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-size:8px;font-weight:700">{{ doc.ownerInit }}</div>
+              <span style="font-size:13px;color:#374151">{{ doc.owner }}</span>
+            </div>
+          </td>
+          <td class="td" style="color:#6b7280">{{ doc.modif }}</td>
+          <td class="td" style="color:#6b7280">{{ doc.size }}</td>
+          <td class="td">
+            <div style="display:flex;align-items:center;gap:4px;color:#6b7280">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              {{ doc.views }}
+            </div>
+          </td>
+          <td class="td" style="position:sticky;right:0;background:inherit">
+            <div style="display:flex;align-items:center;justify-content:center;gap:4px">
+              <button style="width:26px;height:26px;border:none;background:transparent;cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center" style-hover="background:#f3f4f6">
+                <svg width="13" height="13" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+              </button>
+              <button style="width:26px;height:26px;border:none;background:transparent;cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center" style-hover="background:#f3f4f6">
+                <svg width="13" height="13" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </sc-for>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <div style="background:#fff;border-top:1px solid #e5e7eb;padding:8px 24px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#6b7280;flex-shrink:0">
+    <span>{{ totalDocs }} documents · Stockage utilisé : 2,4 Go / 10 Go</span>
+    <div style="display:flex;align-items:center;gap:4px">
+      <button class="btn-sec" style="height:26px;padding:0 10px;font-size:12px">Précédent</button>
+      <span style="padding:0 8px">Page 1 / 2</span>
+      <button class="btn-sec" style="height:26px;padding:0 10px;font-size:12px">Suivant</button>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab:'docs', typeDrop:false, ownerDrop:false, uploadDrop:false, typeFilter:'all', ownerFilter:'all', importFileModal:false, importLinkModal:false };
+
+  DOCS = [
+    { id:'d1', name:'Contrat de prestation – Atlas Corp', subline:'Signé le 15 juin 2026', ext:'PDF', iconBg:'#f3f4f6', iconColor:'#374151', type:'Contrat', typeBg:'#f0fdf4', typeColor:'var(--color-primary)', linkedTo:'Atlas Corp', owner:'Mel Jay', ownerInit:'MJ', ownerBg:'var(--color-primary)', modif:'2 juil. 2026', size:'1,2 Mo', views:8 },
+    { id:'d2', name:'Proposition commerciale ERP', subline:'Version 3 – envoyée le 28 juin', ext:'DOCX', iconBg:'#f3f4f6', iconColor:'#374151', type:'Proposition', typeBg:'#f3f4f6', typeColor:'#374151', linkedTo:'Migration ERP Client Atlas', owner:'Koffi Amani', ownerInit:'KA', ownerBg:'#374151', modif:'28 juin 2026', size:'842 Ko', views:14 },
+    { id:'d3', name:'Présentation bilan trimestriel Q2', subline:'Présenté au CODIR le 1er juil.', ext:'PPTX', iconBg:'#f3f4f6', iconColor:'#374151', type:'Présentation', typeBg:'#f0fdf4', typeColor:'var(--color-primary)', linkedTo:'–', owner:'Awa Touré', ownerInit:'AT', ownerBg:'#4b5563', modif:'1 juil. 2026', size:'5,3 Mo', views:31 },
+    { id:'d4', name:'Facture #FAC-2026-089', subline:'Émise le 20 juin 2026 · 4 500 000 FCFA', ext:'PDF', iconBg:'#f3f4f6', iconColor:'#374151', type:'Facture', typeBg:'#f0fdf4', typeColor:'var(--color-primary)', linkedTo:'EmpowerMove', owner:'Mel Jay', ownerInit:'MJ', ownerBg:'var(--color-primary)', modif:'20 juin 2026', size:'320 Ko', views:5 },
+    { id:'d5', name:'Devis intégration API paiement', subline:'En attente de validation client', ext:'PDF', iconBg:'#f3f4f6', iconColor:'#374151', type:'Devis', typeBg:'#f3f4f6', typeColor:'#374151', linkedTo:'Intégration API paiement', owner:'Mel Jay', ownerInit:'MJ', ownerBg:'var(--color-primary)', modif:'18 juin 2026', size:'215 Ko', views:3 },
+    { id:'d6', name:'Rapport audit sécurité annuel 2026', subline:'Certifié ISO 27001', ext:'PDF', iconBg:'#f3f4f6', iconColor:'#374151', type:'Rapport', typeBg:'#f3f4f6', typeColor:'#374151', linkedTo:'Audit sécurité annuel', owner:'Jean-Baptiste N.', ownerInit:'JB', ownerBg:'#374151', modif:'5 juil. 2026', size:'3,1 Mo', views:22 },
+    { id:'d7', name:'Cahier des charges – Refonte identité', subline:'Validé par le client le 22 juin', ext:'DOCX', iconBg:'#f3f4f6', iconColor:'#374151', type:'Rapport', typeBg:'#f3f4f6', typeColor:'#374151', linkedTo:'Refonte identité visuelle', owner:'Koffi Amani', ownerInit:'KA', ownerBg:'#374151', modif:'22 juin 2026', size:'1,8 Mo', views:11 },
+    { id:'d8', name:'Contrat de maintenance – Vantis', subline:'Renouvellement annuel 2026-2027', ext:'PDF', iconBg:'#f3f4f6', iconColor:'#374151', type:'Contrat', typeBg:'#f0fdf4', typeColor:'var(--color-primary)', linkedTo:'Onboarding client Vantis', owner:'Awa Touré', ownerInit:'AT', ownerBg:'#4b5563', modif:'10 juil. 2026', size:'780 Ko', views:6 },
+    { id:'d9', name:'Présentation formation équipe support', subline:'Support Vooroo · 30 juin 2026', ext:'PPTX', iconBg:'#f3f4f6', iconColor:'#374151', type:'Présentation', typeBg:'#f0fdf4', typeColor:'var(--color-primary)', linkedTo:'Formation équipe support', owner:'Mel Jay', ownerInit:'MJ', ownerBg:'var(--color-primary)', modif:'30 juin 2026', size:'9,2 Mo', views:44 },
+    { id:'d10', name:'Accord de confidentialité – MoveEr', subline:'Signé le 12 mai 2026', ext:'PDF', iconBg:'#f3f4f6', iconColor:'#374151', type:'Contrat', typeBg:'#f0fdf4', typeColor:'var(--color-primary)', linkedTo:'MoveEr', owner:'Mel Jay', ownerInit:'MJ', ownerBg:'var(--color-primary)', modif:'12 mai 2026', size:'420 Ko', views:2 },
+  ];
+
+  renderVals() {
+    const s = this.state;
+    const docs = this.DOCS.filter(d => (s.typeFilter === 'all' || d.type.toLowerCase().includes(s.typeFilter)) && (s.ownerFilter === 'all' || d.owner === s.ownerFilter));
+    const typeLabels = { all:'Tous les types', contrat:'Contrat', proposal:'Proposition', present:'Présentation', facture:'Facture', devis:'Devis', rapport:'Rapport', autre:'Autre' };
+    const setTab = t => () => this.setState({ tab: t, typeDrop:false, ownerDrop:false, uploadDrop:false });
+    return {
+      documents: docs,
+      totalDocs: docs.length,
+      tab: s.tab,
+      tabClsDocs:    s.tab === 'docs'    ? 'active' : '',
+      tabClsShared:  s.tab === 'shared'  ? 'active' : '',
+      tabClsRecent:  s.tab === 'recent'  ? 'active' : '',
+      tabClsFavoris: s.tab === 'favoris' ? 'active' : '',
+      tabClsArchive: s.tab === 'archive' ? 'active' : '',
+      goTabDocs:    setTab('docs'),
+      goTabShared:  setTab('shared'),
+      goTabRecent:  setTab('recent'),
+      goTabFavoris: setTab('favoris'),
+      goTabArchive: setTab('archive'),
+      typeLabel: typeLabels[s.typeFilter] || 'Tous les types',
+      ownerLabel: s.ownerFilter === 'all' ? 'Tout le monde' : s.ownerFilter,
+      showTypeDrop: s.typeDrop,
+      showOwnerDrop: s.ownerDrop,
+      showUploadDrop: s.uploadDrop,
+      toggleTypeDrop:   () => this.setState(st => ({ typeDrop:!st.typeDrop, ownerDrop:false, uploadDrop:false })),
+      toggleOwnerDrop:  () => this.setState(st => ({ ownerDrop:!st.ownerDrop, typeDrop:false, uploadDrop:false })),
+      toggleUploadDrop: () => this.setState(st => ({ uploadDrop:!st.uploadDrop, typeDrop:false, ownerDrop:false })),
+      setTypeAll:      () => this.setState({ typeFilter:'all',      typeDrop:false }),
+      setTypeContrat:  () => this.setState({ typeFilter:'contrat',  typeDrop:false }),
+      setTypeProposal: () => this.setState({ typeFilter:'proposal', typeDrop:false }),
+      setTypePresent:  () => this.setState({ typeFilter:'présent',  typeDrop:false }),
+      setTypeFacture:  () => this.setState({ typeFilter:'facture',  typeDrop:false }),
+      setTypeDevis:    () => this.setState({ typeFilter:'devis',    typeDrop:false }),
+      setTypeRapport:  () => this.setState({ typeFilter:'rapport',  typeDrop:false }),
+      setTypeAutre:    () => this.setState({ typeFilter:'autre',    typeDrop:false }),
+      setOwnerAll:     () => this.setState({ ownerFilter:'all',     ownerDrop:false }),
+      setOwnerMe:      () => this.setState({ ownerFilter:'Mel Jay', ownerDrop:false }),
+      showImportFileModal: s.importFileModal,
+      showImportLinkModal: s.importLinkModal,
+      openImportFile: () => this.setState({ importFileModal:true, uploadDrop:false }),
+      openImportLink: () => this.setState({ importLinkModal:true, uploadDrop:false }),
+      closeModals: () => this.setState({ importFileModal:false, importLinkModal:false }),
+      stopProp: e => e && e.stopPropagation && e.stopPropagation(),
+    };
+  }
+}
+</script>
+</body>
+</html>

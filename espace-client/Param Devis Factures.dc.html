@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:'Inter',-apple-system,sans-serif;background:#f9fafb;color:#111827}
+@keyframes ani{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.ani{animation:ani .18s ease}
+label{display:block;font-size:12.5px;font-weight:600;color:#374151;margin-bottom:5px}
+input[type=text],input[type=number],select,textarea{width:100%;border:1px solid #d1d5db;border-radius:6px;padding:8px 12px;font-size:13px;font-family:inherit;color:#111827;background:#fff;outline:none}
+input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{border-color:#16A34A;box-shadow:0 0 0 2px #dcfce7}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:16px;overflow:hidden}
+.card-header{padding:20px 28px 16px}
+.card-header h2{font-size:17px;font-weight:700;color:#111827;margin:0 0 10px}
+.grad-line{height:2px;background:linear-gradient(90deg,#16A34A,#4ade80);border-radius:2px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 28px;border-bottom:1px solid #f3f4f6}
+.row-top{align-items:flex-start}
+.tog{position:relative;width:44px;height:24px;border-radius:12px;cursor:pointer;flex-shrink:0;transition:background .2s}
+.tog.on{background:#16A34A}
+.tog.off{background:#d1d5db}
+.k{position:absolute;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.22);transition:left .2s}
+.tog.on .k{left:calc(100% - 21px)}
+.tog.off .k{left:3px}
+.vp{display:inline-flex;align-items:center;padding:3px 8px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:5px;font-size:12.5px;font-weight:600;color:#166534;cursor:pointer;font-family:monospace}
+.btn-save{display:inline-flex;align-items:center;padding:9px 20px;border:none;border-radius:7px;background:#16A34A;color:#fff;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-cancel{display:inline-flex;align-items:center;padding:9px 20px;border:1px solid #e5e7eb;border-radius:7px;background:#fff;color:#374151;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit}
+.savebar{display:flex;justify-content:flex-end;gap:10px;padding:20px 0 4px}
+</style>
+</helmet>
+
+<div style="display:flex;flex-direction:column;height:100%;overflow:hidden">
+
+  <!-- Tab bar -->
+  <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:0 28px;flex-shrink:0;display:flex;align-items:center;gap:0">
+    <button onClick="{{ setTab('numerotation') }}" style="height:46px;padding:0 16px;border:none;background:none;font-family:inherit;font-size:13px;cursor:pointer;border-bottom:2px solid {{ t1Border }};color:{{ t1Color }};display:inline-flex;align-items:center;gap:7px;white-space:nowrap">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 010 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 010-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      Réglages et numérotation
+    </button>
+    <button onClick="{{ setTab('dispositions') }}" style="height:46px;padding:0 16px;border:none;background:none;font-family:inherit;font-size:13px;cursor:pointer;border-bottom:2px solid {{ t2Border }};color:{{ t2Color }};display:inline-flex;align-items:center;gap:7px;white-space:nowrap">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
+      Dispositions et couleurs
+    </button>
+    <button onClick="{{ setTab('logo') }}" style="height:46px;padding:0 16px;border:none;background:none;font-family:inherit;font-size:13px;cursor:pointer;border-bottom:2px solid {{ t3Border }};color:{{ t3Color }};display:inline-flex;align-items:center;gap:7px;white-space:nowrap">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+      Logo et informations
+    </button>
+    <button onClick="{{ setTab('automatisations') }}" style="height:46px;padding:0 16px;border:none;background:none;font-family:inherit;font-size:13px;cursor:pointer;border-bottom:2px solid {{ t4Border }};color:{{ t4Color }};display:inline-flex;align-items:center;gap:7px;white-space:nowrap">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+      Automatisations
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div style="flex:1;overflow-y:auto;padding:28px 32px 60px">
+
+    <!-- ===== 1. RÉGLAGES ET NUMÉROTATION ===== -->
+    <sc-if value="{{ isNumerotation }}" hint-placeholder-val="{{ true }}">
+    <div class="ani">
+      <div style="display:flex;align-items:center;gap:5px;font-size:13px;color:#6b7280;margin-bottom:20px;flex-wrap:wrap">
+        <span>Panneau d'administration</span><span style="color:#d1d5db">›</span>
+        <span>Processus de vente</span><span style="color:#d1d5db">›</span>
+        <span>Devis et factures</span><span style="color:#d1d5db">›</span>
+        <span style="color:#111827;font-weight:600">Réglages et numérotation</span>
+      </div>
+      <h1 style="font-size:34px;font-weight:800;color:#111827;line-height:1.1;margin-bottom:10px">Réglages et numérotation</h1>
+      <p style="font-size:14px;color:#16A34A;margin-bottom:6px">Activez la fonctionnalité et définissez la numérotation de vos documents.</p>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:28px;cursor:pointer">
+        <div style="width:18px;height:18px;border-radius:50%;background:#111827;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="color:#fff;font-size:11px;font-weight:700;font-style:italic">i</span></div>
+        <span style="font-size:13.5px;color:#111827;font-weight:500">Le Centre d'Aide</span>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h2>Réglages généraux</h2><div class="grad-line"></div></div>
+        <div class="row row-top">
+          <div style="flex:1"><div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:4px">Activer la fonctionnalité de devis et factures</div><div style="font-size:13px;color:#6b7280;line-height:1.5">Désactiver la fonctionnalité de devis et factures empêchera les utilisateurs de créer des documents et masquera les liens dans la barre de navigation</div></div>
+          <div class="tog on"><div class="k"></div></div>
+        </div>
+        <div class="row row-top">
+          <p style="flex:1;font-size:13px;color:#374151;line-height:1.6">Lorsqu'un devis ou une facture est envoyé(e) à un client, sa modification n'est pas autorisée. Il arrive cependant que vous deviez mettre à jour l'adresse de facturation ou ajouter un numéro de TVA. Le mode flexible permet ces modifications, tandis que le mode strict interdit toute modification d'un devis ou d'une facture publié(e). La modification des brouillons est toujours autorisée.</p>
+          <select style="width:180px;flex-shrink:0"><option>Mode flexible</option><option>Mode strict</option></select>
+        </div>
+        <div class="row"><div style="font-size:14px;font-weight:600;color:#111827">Activer la fonctionnalité de création de devis</div><div class="tog on"><div class="k"></div></div></div>
+        <div class="row"><div style="font-size:14px;font-weight:600;color:#111827">Activer la fonctionnalité de création de facture</div><div class="tog on"><div class="k"></div></div></div>
+        <div class="row" style="border-bottom:none"><div style="font-size:14px;font-weight:600;color:#111827">Nombre de décimales pour les montants</div><input type="number" value="2" style="width:90px;text-align:right"/></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h2>Numérotation des factures</h2><div class="grad-line"></div></div>
+        <div class="row row-top">
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:4px">Mode live</div>
+            <div style="font-size:13px;color:#374151;margin-bottom:2px">Activer le mode live pour émettre des factures.</div>
+            <div style="font-size:13px;color:#374151">Une fois que vous avez activé le mode live et publié au moins une facture, il n'est plus possible de revenir en arrière.</div>
+          </div>
+          <div class="tog off" style="margin-top:2px"><div class="k"></div></div>
+        </div>
+        <div style="padding:22px 28px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+            <div><label>Numérotation des factures</label><input type="text" value="{{ numFct }}"/></div>
+            <div><label>Aperçu</label><input type="text" value="{{ previewFct }}" readonly style="background:#f9fafb;color:#6b7280;font-weight:500"/></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+            <div style="border:1px solid #e5e7eb;border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="vp">&lt;yyyy&gt;</span><span style="font-size:13px;color:#6b7280">ou</span><span class="vp">&lt;yy&gt;</span><span style="font-size:13px;color:#374151">l'année en 4 ou 2 chiffres</span></div>
+              <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="vp">&lt;mm&gt;</span><span style="font-size:13px;color:#6b7280">ou</span><span class="vp">&lt;m&gt;</span><span style="font-size:13px;color:#374151">le mois en 2 ou 1 chiffre(s)</span></div>
+              <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="vp">&lt;dd&gt;</span><span style="font-size:13px;color:#6b7280">ou</span><span class="vp">&lt;d&gt;</span><span style="font-size:13px;color:#374151">le jour en 2 ou 1 chiffre(s)</span></div>
+              <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="vp">&lt;count&gt;</span><span style="font-size:13px;color:#374151">le compteur, qui augmentera automatiquement</span></div>
+              <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="vp">&lt;type&gt;</span><span style="font-size:13px;color:#374151">correspondant au type de facture.</span></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="border:1px solid #e5e7eb;border-radius:8px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <div style="font-size:14px;font-weight:600;color:#111827">Taille minimale du compteur</div>
+                <input type="number" value="6" style="width:80px;text-align:right"/>
+              </div>
+              <div style="border:1px solid #e5e7eb;border-radius:8px;padding:16px 18px">
+                <div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:6px">Réinitialiser la numérotation</div>
+                <select><option>Continu</option><option>Mensuelle</option><option>Annuelle</option></select>
+              </div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #f3f4f6"><span style="font-size:14px;color:#111827">Facture standard</span><input type="text" value="FCT" style="width:90px;text-align:right"/></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #f3f4f6"><span style="font-size:14px;color:#111827">Facture d'avoir</span><input type="text" value="FAV" style="width:90px;text-align:right"/></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #f3f4f6"><span style="font-size:14px;color:#111827">Facture pro forma</span><input type="text" value="PRO" style="width:90px;text-align:right"/></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #f3f4f6"><span style="font-size:14px;color:#111827">Facture d'acompte</span><input type="text" value="NDC" style="width:90px;text-align:right"/></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px"><span style="font-size:14px;color:#111827">Facture de solde</span><input type="text" value="SOL" style="width:90px;text-align:right"/></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h2>Numérotation des devis</h2><div class="grad-line"></div></div>
+        <div class="row row-top">
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:4px">Mode live</div>
+            <div style="font-size:13px;color:#374151;margin-bottom:2px">Activer le mode live pour émettre des devis.</div>
+            <div style="font-size:13px;color:#374151">Une fois que vous avez activé le mode live et que vous avez publié au moins un devis, il n'est plus possible de revenir en arrière.</div>
+          </div>
+          <div class="tog off" style="margin-top:2px"><div class="k"></div></div>
+        </div>
+        <div style="padding:22px 28px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+            <div><label>Numérotation des devis</label><input type="text" value="{{ numDev }}"/></div>
+            <div><label>Aperçu</label><input type="text" value="{{ previewDev }}" readonly style="background:#f9fafb;color:#6b7280;font-weight:500"/></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div style="border:1px solid #e5e7eb;border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="vp">&lt;yyyy&gt;</span><span style="font-size:13px;color:#6b7280">ou</span><span class="vp">&lt;yy&gt;</span><span style="font-size:13px;color:#374151">l'année en 4 ou 2 chiffres</span></div>
+              <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="vp">&lt;mm&gt;</span><span style="font-size:13px;color:#6b7280">ou</span><span class="vp">&lt;m&gt;</span><span style="font-size:13px;color:#374151">le mois en 2 ou 1 chiffre(s)</span></div>
+              <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="vp">&lt;dd&gt;</span><span style="font-size:13px;color:#6b7280">ou</span><span class="vp">&lt;d&gt;</span><span style="font-size:13px;color:#374151">le jour en 2 ou 1 chiffre(s)</span></div>
+              <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="vp">&lt;count&gt;</span><span style="font-size:13px;color:#374151">le compteur, qui augmentera automatiquement</span></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="border:1px solid #e5e7eb;border-radius:8px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <div style="font-size:14px;font-weight:600;color:#111827">Taille minimale du compteur</div>
+                <input type="number" value="6" style="width:80px;text-align:right"/>
+              </div>
+              <div style="border:1px solid #e5e7eb;border-radius:8px;padding:16px 18px">
+                <div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:6px">Réinitialiser la numérotation</div>
+                <select><option>Continu</option><option>Mensuelle</option><option>Annuelle</option></select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="savebar"><button class="btn-cancel">Annuler</button><button class="btn-save">Enregistrer les modifications</button></div>
+    </div>
+    </sc-if>
+
+    <!-- ===== 2. DISPOSITIONS ET COULEURS ===== -->
+    <sc-if value="{{ isDispositions }}" hint-placeholder-val="{{ false }}">
+    <div class="ani">
+      <div style="display:flex;align-items:center;gap:5px;font-size:13px;color:#6b7280;margin-bottom:20px;flex-wrap:wrap">
+        <span>Panneau d'administration</span><span style="color:#d1d5db">›</span><span>Processus de vente</span><span style="color:#d1d5db">›</span><span>Devis et factures</span><span style="color:#d1d5db">›</span><span style="color:#111827;font-weight:600">Disposition et couleurs</span>
+      </div>
+      <h1 style="font-size:34px;font-weight:800;color:#111827;line-height:1.1;margin-bottom:8px">Disposition et couleurs</h1>
+      <p style="font-size:13.5px;color:#374151;margin-bottom:28px">Sélectionnez un modèle et personnalisez-le pour qu'il soit en alignement avec l'image de marque de votre entreprise.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start">
+        <!-- Doc preview -->
+        <div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;min-height:480px;padding:40px 48px">
+          <div style="margin-bottom:20px"><div style="width:100px;height:100px;background:#f3f4f6;border:1.5px dashed #d1d5db;border-radius:8px;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:600;color:#9ca3af;text-align:center;letter-spacing:.5px">VOTRE<br/>LOGO</span></div></div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px">
+            <div><div style="font-size:9px;font-weight:700;color:#9ca3af;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">ÉMETTEUR</div><div style="font-size:16px;font-weight:700;color:#111827">SOLOPRO</div></div>
+            <div style="text-align:right">
+              <div style="font-size:24px;font-weight:800;color:#111827;margin-bottom:6px">Devis</div>
+              <div style="font-size:12px;color:#6b7280;margin-bottom:2px"><span style="color:#9ca3af">Numéro de devis :</span> Devis/2026-XXXXXX</div>
+              <div style="font-size:12px"><span style="color:#9ca3af">Date d'émission :</span> <span style="color:{{ accentColor }}">À définir</span></div>
+              <div style="margin-top:16px;text-align:left"><div style="font-size:9px;font-weight:700;color:#9ca3af;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">CLIENT</div><div style="font-size:16px;font-weight:700;color:#111827">John Doe</div><div style="font-size:12.5px;color:{{ accentColor }}">7 Sieben Strasse</div><div style="font-size:12.5px;color:{{ accentColor }}">Deutschland</div></div>
+            </div>
+          </div>
+          <table style="width:100%;border-collapse:collapse">
+            <thead><tr style="background:{{ accentColor }};color:#fff"><th style="padding:10px;font-size:12px;font-weight:700;text-align:left;letter-spacing:.6px">DESCRIPTION</th><th style="padding:10px;font-size:12px;font-weight:700;text-align:right">QTÉ.</th><th style="padding:10px;font-size:12px;font-weight:700;text-align:right">PRIX UNITAIRE</th><th style="padding:10px;font-size:12px;font-weight:700;text-align:right">MONTANT</th></tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #f3f4f6"><td style="padding:10px;font-size:13px;color:{{ accentColor }}">Produit génial</td><td style="padding:10px;font-size:13px;text-align:right">2</td><td style="padding:10px;font-size:13px;text-align:right">12.00 $</td><td style="padding:10px;font-size:13px;text-align:right">24.00 $</td></tr>
+              <tr style="border-bottom:1px solid #f3f4f6"><td style="padding:10px;font-size:13px;color:{{ accentColor }}">Un autre produit</td><td style="padding:10px;font-size:13px;text-align:right">1</td><td style="padding:10px;font-size:13px;text-align:right">42.00 $</td><td style="padding:10px;font-size:13px;text-align:right">42.00 $</td></tr>
+              <tr><td colspan="3" style="padding:8px 10px;font-size:12.5px;color:#6b7280;text-align:right">Total (HT)</td><td style="padding:8px 10px;font-size:12.5px;text-align:right">66.00 $</td></tr>
+              <tr style="border-top:2px solid {{ accentColor }}"><td colspan="3" style="padding:10px;font-size:13px;font-weight:700;text-align:right">Total TTC</td><td style="padding:10px;font-size:13px;font-weight:700;text-align:right">66.00 $</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Panneau droit -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:20px 22px">
+            <div style="font-size:16px;font-weight:700;color:#111827;margin-bottom:10px">Sélectionner votre modèle</div>
+            <div class="grad-line" style="margin-bottom:18px"></div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div onClick="{{ setLayout('default') }}" style="display:flex;align-items:center;gap:11px;cursor:pointer">
+                <div style="width:18px;height:18px;border-radius:50%;border:2px solid {{ layout === 'default' ? accentColor : '#d1d5db' }};display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;border-radius:50%;background:{{ layout === 'default' ? accentColor : 'transparent' }}"></div></div>
+                <span style="font-size:14px;color:#111827">Vooroo par défaut</span>
+              </div>
+              <div onClick="{{ setLayout('centered') }}" style="display:flex;align-items:center;gap:11px;cursor:pointer">
+                <div style="width:18px;height:18px;border-radius:50%;border:2px solid {{ layout === 'centered' ? accentColor : '#d1d5db' }};display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;border-radius:50%;background:{{ layout === 'centered' ? accentColor : 'transparent' }}"></div></div>
+                <span style="font-size:14px;color:#111827">Centré</span>
+              </div>
+              <div onClick="{{ setLayout('borderLeft') }}" style="display:flex;align-items:center;gap:11px;cursor:pointer">
+                <div style="width:18px;height:18px;border-radius:50%;border:2px solid {{ layout === 'borderLeft' ? accentColor : '#d1d5db' }};display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;border-radius:50%;background:{{ layout === 'borderLeft' ? accentColor : 'transparent' }}"></div></div>
+                <span style="font-size:14px;color:#111827">Bordure à gauche</span>
+              </div>
+              <div onClick="{{ setLayout('columnLeft') }}" style="display:flex;align-items:center;gap:11px;cursor:pointer">
+                <div style="width:18px;height:18px;border-radius:50%;border:2px solid {{ layout === 'columnLeft' ? accentColor : '#d1d5db' }};display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;border-radius:50%;background:{{ layout === 'columnLeft' ? accentColor : 'transparent' }}"></div></div>
+                <span style="font-size:14px;color:#111827">Colonne à gauche</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:20px 22px">
+            <div style="font-size:16px;font-weight:700;color:#111827;margin-bottom:10px">Personnalisez vos couleurs</div>
+            <div class="grad-line" style="margin-bottom:18px"></div>
+            <div style="font-size:13px;color:#374151;margin-bottom:8px">Couleur accentuée</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <sc-for list="{{ colorSwatches }}" as="sw" hint-placeholder-count="6">
+                <div onClick="{{ sw.pick }}" style="width:32px;height:32px;border-radius:6px;background:{{ sw.color }};cursor:pointer;border:2px solid {{ sw.active ? '#111827' : 'transparent' }};box-shadow:{{ sw.active ? '0 0 0 2px #fff inset' : 'none' }}"></div>
+              </sc-for>
+            </div>
+          </div>
+
+          <button class="btn-save" style="width:100%;padding:11px;border-radius:7px;justify-content:center">Enregistrer les modifications</button>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ===== 3. LOGO ET INFORMATIONS ===== -->
+    <sc-if value="{{ isLogo }}" hint-placeholder-val="{{ false }}">
+    <div class="ani">
+      <div style="display:flex;align-items:center;gap:5px;font-size:13px;color:#6b7280;margin-bottom:20px;flex-wrap:wrap">
+        <span>Panneau d'administration</span><span style="color:#d1d5db">›</span><span>Processus de vente</span><span style="color:#d1d5db">›</span><span>Devis et factures</span><span style="color:#d1d5db">›</span><span style="color:#111827;font-weight:600">Logo et informations par défaut</span>
+      </div>
+      <h1 style="font-size:34px;font-weight:800;color:#111827;line-height:1.1;margin-bottom:8px">Logo et informations par défaut</h1>
+      <p style="font-size:13.5px;color:#374151;margin-bottom:28px">Ajoutez votre logo et entrez les informations légales de vos documents.</p>
+
+      <div class="card" style="margin-bottom:24px">
+        <div class="card-header"><h2>Modèle de Devis et Factures</h2><div class="grad-line"></div></div>
+        <div style="padding:24px;border-bottom:1px solid #f3f4f6">
+          <div style="font-size:13.5px;font-weight:600;color:#111827;margin-bottom:10px">Logo du compte</div>
+          <button style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:6px;border:1px solid #d1d5db;background:#fff;font-size:13px;color:#374151;cursor:pointer;font-family:inherit;font-weight:500">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+            Importer un logo
+          </button>
+        </div>
+        <div style="padding:24px;border-bottom:1px solid #f3f4f6">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div><label>Nom de l'entreprise</label><input type="text" value="SOLOPRO" style="max-width:340px"/></div>
+            <div><label>Coordonnées (adresse, téléphone, e-mail, etc.)</label><textarea style="min-height:90px;resize:vertical"></textarea></div>
+            <div><label>Informations légales</label><textarea style="min-height:60px;resize:vertical"></textarea><p style="font-size:12px;color:#6b7280;margin-top:5px;line-height:1.5">Utilisez ce champ pour toute information légale devant figurer en en-tête de vos documents.</p></div>
+          </div>
+        </div>
+        <div style="padding:24px;border-bottom:1px solid #f3f4f6">
+          <label>Devise</label>
+          <select style="max-width:220px"><option>Franc CFA (XOF)</option><option>Euro (€)</option><option>U.S. Dollar ($)</option><option>Franc suisse (CHF)</option><option>Livre sterling (£)</option></select>
+        </div>
+        <div style="padding:0 24px;border-bottom:1px solid #f3f4f6">
+          <div class="row row-top" style="padding-left:0;padding-right:0">
+            <div><div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Ajouter une colonne de taxes sur les devis et factures</div><div style="font-size:13px;color:#6b7280">La colonne de taxes peut être ajoutée ou supprimée indépendamment sur chaque document</div></div>
+            <div class="tog on"><div class="k"></div></div>
+          </div>
+          <div style="margin:14px 0;background:#f9fafb;border-radius:8px;padding:14px 16px">
+            <div style="font-size:13.5px;font-weight:600;color:#111827;margin-bottom:3px">Taxes prédéfinies</div>
+            <div style="font-size:12.5px;color:#6b7280;margin-bottom:12px">Le premier pourcentage sera utilisé par défaut</div>
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#fff;border:1px solid #e5e7eb;border-radius:7px;margin-bottom:10px">
+              <span style="font-size:13.5px;font-weight:600;color:#111827">20%</span>
+              <span style="font-size:11.5px;font-weight:500;color:#6b7280;background:#f3f4f6;padding:2px 8px;border-radius:4px">Par défaut</span>
+            </div>
+            <button style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:6px;border:none;background:#16A34A;font-size:13px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 12 12"><path stroke-linecap="round" d="M6 2v8M2 6h8"/></svg>
+              Ajouter une taxe
+            </button>
+          </div>
+        </div>
+        <div class="row" style="border-bottom:1px solid #f3f4f6"><div><div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Afficher la colonne quantité</div><div style="font-size:13px;color:#6b7280">Ce paramètre par défaut peut être modifié indépendamment sur chaque document</div></div><div class="tog on"><div class="k"></div></div></div>
+        <div class="row" style="border-bottom:1px solid #f3f4f6"><div><div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Afficher une colonne de remises</div><div style="font-size:13px;color:#6b7280">La colonne remise peut être ajoutée ou retirée indépendamment sur chaque document</div></div><div class="tog off"><div class="k"></div></div></div>
+        <div style="padding:24px;display:flex;align-items:flex-start;gap:24px">
+          <div style="flex:1">
+            <label>Pied de page</label>
+            <textarea style="min-height:90px;resize:vertical"></textarea>
+            <p style="font-size:12px;color:#6b7280;margin-top:5px">Le pied de page sera ajouté à toutes les pages de vos documents.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px">
+        <div class="card-header"><h2>Configuration des factures</h2><div class="grad-line"></div></div>
+        <div style="padding:24px;border-bottom:1px solid #f3f4f6">
+          <label>Échéance de paiement</label>
+          <select style="max-width:280px"><option>30 jours</option><option>À réception</option><option>15 jours</option><option>45 jours fin de mois</option><option>60 jours</option></select>
+          <p style="font-size:12px;color:#6b7280;margin-top:6px;line-height:1.5;max-width:280px">La date sera calculée lorsque le statut de la facture passera de brouillon à en attente de paiement.</p>
+        </div>
+        <div style="padding:24px;border-bottom:1px solid #f3f4f6">
+          <label>Informations bancaires</label>
+          <textarea style="min-height:90px;resize:vertical"></textarea>
+        </div>
+        <div style="padding:24px">
+          <label>Conditions de facturation</label>
+          <textarea style="min-height:80px;resize:vertical"></textarea>
+          <p style="font-size:12px;color:#6b7280;margin-top:5px">Conditions de facturation par défaut. Ce champ sera modifiable sur chaque facture indépendamment.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px">
+        <div class="card-header"><h2>Configuration des devis</h2><div class="grad-line"></div></div>
+        <div style="padding:24px;border-bottom:1px solid #f3f4f6">
+          <label>Validité du devis</label>
+          <select style="max-width:280px"><option>30 jours</option><option>15 jours</option><option>45 jours</option><option>60 jours</option><option>90 jours</option><option>Aucune</option></select>
+        </div>
+        <div style="padding:24px">
+          <label>Conditions de devis</label>
+          <textarea style="min-height:80px;resize:vertical"></textarea>
+          <p style="font-size:12px;color:#6b7280;margin-top:5px">Conditions de devis par défaut. Ce champ sera modifiable sur chaque devis indépendamment.</p>
+        </div>
+      </div>
+
+      <div class="savebar"><button class="btn-cancel">Annuler</button><button class="btn-save">Enregistrer les modifications</button></div>
+    </div>
+    </sc-if>
+
+    <!-- ===== 4. AUTOMATISATIONS ===== -->
+    <sc-if value="{{ isAutomatisations }}" hint-placeholder-val="{{ false }}">
+    <div class="ani">
+      <div style="display:flex;align-items:center;gap:5px;font-size:13px;color:#6b7280;margin-bottom:20px;flex-wrap:wrap">
+        <span>Panneau d'administration</span><span style="color:#d1d5db">›</span><span>Devis et factures</span><span style="color:#d1d5db">›</span><span style="color:#111827;font-weight:600">Automatisations</span>
+      </div>
+      <h1 style="font-size:34px;font-weight:800;color:#111827;line-height:1.1;margin-bottom:10px">Automatisations</h1>
+      <p style="font-size:14px;color:#16A34A;margin-bottom:28px">Configurez les actions automatiques liées à vos devis et factures.</p>
+
+      <div class="card">
+        <div class="card-header"><h2>Devis</h2><div class="grad-line"></div></div>
+        <div class="row row-top">
+          <div style="flex:1"><div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Convertir en facture à l'acceptation</div><div style="font-size:13px;color:#6b7280">Génère une facture dès qu'un devis est accepté par le client</div></div>
+          <div class="tog on"><div class="k"></div></div>
+        </div>
+        <div style="margin:0 28px 16px;padding:12px 16px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+          <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" fill="none" stroke="#16A34A" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg><span style="font-size:13px;color:#15803d">Envoyer la facture générée par email automatiquement</span></div>
+          <div class="tog on" style="width:36px;height:20px"><div class="k" style="width:16px;height:16px;top:2px;left:calc(100% - 18px)"></div></div>
+        </div>
+        <div class="row"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Archiver les devis expirés</div><div style="font-size:13px;color:#6b7280">Archive automatiquement les devis dont la validité est dépassée</div></div><div class="tog on"><div class="k"></div></div></div>
+        <div class="row row-top" style="border-bottom:none;flex-direction:column;align-items:flex-start;gap:14px">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;width:100%">
+            <div><div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Relance avant expiration du devis</div><div style="font-size:13px;color:#6b7280">Envoie un email de rappel au client avant expiration</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;background:#fff;border:1px solid #e5e7eb;border-radius:8px;width:100%">
+            <select style="width:160px"><option>7 jours avant</option><option>3 jours avant</option><option>14 jours avant</option></select>
+            <span style="font-size:12.5px;color:#6b7280">Email automatique</span>
+          </div>
+          <button style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:6px;border:1px dashed #d1d5db;background:#f9fafb;font-size:13px;font-weight:500;color:#6b7280;cursor:pointer;font-family:inherit">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 12 12"><path stroke-linecap="round" d="M6 2v8M2 6h8"/></svg>
+            Ajouter une date de relance
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h2>Factures</h2><div class="grad-line"></div></div>
+        <div class="row"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Email de confirmation de paiement</div><div style="font-size:13px;color:#6b7280">Envoie un reçu au client lorsqu'un paiement est enregistré</div></div><div class="tog on"><div class="k"></div></div></div>
+        <div class="row"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Rappel avant échéance</div><div style="font-size:13px;color:#6b7280">Avertit le client avant la date d'échéance</div></div><div style="display:flex;align-items:center;gap:12px"><select style="width:140px"><option>3 jours avant</option><option>5 jours avant</option><option>7 jours avant</option></select><div class="tog on"><div class="k"></div></div></div></div>
+        <div style="padding:0 28px 22px">
+          <div style="border:1px solid #e5e7eb;border-radius:10px;overflow:hidden">
+            <div style="padding:16px 20px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Relances automatiques — factures impayées</div><div style="font-size:13px;color:#6b7280">Séquence de rappels envoyés automatiquement après l'échéance</div></div><div class="tog on"><div class="k"></div></div></div>
+            <div style="padding:16px 20px;background:#f9fafb;display:flex;flex-direction:column;gap:10px">
+              <p style="font-size:13px;font-weight:600;color:#374151;margin-bottom:4px">Calendrier des relances :</p>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;background:#fff;border:1px solid #e5e7eb;border-radius:8px">
+                <div style="width:24px;height:24px;border-radius:50%;background:#fef9c3;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:12px;font-weight:700;color:#a16207">1</span></div>
+                <span style="font-size:13.5px;color:#111827;font-weight:600;min-width:90px">1ère relance</span>
+                <select style="width:160px"><option>J+7 après échéance</option><option>J+3</option><option>J+14</option><option>J+30</option></select>
+                <span style="font-size:12.5px;color:#6b7280;flex:1">Email automatique</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;background:#fff;border:1px solid #e5e7eb;border-radius:8px">
+                <div style="width:24px;height:24px;border-radius:50%;background:#fed7aa;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:12px;font-weight:700;color:#c2410c">2</span></div>
+                <span style="font-size:13.5px;color:#111827;font-weight:600;min-width:90px">2ème relance</span>
+                <select style="width:160px"><option>J+14 après échéance</option><option>J+21</option><option>J+30</option></select>
+                <span style="font-size:12.5px;color:#6b7280;flex:1">Email automatique</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;background:#fff;border:1px solid #e5e7eb;border-radius:8px">
+                <div style="width:24px;height:24px;border-radius:50%;background:#fecaca;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:12px;font-weight:700;color:#b91c1c">3</span></div>
+                <span style="font-size:13.5px;color:#111827;font-weight:600;min-width:90px">3ème relance</span>
+                <select style="width:160px"><option>J+30 après échéance</option><option>J+45</option><option>J+60</option></select>
+                <span style="font-size:12.5px;color:#6b7280;flex:1">Email + notification</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="border-bottom:none"><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Notification interne — facture impayée</div><div style="font-size:13px;color:#6b7280">Alerte l'équipe commerciale après J+30 sans paiement</div></div><div class="tog on"><div class="k"></div></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h2>Modèles d'emails</h2><div class="grad-line"></div><p style="font-size:13px;color:#6b7280;margin-top:8px">Personnalisez le contenu des emails envoyés automatiquement</p></div>
+        <div style="padding:0 28px 22px;display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border:1px solid #e5e7eb;border-radius:8px"><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;background:#f0fdf4;border-radius:7px;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" fill="none" stroke="#16A34A" stroke-width="1.3" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" stroke-linecap="round"/><path stroke-linecap="round" d="M2 8l10 6 10-6"/></svg></div><span style="font-size:13.5px;font-weight:500;color:#111827">Envoi de devis</span></div><button style="padding:6px 14px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;font-size:12.5px;font-weight:500;color:#6b7280;cursor:pointer;font-family:inherit">Modifier</button></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border:1px solid #e5e7eb;border-radius:8px"><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;background:#f0fdf4;border-radius:7px;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" fill="none" stroke="#16A34A" stroke-width="1.3" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path stroke-linecap="round" d="M2 8l10 6 10-6"/></svg></div><span style="font-size:13.5px;font-weight:500;color:#111827">Envoi de facture</span></div><button style="padding:6px 14px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;font-size:12.5px;font-weight:500;color:#6b7280;cursor:pointer;font-family:inherit">Modifier</button></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border:1px solid #e5e7eb;border-radius:8px"><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;background:#fef9c3;border-radius:7px;border:1px solid #fef08a;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" fill="none" stroke="#ca8a04" stroke-width="1.3" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path stroke-linecap="round" d="M2 8l10 6 10-6"/></svg></div><span style="font-size:13.5px;font-weight:500;color:#111827">Relance avant expiration du devis</span></div><button style="padding:6px 14px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;font-size:12.5px;font-weight:500;color:#6b7280;cursor:pointer;font-family:inherit">Modifier</button></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border:1px solid #e5e7eb;border-radius:8px"><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;background:#fef9c3;border-radius:7px;border:1px solid #fef08a;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" fill="none" stroke="#ca8a04" stroke-width="1.3" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path stroke-linecap="round" d="M2 8l10 6 10-6"/></svg></div><span style="font-size:13.5px;font-weight:500;color:#111827">Relance impayée – 1ère</span></div><button style="padding:6px 14px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;font-size:12.5px;font-weight:500;color:#6b7280;cursor:pointer;font-family:inherit">Modifier</button></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border:1px solid #e5e7eb;border-radius:8px"><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;background:#fecaca;border-radius:7px;border:1px solid #fca5a5;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" fill="none" stroke="#b91c1c" stroke-width="1.3" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path stroke-linecap="round" d="M2 8l10 6 10-6"/></svg></div><span style="font-size:13.5px;font-weight:500;color:#111827">Relance impayée – 2ème &amp; 3ème</span></div><button style="padding:6px 14px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;font-size:12.5px;font-weight:500;color:#6b7280;cursor:pointer;font-family:inherit">Modifier</button></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border:1px solid #e5e7eb;border-radius:8px"><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;background:#f0fdf4;border-radius:7px;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" fill="none" stroke="#16A34A" stroke-width="1.3" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path stroke-linecap="round" d="M2 8l10 6 10-6"/></svg></div><span style="font-size:13.5px;font-weight:500;color:#111827">Confirmation de paiement</span></div><button style="padding:6px 14px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;font-size:12.5px;font-weight:500;color:#6b7280;cursor:pointer;font-family:inherit">Modifier</button></div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab: 'numerotation', layout: 'default', accentColor: '#16A34A', numFct: 'FCT/<yyyy>-<count>', numDev: 'DEV/<yyyy>-<count>' };
+
+  renderVals() {
+    const { tab, layout, accentColor, numFct, numDev } = this.state;
+    const active = '#16A34A', inactive = 'transparent', tc = (t) => tab === t ? active : inactive, tc2 = (t) => tab === t ? active : '#374151';
+    const preview = (tpl) => tpl.replace('<yyyy>', new Date().getFullYear()).replace('<yy>', String(new Date().getFullYear()).slice(-2)).replace('<mm>', String(new Date().getMonth()+1).padStart(2,'0')).replace('<m>', new Date().getMonth()+1).replace('<dd>', String(new Date().getDate()).padStart(2,'0')).replace('<d>', new Date().getDate()).replace('<count>', '000001').replace('<type>','FCT');
+    return {
+      setTab: (t) => () => this.setState({ tab: t }),
+      t1Border: tc('numerotation'), t1Color: tc2('numerotation'),
+      t2Border: tc('dispositions'), t2Color: tc2('dispositions'),
+      t3Border: tc('logo'),         t3Color: tc2('logo'),
+      t4Border: tc('automatisations'), t4Color: tc2('automatisations'),
+      isNumerotation: tab === 'numerotation',
+      isDispositions: tab === 'dispositions',
+      isLogo:         tab === 'logo',
+      isAutomatisations: tab === 'automatisations',
+      numFct, numDev,
+      previewFct: preview(numFct),
+      previewDev: preview(numDev),
+      layout, accentColor,
+      setLayout: (l) => () => this.setState({ layout: l }),
+      colorSwatches: ['#16A34A','#2563eb','#7c3aed','#dc2626','#d97706','#111827'].map(c => ({
+        color: c, active: accentColor === c, pick: () => this.setState({ accentColor: c })
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>

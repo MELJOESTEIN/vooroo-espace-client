@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Roboto,-apple-system,sans-serif;background:#f4f5f7;color:#111827;font-size:13px}
+@keyframes fIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:6px;margin-bottom:14px;overflow:hidden}
+.card-head{display:flex;align-items:center;gap:10px;padding:14px 20px 10px;border-bottom:1px solid #f3f4f6}
+.card-head h2{font-size:14px;font-weight:700;color:#111827;margin:0}
+.card-head p{font-size:11.5px;color:#6b7280;margin:2px 0 0}
+.card-body{padding:2px 0}
+.field-row{display:flex;align-items:center;padding:10px 20px;border-bottom:1px solid #f9fafb}
+.field-row:last-child{border-bottom:none}
+.field-name{flex:1;font-size:13px;color:#111827;font-weight:500}
+.field-hint{font-size:11px;color:#9ca3af;font-weight:400;display:block;margin-top:1px}
+.field-status{display:flex;align-items:center;gap:8px;flex-shrink:0;min-width:130px;justify-content:flex-end}
+.status-label{font-size:11.5px;font-weight:600}
+.obligatoire{color:#16A34A}
+.facultatif{color:#9ca3af}
+.tog{position:relative;width:36px;height:20px;border-radius:10px;cursor:pointer;flex-shrink:0;display:inline-block}
+.tog-on{background:#16A34A}
+.tog-off{background:#d1d5db}
+.tog .k{position:absolute;top:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:left .15s}
+.tog-on .k{left:18px}
+.tog-off .k{left:2px}
+.tab-btn{height:34px;padding:0 14px;border:none;background:none;font-family:inherit;font-size:12.5px;cursor:pointer;border-bottom:2px solid transparent;color:#374151;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0}
+.tab-btn.active{color:#16A34A;border-bottom-color:#16A34A;font-weight:600}
+.btn-g{height:30px;padding:0 12px;border:none;border-radius:4px;background:#16A34A;color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:5px}
+.btn-g:hover{background:#15803d}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;padding:9px 20px;text-align:left;border-bottom:1px solid #e5e7eb;background:#f9fafb}
+.tbl td{padding:9px 20px;border-bottom:1px solid #f3f4f6;color:#374151;vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:#fafafa}
+.requis-dot{color:#16A34A;font-size:14px}
+.empty-state{text-align:center;padding:28px;color:#9ca3af;font-size:12.5px}
+.info-banner{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:5px;margin-bottom:16px;font-size:12.5px;color:#1d4ed8}
+.custom-field-actions{display:flex;gap:8px;align-items:center}
+</style>
+</helmet>
+
+<div style="display:flex;flex-direction:column;min-height:100%;background:#f4f5f7">
+
+  <!-- Sub-header -->
+  <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 24px;flex-shrink:0;display:flex;align-items:center;gap:10px">
+    <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/></svg>
+    <div>
+      <div style="font-size:11px;color:#9ca3af;font-weight:500;text-transform:uppercase;letter-spacing:.05em">Paramètres</div>
+      <div style="font-size:14px;font-weight:700;color:#111827">Champs de données</div>
+    </div>
+  </div>
+
+  <!-- Tab bar -->
+  <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:0 24px;flex-shrink:0;display:flex;align-items:center;overflow-x:auto">
+    <button onClick="{{ goProspect }}" class="tab-btn {{ t.prospect }}">
+      <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      Prospect/Affaire
+    </button>
+    <button onClick="{{ goPersonne }}" class="tab-btn {{ t.personne }}">
+      <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+      Personne
+    </button>
+    <button onClick="{{ goOrganisation }}" class="tab-btn {{ t.organisation }}">
+      <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
+      Organisation
+    </button>
+    <button onClick="{{ goActivite }}" class="tab-btn {{ t.activite }}">
+      <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+      Activité
+    </button>
+    <button onClick="{{ goProduit }}" class="tab-btn {{ t.produit }}">
+      <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>
+      Produit
+    </button>
+    <button onClick="{{ goProjet }}" class="tab-btn {{ t.projet }}">
+      <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
+      Projet
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div style="flex:1;overflow-y:auto;padding:24px">
+    <div style="max-width:860px;margin:0 auto">
+    <h1 style="font-size:18px;font-weight:700;color:#111827;margin:0 0 4px">Champs de données</h1>
+    <p style="font-size:12.5px;color:#6b7280;margin:0 0 16px">Gérez les champs obligatoires et créez des champs personnalisés pour chaque module.</p>
+
+    <div class="info-banner">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
+      <span><strong>15 champs personnalisés</strong> utilisés sur 300.</span>
+    </div>
+
+    <!-- ===== PROSPECT / AFFAIRE ===== -->
+    <sc-if value="{{ isProspect }}" hint-placeholder-val="{{ true }}">
+    <div style="animation:fIn .18s ease">
+
+      <!-- Obligatoires Particulier -->
+      <div class="card">
+        <div class="card-head">
+          <svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <div><h2>Champs obligatoires — Prospect Particulier</h2><p>Activez les champs à renseigner obligatoirement à la création d'un prospect particulier.</p></div>
+        </div>
+        <div class="card-body">
+          <sc-for list="{{ prospectParticulierFields }}" as="f" hint-placeholder-count="6">
+            <div class="field-row">
+              <div class="field-name">{{ f.name }}<span class="field-hint">{{ f.hint }}</span></div>
+              <div class="field-status">
+                <span class="status-label {{ f.cls }}">{{ f.label }}</span>
+                <div class="tog {{ f.togCls }}" onClick="{{ f.toggle }}"><div class="k"></div></div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- Obligatoires Organisation -->
+      <div class="card">
+        <div class="card-head">
+          <svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <div><h2>Champs obligatoires — Prospect Organisation</h2><p>Activez les champs à renseigner obligatoirement à la création d'un prospect organisation.</p></div>
+        </div>
+        <div class="card-body">
+          <sc-for list="{{ prospectOrgFields }}" as="f" hint-placeholder-count="6">
+            <div class="field-row">
+              <div class="field-name">{{ f.name }}<span class="field-hint">{{ f.hint }}</span></div>
+              <div class="field-status">
+                <span class="status-label {{ f.cls }}">{{ f.label }}</span>
+                <div class="tog {{ f.togCls }}" onClick="{{ f.toggle }}"><div class="k"></div></div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- Personnalisés -->
+      <div class="card">
+        <div class="card-head" style="justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:10px">
+            <svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg>
+            <h2>Champs personnalisés</h2>
+          </div>
+          <button class="btn-g">+ Champ personnalisé</button>
+        </div>
+        <div class="card-body">
+          <table class="tbl">
+            <thead><tr><th>Nom du champ</th><th>Type</th><th>Obligatoire</th><th>Actions</th></tr></thead>
+            <tbody>
+              <sc-for list="{{ prospectCustomFields }}" as="cf" hint-placeholder-count="3">
+                <tr>
+                  <td style="font-weight:500">{{ cf.name }}</td>
+                  <td style="color:#6b7280">{{ cf.type }}</td>
+                  <td><div class="tog tog-off"><div class="k"></div></div></td>
+                  <td>
+                    <div class="custom-field-actions">
+                      <svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24" style="cursor:pointer"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg>
+                      <svg width="14" height="14" fill="none" stroke="#ef4444" stroke-width="1.5" viewBox="0 0 24 24" style="cursor:pointer"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+                    </div>
+                  </td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Champs par défaut -->
+      <div class="card">
+        <div class="card-head">
+          <svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"/></svg>
+          <div><h2>Champs par défaut</h2><p>Champs standard du module (lecture seule).</p></div>
+        </div>
+        <div class="card-body">
+          <table class="tbl">
+            <thead><tr><th>Nom du champ</th><th>Type</th><th>Requis</th></tr></thead>
+            <tbody>
+              <sc-for list="{{ prospectDefaultFields }}" as="df" hint-placeholder-count="10">
+                <tr>
+                  <td style="font-weight:500">{{ df.name }}</td>
+                  <td style="color:#6b7280">{{ df.type }}</td>
+                  <td><span class="requis-dot">{{ df.req }}</span></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ===== PERSONNE ===== -->
+    <sc-if value="{{ isPersonne }}" hint-placeholder-val="{{ false }}">
+    <div style="animation:fIn .18s ease">
+      <div class="card">
+        <div class="card-head">
+          <svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <div><h2>Champs obligatoires — Contact Particulier</h2><p>Activez les champs à renseigner obligatoirement à la création d'une personne.</p></div>
+        </div>
+        <div class="card-body">
+          <sc-for list="{{ personneObligatoireFields }}" as="f" hint-placeholder-count="6">
+            <div class="field-row">
+              <div class="field-name">{{ f.name }}<span class="field-hint">{{ f.hint }}</span></div>
+              <div class="field-status">
+                <span class="status-label {{ f.cls }}">{{ f.label }}</span>
+                <div class="tog {{ f.togCls }}" onClick="{{ f.toggle }}"><div class="k"></div></div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head" style="justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:10px">
+            <svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg>
+            <h2>Champs personnalisés</h2>
+          </div>
+          <button class="btn-g">+ Champ personnalisé</button>
+        </div>
+        <div class="card-body">
+          <table class="tbl">
+            <thead><tr><th>Nom du champ</th><th>Type</th><th>Obligatoire</th><th>Actions</th></tr></thead>
+            <tbody>
+              <sc-for list="{{ personneCustomFields }}" as="cf" hint-placeholder-count="3">
+                <tr>
+                  <td style="font-weight:500">{{ cf.name }}</td>
+                  <td style="color:#6b7280">{{ cf.type }}</td>
+                  <td><div class="tog tog-off"><div class="k"></div></div></td>
+                  <td><div class="custom-field-actions"><svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24" style="cursor:pointer"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg><svg width="14" height="14" fill="none" stroke="#ef4444" stroke-width="1.5" viewBox="0 0 24 24" style="cursor:pointer"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg></div></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"/></svg><div><h2>Champs par défaut</h2><p>Champs standard du module (lecture seule).</p></div></div>
+        <div class="card-body"><table class="tbl"><thead><tr><th>Nom du champ</th><th>Type</th><th>Requis</th></tr></thead><tbody><sc-for list="{{ personneDefaultFields }}" as="df" hint-placeholder-count="12"><tr><td style="font-weight:500">{{ df.name }}</td><td style="color:#6b7280">{{ df.type }}</td><td><span class="requis-dot">{{ df.req }}</span></td></tr></sc-for></tbody></table></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><svg width="14" height="14" fill="none" stroke="#16A34A" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg><div><h2>Champs système</h2><p>Champs personnalisés synchronisés (lecture seule).</p></div></div>
+        <div class="card-body"><table class="tbl"><thead><tr><th>Nom du champ</th><th>Type</th></tr></thead><tbody><sc-for list="{{ personneSysFields }}" as="sf" hint-placeholder-count="6"><tr><td style="font-weight:500">{{ sf.name }}</td><td style="color:#6b7280">{{ sf.type }}</td></tr></sc-for></tbody></table></div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ===== ORGANISATION ===== -->
+    <sc-if value="{{ isOrganisation }}" hint-placeholder-val="{{ false }}">
+    <div style="animation:fIn .18s ease">
+      <div class="card">
+        <div class="card-head"><svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><div><h2>Champs obligatoires — Contact Organisation</h2><p>Activez les champs à renseigner obligatoirement à la création d'une organisation.</p></div></div>
+        <div class="card-body">
+          <sc-for list="{{ orgObligatoireFields }}" as="f" hint-placeholder-count="6">
+            <div class="field-row">
+              <div class="field-name">{{ f.name }}<span class="field-hint">{{ f.hint }}</span></div>
+              <div class="field-status"><span class="status-label {{ f.cls }}">{{ f.label }}</span><div class="tog {{ f.togCls }}" onClick="{{ f.toggle }}"><div class="k"></div></div></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head" style="justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg><h2>Champs personnalisés</h2></div><button class="btn-g">+ Champ personnalisé</button></div>
+        <div class="card-body"><table class="tbl"><thead><tr><th>Nom du champ</th><th>Type</th><th>Obligatoire</th><th>Actions</th></tr></thead><tbody><sc-for list="{{ orgCustomFields }}" as="cf" hint-placeholder-count="3"><tr><td style="font-weight:500">{{ cf.name }}</td><td style="color:#6b7280">{{ cf.type }}</td><td><div class="tog tog-off"><div class="k"></div></div></td><td><div class="custom-field-actions"><svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24" style="cursor:pointer"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg><svg width="14" height="14" fill="none" stroke="#ef4444" stroke-width="1.5" viewBox="0 0 24 24" style="cursor:pointer"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg></div></td></tr></sc-for></tbody></table></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"/></svg><div><h2>Champs par défaut</h2><p>Champs standard du module (lecture seule).</p></div></div>
+        <div class="card-body"><table class="tbl"><thead><tr><th>Nom du champ</th><th>Type</th><th>Requis</th></tr></thead><tbody><sc-for list="{{ orgDefaultFields }}" as="df" hint-placeholder-count="10"><tr><td style="font-weight:500">{{ df.name }}</td><td style="color:#6b7280">{{ df.type }}</td><td><span class="requis-dot">{{ df.req }}</span></td></tr></sc-for></tbody></table></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><svg width="14" height="14" fill="none" stroke="#16A34A" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg><div><h2>Champs système</h2><p>Champs personnalisés synchronisés (lecture seule).</p></div></div>
+        <div class="card-body"><table class="tbl"><thead><tr><th>Nom du champ</th><th>Type</th></tr></thead><tbody><sc-for list="{{ orgSysFields }}" as="sf" hint-placeholder-count="4"><tr><td style="font-weight:500">{{ sf.name }}</td><td style="color:#6b7280">{{ sf.type }}</td></tr></sc-for></tbody></table></div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ===== ACTIVITÉ ===== -->
+    <sc-if value="{{ isActivite }}" hint-placeholder-val="{{ false }}">
+    <div style="animation:fIn .18s ease">
+      <div class="card">
+        <div class="card-head"><svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><div><h2>Champs obligatoires — Activité</h2><p>Activez les champs à renseigner obligatoirement à la création d'une activité.</p></div></div>
+        <div class="card-body">
+          <sc-for list="{{ activiteObligatoireFields }}" as="f" hint-placeholder-count="5">
+            <div class="field-row">
+              <div class="field-name">{{ f.name }}<span class="field-hint">{{ f.hint }}</span></div>
+              <div class="field-status"><span class="status-label {{ f.cls }}">{{ f.label }}</span><div class="tog {{ f.togCls }}" onClick="{{ f.toggle }}"><div class="k"></div></div></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head" style="justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg><h2>Champs personnalisés</h2></div><button class="btn-g">+ Champ personnalisé</button></div>
+        <div class="card-body"><div class="empty-state">Aucun champ personnalisé pour l'instant.</div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"/></svg><div><h2>Champs par défaut</h2><p>Champs standard du module (lecture seule).</p></div></div>
+        <div class="card-body"><table class="tbl"><thead><tr><th>Nom du champ</th><th>Type</th><th>Requis</th></tr></thead><tbody><sc-for list="{{ activiteDefaultFields }}" as="df" hint-placeholder-count="8"><tr><td style="font-weight:500">{{ df.name }}</td><td style="color:#6b7280">{{ df.type }}</td><td><span class="requis-dot">{{ df.req }}</span></td></tr></sc-for></tbody></table></div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ===== PRODUIT ===== -->
+    <sc-if value="{{ isProduit }}" hint-placeholder-val="{{ false }}">
+    <div style="animation:fIn .18s ease">
+      <div class="card">
+        <div class="card-head"><svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><div><h2>Champs obligatoires — Produit</h2><p>Activez les champs à renseigner obligatoirement à la création d'un produit.</p></div></div>
+        <div class="card-body">
+          <sc-for list="{{ produitObligatoireFields }}" as="f" hint-placeholder-count="4">
+            <div class="field-row">
+              <div class="field-name">{{ f.name }}</div>
+              <div class="field-status"><span class="status-label {{ f.cls }}">{{ f.label }}</span><div class="tog {{ f.togCls }}" onClick="{{ f.toggle }}"><div class="k"></div></div></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head" style="justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg><h2>Champs personnalisés</h2></div><button class="btn-g">+ Champ personnalisé</button></div>
+        <div class="card-body"><div class="empty-state">Aucun champ personnalisé pour l'instant.</div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"/></svg><div><h2>Champs par défaut</h2><p>Champs standard du module (lecture seule).</p></div></div>
+        <div class="card-body"><table class="tbl"><thead><tr><th>Nom du champ</th><th>Type</th><th>Requis</th></tr></thead><tbody><sc-for list="{{ produitDefaultFields }}" as="df" hint-placeholder-count="6"><tr><td style="font-weight:500">{{ df.name }}</td><td style="color:#6b7280">{{ df.type }}</td><td><span class="requis-dot">{{ df.req }}</span></td></tr></sc-for></tbody></table></div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ===== PROJET ===== -->
+    <sc-if value="{{ isProjet }}" hint-placeholder-val="{{ false }}">
+    <div style="animation:fIn .18s ease">
+      <div class="card">
+        <div class="card-head" style="justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg><h2>Champs personnalisés</h2></div><button class="btn-g">+ Champ personnalisé</button></div>
+        <div class="card-body"><div class="empty-state">Aucun champ personnalisé pour l'instant.</div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><svg width="14" height="14" fill="none" stroke="#374151" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"/></svg><div><h2>Champs par défaut</h2><p>Champs standard du module (lecture seule).</p></div></div>
+        <div class="card-body"><table class="tbl"><thead><tr><th>Nom du champ</th><th>Type</th><th>Requis</th></tr></thead><tbody><sc-for list="{{ projetDefaultFields }}" as="df" hint-placeholder-count="8"><tr><td style="font-weight:500">{{ df.name }}</td><td style="color:#6b7280">{{ df.type }}</td><td><span class="requis-dot">{{ df.req }}</span></td></tr></sc-for></tbody></table></div>
+      </div>
+    </div>
+    </sc-if>
+
+    </div><!-- /max-width -->
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    tab: 'prospect',
+    // toggles for prospect particulier
+    ppCivilite: true, ppPrenom: false, ppNom: false, ppGenre: true, ppEmail: false,
+    ppTel: true, ppWA: false, ppProf: false, ppFonction: false, ppNiveau: false,
+    ppPays: false, ppVille: false, ppEtiquette: false, ppStatut: true, ppCause: false, ppValeur: false, ppProduit: false,
+    // toggles prospect org
+    poNomOrg: true, poSite: false, poSecteur: false, poEffectifs: true, poCa: false, poPays: true, poVille: false, poAdresse: false, poTel: false, poEtiquette: false, poStatut: true, poCanal: false, poValeur: false, poProduit: false,
+    // personne
+    peCivilite: true, pePrenom: false, peNom: false, peEmail: false, peTel: true, peOrg: false, peFonction: false, peProf: false, peNiveau: false, pePays: false, peVille: false, peEtiquette: false,
+    // org
+    orgNom: true, orgEmail: false, orgTel: false, orgSite: false, orgSecteur: false, orgEffectifs: false, orgRevenu: false, orgPays: false, orgVille: false, orgEtiquette: false,
+    // activite
+    actNom: true, actType: false, actEcheance: true, actHeure: false, actPriorite: false, actAttribue: false, actAffaire: false, actContact: false, actLieu: false, actVideo: false, actDesc: false, actNotes: false,
+    // produit
+    prCode: false, prSku: false, prCategorie: true, prUnite: false, prFreq: false, prTaxe: false, prDesc: false,
+  };
+  mkField(name, hint, stateKey) {
+    const on = this.state[stateKey];
+    return {
+      name, hint: hint||'',
+      label: on ? 'Obligatoire' : 'Facultatif',
+      cls: on ? 'obligatoire' : 'facultatif',
+      togCls: on ? 'tog-on' : 'tog-off',
+      toggle: () => this.setState({ [stateKey]: !on }),
+    };
+  }
+  renderVals() {
+    const { tab } = this.state;
+    const a = 'active', i = '';
+    const st = (t) => () => this.setState({ tab: t });
+    return {
+      goProspect: st('prospect'), goPersonne: st('personne'), goOrganisation: st('organisation'),
+      goActivite: st('activite'), goProduit: st('produit'), goProjet: st('projet'),
+      t: { prospect: tab==='prospect'?a:i, personne: tab==='personne'?a:i, organisation: tab==='organisation'?a:i, activite: tab==='activite'?a:i, produit: tab==='produit'?a:i, projet: tab==='projet'?a:i },
+      isProspect: tab==='prospect', isPersonne: tab==='personne', isOrganisation: tab==='organisation',
+      isActivite: tab==='activite', isProduit: tab==='produit', isProjet: tab==='projet',
+
+      prospectParticulierFields: [
+        this.mkField('Civilité','Obligatoire par défaut','ppCivilite'),
+        this.mkField('Prénom','','ppPrenom'), this.mkField('Nom','','ppNom'),
+        this.mkField('Genre','','ppGenre'), this.mkField('Adresse e-mail','','ppEmail'),
+        this.mkField('Téléphone','Obligatoire par défaut','ppTel'),
+        this.mkField('WhatsApp','','ppWA'), this.mkField('Profession','','ppProf'),
+        this.mkField('Fonction','','ppFonction'), this.mkField('Niveau de pouvoir','','ppNiveau'),
+        this.mkField('Pays','','ppPays'), this.mkField('Ville','','ppVille'),
+        this.mkField('Étiquette','','ppEtiquette'), this.mkField('Statut','','ppStatut'),
+        this.mkField('Cause disqualification','','ppCause'), this.mkField('Valeur espérée','','ppValeur'),
+        this.mkField('Produit/Service sollicité','','ppProduit'),
+      ],
+      prospectOrgFields: [
+        this.mkField("Nom de l'organisation","Obligatoire par défaut",'poNomOrg'),
+        this.mkField('Site internet','','poSite'), this.mkField("Secteur d'activité",'','poSecteur'),
+        this.mkField('Effectifs','','poEffectifs'), this.mkField('CA annuel (FCFA)','','poCa'),
+        this.mkField('Pays siège','','poPays'), this.mkField('Ville siège','','poVille'),
+        this.mkField('Adresse e-mail','','poAdresse'), this.mkField('Téléphone','','poTel'),
+        this.mkField('Étiquette','','poEtiquette'), this.mkField('Statut','','poStatut'),
+        this.mkField("Canal d'acquisition",'','poCanal'), this.mkField('Valeur espérée','','poValeur'),
+        this.mkField('Produit/Service sollicité','','poProduit'),
+      ],
+      prospectCustomFields: [
+        {name:'Référence interne', type:'Texte (court)'},
+        {name:'Score de priorité', type:'Nombre'},
+        {name:'Budget estimé', type:'Monétaire (devise)'},
+      ],
+      prospectDefaultFields: [
+        {name:'Référence cliente',type:'Texte (court)',req:''},
+        {name:'Prospect Number',type:'Texte (court)',req:'✓'},
+        {name:'Titre',type:'Texte (court)',req:''},
+        {name:'Prospect Name',type:'Texte (court)',req:''},
+        {name:'Prospect Type',type:'Sélection unique',req:'✓'},
+        {name:'Secteur',type:'Lien utilisateur',req:''},
+        {name:'Statut',type:'Lien utilisateur',req:''},
+        {name:'Étiquette',type:'Lien utilisateur',req:''},
+        {name:'Prénom',type:'Texte (court)',req:''},
+        {name:'Nom',type:'Texte (court)',req:''},
+        {name:'E-mail (principal)',type:'Texte (court)',req:''},
+        {name:'Téléphone (principal)',type:'Texte (court)',req:''},
+        {name:'WhatsApp (principal)',type:'Texte (court)',req:''},
+        {name:'Adresse e-mail',type:'Texte (court)',req:''},
+        {name:'Téléphones',type:'Table',req:''},
+        {name:'Numéros WhatsApp',type:'Table',req:''},
+        {name:'Profession',type:'Texte (court)',req:''},
+        {name:'Fonction (poste)',type:'Texte (court)',req:''},
+        {name:'Niveau de pouvoir',type:'Texte (court)',req:''},
+        {name:'Ville',type:'Lien utilisateur',req:''},
+        {name:'Organisation',type:'Lien utilisateur',req:''},
+        {name:'Téléphone entreprise (principal)',type:'Texte (court)',req:''},
+        {name:'E-mail entreprise',type:'Table',req:''},
+        {name:'Secteur activités',type:'Texte (court)',req:''},
+        {name:'Effectifs',type:'Sélection unique',req:''},
+        {name:'Revenu annuel',type:'Nombre (Binaire)',req:''},
+        {name:'Pays siège',type:'Lien utilisateur',req:''},
+        {name:'Ville siège',type:'Texte (court)',req:''},
+        {name:"Canal d'acquisition",'type':'Lien utilisateur',req:''},
+        {name:'Type de deal source',type:'Lien utilisateur',req:''},
+        {name:'Lien de page (institution)',type:'Lien',req:''},
+        {name:'Produit/Service sollicité',type:'Lien utilisateur',req:''},
+        {name:'Valeur espérée',type:'Nombre (Binaire)',req:''},
+        {name:'Devise',type:'Lien utilisateur',req:''},
+        {name:'Conv de chiffrer prévue',type:'Lien',req:''},
+        {name:'Propriétaire',type:'Lien utilisateur',req:''},
+        {name:'Deal link',type:'Lien utilisateur',req:''},
+      ],
+
+      personneObligatoireFields: [
+        this.mkField('Civilité','Obligatoire par défaut','peCivilite'),
+        this.mkField('Prénom','','pePrenom'), this.mkField('Nom','','peNom'),
+        this.mkField('Adresse e-mail','','peEmail'), this.mkField('Téléphone','Obligatoire par défaut','peTel'),
+        this.mkField('Organisation','','peOrg'), this.mkField('Fonction','','peFonction'),
+        this.mkField('Profession','','peProf'), this.mkField('Niveau de pouvoir','','peNiveau'),
+        this.mkField('Pays','','pePays'), this.mkField('Ville','','peVille'),
+        this.mkField('Étiquettes','','peEtiquette'),
+      ],
+      personneCustomFields: [
+        {name:'N° Contact',type:'Texte (court)'},{name:'Étiquette',type:'Lien utilisateur'},
+        {name:"Canal d'origine",type:'Texte (court)'},{name:'Profession',type:'Texte (court)'},
+        {name:'Niveau de pouvoir',type:'Texte (court)'},{name:'Pays de résidence',type:'Lien utilisateur'},
+        {name:'Ville',type:'Texte (court)'},{name:'Tags',type:'Small Text'},
+        {name:'Visibilité',type:'Sélection unique'},{name:'Abonnés',type:'Table'},
+        {name:'WhatsApp',type:'Téléphone'},
+      ],
+      personneDefaultFields: [
+        {name:'First Name',type:'Texte (court)',req:''},{name:'Middle Name',type:'Texte (court)',req:''},
+        {name:'Last Name',type:'Texte (court)',req:''},{name:'Full Name',type:'Texte (court)',req:''},
+        {name:'Email Address',type:'Texte (court)',req:''},{name:'User Id',type:'Lien utilisateur',req:''},
+        {name:'Address',type:'Lien utilisateur',req:''},{name:'Sync with Google Contacts',type:'Case à cocher',req:''},
+        {name:'Status',type:'Sélection unique',req:''},{name:'Salutation',type:'Lien utilisateur',req:''},
+        {name:'Designation',type:'Texte (court)',req:''},{name:'Gender',type:'Lien utilisateur',req:''},
+        {name:'Phone',type:'Texte (court)',req:'✓'},{name:'Mobile No',type:'Texte (court)',req:''},
+        {name:'Company Name',type:'Texte (court)',req:''},{name:'Image',type:'Image',req:''},
+        {name:'Google Contacts',type:'Lien utilisateur',req:''},{name:'Is Primary Contact',type:'Case à cocher',req:''},
+        {name:'Department',type:'Texte (court)',req:''},{name:'Unsubscribed',type:'Case à cocher',req:''},
+      ],
+      personneSysFields: [
+        {name:'Étiquette',type:'Lien utilisateur'},{name:"Canal d'origine",type:'Texte (court)'},
+        {name:'Profession',type:'Texte (court)'},{name:'Niveau de pouvoir',type:'Texte (court)'},
+        {name:'Pays de résidence',type:'Lien utilisateur'},{name:'Ville',type:'Texte (court)'},
+        {name:'Tags',type:'Small Text'},{name:'Visibilité',type:'Sélection unique'},
+        {name:'Abonnés',type:'Table'},{name:'Archived',type:'Case à cocher'},{name:'WhatsApp',type:'Téléphone'},
+        {name:'N° Contact',type:'Texte (court)'},
+      ],
+
+      orgObligatoireFields: [
+        this.mkField("Nom de l'organisation","Obligatoire par défaut",'orgNom'),
+        this.mkField('Adresse e-mail','','orgEmail'), this.mkField('Téléphone','','orgTel'),
+        this.mkField('Site internet','','orgSite'), this.mkField("Secteur d'activité",'','orgSecteur'),
+        this.mkField("Nombre d'employés",'','orgEffectifs'), this.mkField('Revenu annuel (FCFA)','','orgRevenu'),
+        this.mkField('Pays siège','','orgPays'), this.mkField('Ville siège','','orgVille'),
+        this.mkField('Étiquettes','','orgEtiquette'),
+      ],
+      orgCustomFields: [
+        {name:'Profil LinkedIn',type:'Texte (court)'},{name:"Canal d'origine",type:'Texte (court)'},
+        {name:'Abonnés',type:'Table'},
+      ],
+      orgDefaultFields: [
+        {name:'Organization Number',type:'Texte (court)',req:''},{name:'Organization Name',type:'Texte (court)',req:'✓'},
+        {name:'Raison sociale',type:'Texte (court)',req:''},{name:'Organization Type',type:'Sélection unique',req:''},
+        {name:'Industry',type:'Texte (court)',req:''},{name:'Website',type:'Texte (court)',req:''},
+        {name:'Téléphone',type:'Texte (court)',req:''},{name:'Email',type:'Texte (court)',req:''},
+        {name:'HQ Country',type:'Lien utilisateur',req:''},{name:'HQ City',type:'Texte (court)',req:''},
+        {name:'HQ Address',type:'Small Text',req:''},{name:'Employees Range',type:'Sélection unique',req:''},
+        {name:'Annual Revenue',type:'Monétaire (devise)',req:''},{name:'RCCM (CI/OHADA)',type:'Texte (court)',req:''},
+        {name:'NIF',type:'Texte (court)',req:''},{name:'Étiquettes',type:'Table',req:''},
+        {name:'Primary Contact',type:'Lien utilisateur',req:''},{name:"Lead d'origine",type:'Lien utilisateur',req:''},
+        {name:'Notes',type:'Text Editor',req:''},{name:'Owner User',type:'Lien utilisateur',req:''},
+        {name:'Creator',type:'Lien utilisateur',req:''},{name:'Visibility',type:'Sélection unique',req:''},
+        {name:'Archived',type:'Case à cocher',req:''},{name:'Archived At',type:'Date et heure',req:''},
+      ],
+      orgSysFields: [
+        {name:'Profil LinkedIn',type:'Texte (court)'},{name:"Canal d'origine",type:'Texte (court)'},
+        {name:'Abonnés',type:'Table'},{name:'Archived',type:'Case à cocher'},
+      ],
+
+      activiteObligatoireFields: [
+        this.mkField("Nom de l'activité","Obligatoire par défaut",'actNom'),
+        this.mkField('Type','','actType'),
+        this.mkField("Date d'échéance","Obligatoire par défaut",'actEcheance'),
+        this.mkField('Heure de début','','actHeure'), this.mkField('Priorité','','actPriorite'),
+        this.mkField('Attribué à','','actAttribue'), this.mkField('Affaire liée','','actAffaire'),
+        this.mkField('Contact lié','','actContact'), this.mkField('Lieu','','actLieu'),
+        this.mkField("Lien d'appel vidéo",'','actVideo'), this.mkField('Description','','actDesc'),
+        this.mkField('Notes internes','','actNotes'),
+      ],
+      activiteDefaultFields: [
+        {name:'Activity Number',type:'Texte (court)',req:''},
+        {name:"Nom de l'activité",type:'Texte (court)',req:'✓'},
+        {name:'Type',type:'Sélection unique',req:''},
+        {name:"Date d'échéance",type:'Date et heure',req:'✓'},
+        {name:'Heure de début',type:'Date et heure',req:''},
+        {name:'Statut',type:'Sélection unique',req:''},
+        {name:'Attribué à',type:'Lien utilisateur',req:''},
+        {name:'Affaire liée',type:'Lien utilisateur',req:''},
+        {name:'Contact lié',type:'Lien utilisateur',req:''},
+        {name:'Lieu',type:'Texte (court)',req:''},
+        {name:"Lien d'appel vidéo",type:'Texte (court)',req:''},
+        {name:'Description',type:'Text Editor',req:''},
+        {name:'Notes internes',type:'Text Editor',req:''},
+        {name:'Priorité',type:'Sélection unique',req:''},
+        {name:'Durée',type:'Nombre',req:''},
+      ],
+
+      produitObligatoireFields: [
+        this.mkField('Code produit','','prCode'), this.mkField('SKU','','prSku'),
+        this.mkField('Catégorie','','prCategorie'), this.mkField('Unité','','prUnite'),
+        this.mkField('Fréquence de facturation','','prFreq'), this.mkField('Taux de taxe (%)','','prTaxe'),
+        this.mkField('Description','','prDesc'),
+      ],
+      produitDefaultFields: [
+        {name:'Produit/Service',type:'Texte (court)',req:'✓'},
+        {name:'Produit (catalogue)',type:'Lien utilisateur',req:''},
+        {name:'Description',type:'Small Text',req:''},
+        {name:'Quantité',type:'Float',req:'✓'},
+        {name:'Prix unitaire HT',type:'Monétaire (devise)',req:'✓'},
+        {name:'Remise (%)',type:'Percent',req:''},
+        {name:'Montant HT',type:'Monétaire (devise)',req:''},
+        {name:'TVA (%)',type:'Percent',req:''},
+        {name:'Montant TTC',type:'Monétaire (devise)',req:''},
+      ],
+
+      projetDefaultFields: [
+        {name:'N° Projet',type:'Texte (court)',req:''},
+        {name:'Titre',type:'Texte (court)',req:'✓'},
+        {name:'Statut',type:'Sélection unique',req:'✓'},
+        {name:'Priorité',type:'Sélection unique',req:''},
+        {name:'Phase',type:'Texte (court)',req:''},
+        {name:'Date de début',type:'Date',req:''},
+        {name:'Date de fin',type:'Date',req:''},
+        {name:'Progression',type:'Percent',req:''},
+        {name:'Responsable',type:'Lien utilisateur',req:''},
+        {name:'Organisation',type:'Texte (court)',req:''},
+        {name:'Deal associé',type:'Lien utilisateur',req:''},
+        {name:'Description',type:'Text Editor',req:''},
+        {name:'Budget',type:'Monétaire (devise)',req:''},
+        {name:'Visibilité',type:'Sélection unique',req:''},
+        {name:'Labels',type:'Small Text',req:''},
+        {name:'Est un modèle',type:'Case à cocher',req:''},
+        {name:'Nom du modèle',type:'Texte (court)',req:''},
+        {name:'Amended From',type:'Lien utilisateur',req:''},
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

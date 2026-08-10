@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/tokens/effects.css">
+  <link rel="stylesheet" href="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/styles.css">
+  <script src="_ds/vooroo-design-system-c7a8afe5-03e4-445e-bcdb-63abc4d1b7fb/_ds_bundle.js"></script>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:var(--font-body);background:var(--color-surface)}
+    h1,h2,h3{font-family:var(--font-body)!important;letter-spacing:normal;font-size:16px;margin:0}
+    a{color:var(--color-primary);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .gu-task-item{display:flex;gap:14px;padding:18px 0;border-bottom:1px solid var(--color-border)}
+    .gu-task-item:last-child{border-bottom:none}
+    .gu-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--color-border);flex-shrink:0;cursor:pointer;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+    .gu-check.done{background:var(--color-primary);border-color:var(--color-primary)}
+    .gu-check.done::after{content:'';display:block;width:6px;height:10px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px)}
+    .gu-btn{height:32px;padding:0 14px;border:none;border-radius:6px;background:var(--color-primary);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-body);white-space:nowrap}
+    .gu-btn:hover{background:var(--color-primary-hover)}
+    .gu-video{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--color-text-muted);cursor:pointer;white-space:nowrap;padding:0 8px;height:32px;border:1px solid var(--color-border);border-radius:6px;background:var(--color-surface)}
+    .gu-video:hover{background:var(--color-bg-subtle)}
+    .gu-section-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;cursor:pointer;background:var(--color-bg-subtle);border-radius:8px;user-select:none}
+    .gu-section-header:hover{background:#eaeaea}
+    .gu-sub-header{display:flex;align-items:center;justify-content:space-between;padding:10px 0;cursor:pointer;user-select:none;border-bottom:1px solid var(--color-border)}
+    .gu-sub-header:hover .gu-sub-title{color:var(--color-primary)}
+    .time-badge{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--color-text-muted);margin-left:8px}
+    @keyframes fIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+  </style>
+</helmet>
+
+<div style="display:flex;flex-direction:column;height:100vh;overflow:hidden;background:#f7f8fa">
+
+  <!-- TOP BAR -->
+  <div style="background:var(--color-surface);border-bottom:1px solid var(--color-border);padding:0 24px;height:48px;display:flex;align-items:center;flex-shrink:0">
+    <span style="font-size:15px;font-weight:700;color:var(--color-text)">Guide de Configuration</span>
+  </div>
+
+  <!-- SCROLLABLE CONTENT -->
+  <div style="flex:1;overflow-y:auto;padding:32px 48px 60px">
+    <div style="max-width:1150px;margin:0 auto;padding:0 24px">
+
+      <!-- HERO -->
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:32px 36px;margin-bottom:32px;display:flex;gap:32px;align-items:center">
+        <div style="flex:1">
+          <h1 style="font-size:28px!important;font-weight:700;color:var(--color-text);margin:0 0 10px">Prêt pour le succès ?</h1>
+          <p style="font-size:14px;color:var(--color-text-muted);margin:0 0 6px;line-height:1.6">Votre guide pour transformer chaque opportunité en réussite.</p>
+          <p style="font-size:14px;color:var(--color-text-muted);margin:0 0 20px;line-height:1.6">Prenez les commandes de votre nouvel outil. En quelques étapes, configurez<br>votre espace de travail et libérez toute la puissance de Vooroo CRM.</p>
+          <!-- Progress -->
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="flex:1;height:6px;background:var(--color-border);border-radius:3px;max-width:220px">
+              <div style="width:{{ progressWidth }};height:100%;background:var(--color-primary);border-radius:3px;transition:width .3s"></div>
+            </div>
+            <span style="font-size:13px;color:var(--color-text-muted)">{{ completedCount }}/{{ totalTasks }} Tâches terminées avec succès</span>
+          </div>
+        </div>
+        <!-- Illustration -->
+        <div style="width:320px;height:160px;flex-shrink:0;border-radius:10px;overflow:hidden;background:var(--color-bg-subtle)">
+          <img src="uploads/Gemini_Generated_Image_wrpfqlwrpfqlwrpf.png" alt="Illustration guide" style="width:100%;height:100%;object-fit:cover;object-position:right center">
+        </div>
+      </div>
+
+      <!-- VOTRE TO-DO LIST -->
+      <div style="font-size:11px;font-weight:700;color:var(--color-text-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px">VOTRE TO-DO LIST</div>
+
+      <!-- CONFIGURATIONS DE BASE -->
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:10px;margin-bottom:28px;overflow:hidden">
+        <div onClick="{{ toggleBase }}" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;background:var(--color-surface);user-select:none" style-hover="background:var(--color-bg-subtle)">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--color-primary)"></div>
+            <span style="font-size:15px;font-weight:700;color:var(--color-text)">Configurations de base</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <div style="height:4px;width:140px;background:var(--color-border);border-radius:2px">
+              <div style="width:{{ baseProgressWidth }};height:100%;background:var(--color-primary);border-radius:2px;transition:width .3s"></div>
+            </div>
+            <span style="font-size:13px;color:var(--color-text-muted);white-space:nowrap">{{ baseCompleted }} sur 15 Tâches</span>
+            <svg width="16" height="16" fill="none" stroke="var(--color-text-muted)" stroke-width="2" viewBox="0 0 24 24" style="transform:{{ baseChevron }};transition:transform .2s"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+          </div>
+        </div>
+        <sc-if value="{{ showBase }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:0 24px 8px;animation:fIn .2s ease">
+            <sc-for list="{{ baseTasks }}" as="task" hint-placeholder-count="3">
+              <div class="gu-task-item">
+                <div class="gu-check {{ task.doneClass }}" onClick="{{ task.toggle }}"></div>
+                <div style="flex:1">
+                  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:5px">
+                    <span style="font-size:14px;font-weight:700;color:var(--color-text)">{{ task.num }}. {{ task.title }}</span>
+                    <span class="time-badge">
+                      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 3"/></svg>
+                      {{ task.time }}
+                    </span>
+                  </div>
+                  <p style="font-size:13px;color:var(--color-text-muted);margin:0 0 10px;line-height:1.5">{{ task.desc }}</p>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <button class="gu-btn">{{ task.cta }}</button>
+                    <div class="gu-video">
+                      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M10 8.5l6 3.5-6 3.5V8.5z"/></svg>
+                      Regarder la vidéo
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- ALLEZ PLUS LOIN -->
+      <div style="font-size:11px;font-weight:700;color:var(--color-text-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px">ALLEZ PLUS LOIN</div>
+
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:10px;overflow:hidden">
+        <!-- Configurations avancées header -->
+        <div onClick="{{ toggleAvance }}" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none" style-hover="background:var(--color-bg-subtle)">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--grey-mid)"></div>
+            <span style="font-size:15px;font-weight:700;color:var(--color-text)">Configurations avancées</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <div style="height:4px;width:140px;background:var(--color-border);border-radius:2px">
+              <div style="width:{{ avanceProgressWidth }};height:100%;background:var(--color-primary);border-radius:2px;transition:width .3s"></div>
+            </div>
+            <span style="font-size:13px;color:var(--color-text-muted);white-space:nowrap">{{ avanceCompleted }} sur 10 Tâches</span>
+            <svg width="16" height="16" fill="none" stroke="var(--color-text-muted)" stroke-width="2" viewBox="0 0 24 24" style="transform:{{ avanceChevron }};transition:transform .2s"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+          </div>
+        </div>
+
+        <sc-if value="{{ showAvance }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:0 24px 16px;animation:fIn .2s ease">
+            <!-- Subcategory 1 -->
+            <sc-for list="{{ avanceSections }}" as="sec" hint-placeholder-count="2">
+              <div style="margin-top:16px;border:1px solid var(--color-border);border-radius:8px;overflow:hidden">
+                <div onClick="{{ sec.toggle }}" style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--color-bg-subtle);cursor:pointer;user-select:none" style-hover="background:#eaeaea">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:22px;height:22px;border-radius:50%;background:var(--color-surface);border:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--color-text-muted)">{{ sec.num }}</div>
+                    <span style="font-size:14px;font-weight:600;color:var(--color-text)">{{ sec.title }}</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:12px">
+                    <div style="height:4px;width:100px;background:var(--color-border);border-radius:2px">
+                      <div style="width:{{ sec.progWidth }};height:100%;background:var(--color-primary);border-radius:2px"></div>
+                    </div>
+                    <span style="font-size:12px;color:var(--color-text-muted);white-space:nowrap">{{ sec.completed }} sur {{ sec.total }} Tâches</span>
+                    <svg width="14" height="14" fill="none" stroke="var(--color-text-muted)" stroke-width="2" viewBox="0 0 24 24" style="transform:{{ sec.chevron }};transition:transform .2s"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                  </div>
+                </div>
+                <sc-if value="{{ sec.open }}" hint-placeholder-val="{{ true }}">
+                  <div style="padding:0 16px 8px">
+                    <sc-for list="{{ sec.tasks }}" as="stask" hint-placeholder-count="2">
+                      <div class="gu-task-item">
+                        <div class="gu-check {{ stask.doneClass }}" onClick="{{ stask.toggle }}"></div>
+                        <div style="flex:1">
+                          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:5px">
+                            <span style="font-size:14px;font-weight:700;color:var(--color-text)">{{ stask.title }}</span>
+                            <span class="time-badge">
+                              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 3"/></svg>
+                              {{ stask.time }}
+                            </span>
+                          </div>
+                          <p style="font-size:13px;color:var(--color-text-muted);margin:0 0 10px;line-height:1.5">{{ stask.desc }}</p>
+                          <div style="display:flex;align-items:center;gap:10px">
+                            <button class="gu-btn">{{ stask.cta }}</button>
+                            <div class="gu-video">
+                              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M10 8.5l6 3.5-6 3.5V8.5z"/></svg>
+                              Regarder la vidéo
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- FOOTER -->
+      <div style="text-align:center;margin-top:40px">
+        <a href="#" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--color-primary)">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>
+          Chattez avec nous
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    showBase: true,
+    showAvance: true,
+    baseDone: {},
+    avanceDone: {},
+    openSec: { 0:true, 1:true, 2:true, 3:true, 4:true }
+  };
+
+  BASE_TASKS = [
+    { num:1, title:'Configurer votre pipeline prospects', time:'1-2 min', desc:"Structurez l'arrivée de vos nouvelles opportunités pour ne laisser filer aucun lead qualifié.", cta:'Configurer le pipeline' },
+    { num:2, title:'Créer des étiquettes pour vos prospects', time:'1-2 min', desc:'Segmentez votre base de données avec des codes couleurs pour identifier vos priorités en un clin d\'œil.', cta:'Créez vos étiquettes' },
+    { num:3, title:'Configurer votre process de vente : pipeline affaires/deals', time:'1-2 min', desc:'Modélisez votre cycle de vente étape par étape pour visualiser clairement votre progression vers le succès.', cta:'Configurer le pipeline' },
+    { num:4, title:'Créer des étiquettes pour vos affaires/deals', time:'1-2 min', desc:'Catégorisez vos ventes en cours pour mieux analyser la provenance et la nature de votre chiffre d\'affaires.', cta:'Créez vos étiquettes' },
+    { num:5, title:'Créer votre premier contact particulier', time:'1-2 min', desc:'Enregistrez les détails essentiels de vos clients individuels pour personnaliser chaque interaction future.', cta:'Ajouter un contact' },
+    { num:6, title:'Créer votre premier contact entreprise', time:'1-2 min', desc:'Liez vos interlocuteurs à leurs organisations et maîtrisez l\'écosystème de vos comptes B2B.', cta:'Ajouter un contact' },
+    { num:7, title:'Créer votre premier prospect', time:'1-2 min', desc:'Initiez votre démarche commerciale en ajoutant une piste prometteuse à votre tableau de bord.', cta:'Créez un prospect' },
+    { num:8, title:'Importer vos contacts/prospects', time:'1-2 min', desc:'Intégrez massivement vos fichiers existants pour retrouver tout votre réseau sur Vooroo en quelques secondes.', cta:'Importez vos prospects' },
+    { num:9, title:'Transformer votre premier prospect en affaire/deal', time:'1-2 min', desc:'Faites passer vos relations au niveau supérieur en ouvrant une opportunité de vente concrète.', cta:'Créez une affaire/deal' },
+    { num:10, title:'Créer votre première activité', time:'1-2 min', desc:'Planifiez un appel, un email ou un rendez-vous pour garder le rythme et faire avancer vos dossiers.', cta:'Créez une activité' },
+    { num:11, title:'Configurer la structure de vos devis', time:'1-2 min', desc:'Préparez votre modèle professionnel de devis à votre image pour envoyer des propositions irrésistibles en un clic.', cta:'Configurez vos devis' },
+    { num:12, title:'Configurer la structure de vos factures', time:'1-2 min', desc:'Automatisez la mise en page de vos documents financiers pour garantir une facturation rapide et précise.', cta:'Configurez vos factures' },
+    { num:13, title:'Configurer les droits d\'accès des membres de votre équipe', time:'1-2 min', desc:'Gérez la visibilité et les permissions de chacun pour sécuriser vos données tout en collaborant.', cta:'Gérez les accès' },
+    { num:14, title:'Ajouter les membres de votre équipe à Vooroo CRM', time:'1-2 min', desc:'Centralisez vos efforts de vente et partagez l\'information en temps réel avec vos collaborateurs.', cta:'Invitez vos équipes' },
+    { num:15, title:'Paramétrez la devise de votre compte', time:'1-2 min', desc:'Définissez votre unité monétaire par défaut pour assurer la précision de vos rapports financiers et de vos prévisions de ventes.', cta:'Définissez votre devise' }
+  ];
+
+  AVANCE_SECTIONS = [
+    {
+      num:1, title:'Paramétrez vos contacts, prospects et affaires', total:2,
+      tasks:[
+        { title:'Personnaliser vos champs personnalisés', time:'2-3 min', desc:'Créez vos propres champs pour suivre les informations spécifiques à votre activité (Contacts, Prospects, Affaires).', cta:'Personnaliser les champs' },
+        { title:'Configurer la numérotation des contacts', time:'1-2 min', desc:'Personnalisez le préfixe et le numéro de départ utilisés pour vos contacts.', cta:'Configurer la numérotation' }
+      ]
+    },
+    {
+      num:2, title:'Paramétrez vos produits', total:2,
+      tasks:[
+        { title:'Configurer la numérotation des produits', time:'1-2 min', desc:'Définissez la séquence de numérotation utilisée pour identifier vos produits.', cta:'Configurer la numérotation' },
+        { title:'Ajouter votre premier produit', time:'1-2 min', desc:'Construisez votre catalogue pour le réutiliser dans vos devis et factures.', cta:'Ajouter un produit' }
+      ]
+    },
+    {
+      num:3, title:'Paramétrez vos activités', total:2,
+      tasks:[
+        { title:'Personnaliser les types d\'activité', time:'1-2 min', desc:'Adaptez les types disponibles (appel, email, rendez-vous) à votre process commercial.', cta:'Configurer les types' },
+        { title:'Configurer la numérotation des activités', time:'1-2 min', desc:'Personnalisez le préfixe et le numéro de départ utilisés pour vos activités.', cta:'Configurer la numérotation' }
+      ]
+    },
+    {
+      num:4, title:'Développez vos compétences', total:2,
+      tasks:[
+        { title:'Découvrir Vooroo Academy', time:'5-10 min', desc:'Maîtrisez Vooroo grâce à nos guides et vidéos pédagogiques pour aller plus loin.', cta:'Aller à Vooroo Academy' },
+        { title:'Consulter la documentation', time:'3-5 min', desc:'Retrouvez des articles détaillés et des cas pratiques pour exploiter tout le potentiel de Vooroo.', cta:'Voir la documentation' }
+      ]
+    },
+    {
+      num:5, title:'Accédez à Vooroo sur téléphone et tablette', total:2,
+      tasks:[
+        { title:'Installer l\'application Vooroo', time:'2-3 min', desc:'Accédez à votre CRM en mobilité depuis votre téléphone ou votre tablette.', cta:'Comment installer' },
+        { title:'Activer les notifications', time:'1 min', desc:'Recevez les alertes en temps réel sur tous vos appareils.', cta:'Configurer mes notifications' }
+      ]
+    }
+  ];
+
+  renderVals() {
+    const { showBase, showAvance, baseDone, avanceDone, openSec } = this.state;
+
+    const baseCompleted = Object.values(baseDone).filter(Boolean).length;
+    const avanceDoneCount = Object.values(avanceDone).filter(Boolean).length;
+    const totalTasks = 15 + 10;
+    const completedCount = baseCompleted + avanceDoneCount;
+
+    const pct = (n,t) => n === 0 ? '0%' : Math.round(n/t*100)+'%';
+
+    const baseTasks = this.BASE_TASKS.map((t,i) => ({
+      ...t,
+      doneClass: baseDone[i] ? 'done' : '',
+      toggle: () => this.setState(s => ({ baseDone: {...s.baseDone, [i]: !s.baseDone[i]} }))
+    }));
+
+    const avanceSections = this.AVANCE_SECTIONS.map((sec, si) => {
+      const tasks = sec.tasks.map((t, ti) => {
+        const key = `${si}-${ti}`;
+        return {
+          ...t,
+          doneClass: avanceDone[key] ? 'done' : '',
+          toggle: () => this.setState(s => ({ avanceDone: {...s.avanceDone, [key]: !s.avanceDone[key]} }))
+        };
+      });
+      const completed = tasks.filter((_, ti) => avanceDone[`${si}-${ti}`]).length;
+      return {
+        ...sec, tasks,
+        completed,
+        progWidth: pct(completed, sec.total),
+        open: openSec[si] !== false,
+        chevron: openSec[si] !== false ? 'rotate(180deg)' : 'rotate(0)',
+        toggle: () => this.setState(s => ({ openSec: {...s.openSec, [si]: !s.openSec[si]} }))
+      };
+    });
+
+    return {
+      showBase, showAvance,
+      baseTasks,
+      avanceSections,
+      baseCompleted,
+      avanceCompleted: avanceDoneCount,
+      totalTasks,
+      completedCount,
+      progressWidth: pct(completedCount, totalTasks),
+      baseProgressWidth: pct(baseCompleted, 15),
+      avanceProgressWidth: pct(avanceDoneCount, 10),
+      baseChevron: showBase ? 'rotate(180deg)' : 'rotate(0)',
+      avanceChevron: showAvance ? 'rotate(180deg)' : 'rotate(0)',
+      toggleBase: () => this.setState(s => ({ showBase: !s.showBase })),
+      toggleAvance: () => this.setState(s => ({ showAvance: !s.showAvance }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>
