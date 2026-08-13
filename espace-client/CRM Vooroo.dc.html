@@ -133,17 +133,28 @@ h1,h2,h3{font-family:var(--font-body)!important;letter-spacing:normal;font-size:
         <svg width="22" height="22" fill="none" stroke="#e8e9f5" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
       </button>
 
+      <!-- Trois points → Autres. Placé juste sous Messagerie : il ouvre des menus,
+           il appartient donc à la navigation, pas au bloc identité du bas. -->
+      <div style="width:100%;height:52px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <button onClick="{{ toggleAutres }}" style="width:36px;height:28px;border:1.5px solid rgba(255,255,255,.25);border-radius:20px;background:{{ bgAutresBt }};display:flex;align-items:center;justify-content:center;cursor:pointer;gap:3px" title="Autres menus" style-hover="background:rgba(255,255,255,.15)">
+          <span style="width:4px;height:4px;border-radius:50%;background:#e8e9f5"></span>
+          <span style="width:4px;height:4px;border-radius:50%;background:#e8e9f5"></span>
+          <span style="width:4px;height:4px;border-radius:50%;background:#e8e9f5"></span>
+        </button>
+      </div>
+
     </div>
 
-    <!-- Bottom: Avatar + "..." -->
+    <!-- Bottom: logo de l'entreprise active -->
     <div style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0 10px;flex-shrink:0">
-      <!-- Avatar utilisateur -->
-      <button onClick="{{ toggleProfile }}" style="width:36px;height:36px;border-radius:50%;background:var(--color-primary);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;font-weight:700;color:#fff;border:2px solid rgba(255,255,255,.2)" title="Mon compte">HM</button>
-      <!-- Trois points → Autres -->
-      <button onClick="{{ toggleAutres }}" style="width:36px;height:28px;border:1.5px solid rgba(255,255,255,.25);border-radius:20px;background:{{ bgAutresBt }};display:flex;align-items:center;justify-content:center;cursor:pointer;gap:3px;margin-top:2px" title="Autres menus" style-hover="background:rgba(255,255,255,.15)">
-        <span style="width:4px;height:4px;border-radius:50%;background:#e8e9f5"></span>
-        <span style="width:4px;height:4px;border-radius:50%;background:#e8e9f5"></span>
-        <span style="width:4px;height:4px;border-radius:50%;background:#e8e9f5"></span>
+      <!-- Logo de l'entreprise — téléversé dans Paramètres › Identité de l'entreprise.
+           À défaut de logo, on retombe sur les initiales : un carré vide ne dirait
+           pas quelle entreprise est active. -->
+      <button onClick="{{ toggleProfile }}" style="width:36px;height:36px;border-radius:50%;background:var(--color-primary);position:relative;cursor:pointer;border:2px solid rgba(255,255,255,.2);overflow:hidden;padding:0" title="Mes entreprises">
+        <!-- Initiales dessous, logo en calque de fond par-dessus. Une image de fond
+             absente n'affiche rien — là où une <img> cassée montrerait son icône. -->
+        <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff">MT</span>
+        <span style="position:absolute;inset:0;background-image:url('./uploads/logo-entreprise.png');background-size:cover;background-position:center;background-repeat:no-repeat"></span>
       </button>
     </div>
 
@@ -173,10 +184,6 @@ h1,h2,h3{font-family:var(--font-body)!important;letter-spacing:normal;font-size:
             <svg width="16" height="16" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>
             <span style="font-size:13px;color:#374151">Produits</span>
           </button>
-          <button onClick="{{ goEquipe }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:9px 18px;border:none;background:transparent;cursor:pointer;text-align:left" style-hover="background:#f9fafb">
-            <svg width="16" height="16" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
-            <span style="font-size:13px;color:#374151">Équipe</span>
-          </button>
 
           <!-- INTELLIGENCE -->
           <div style="padding:14px 18px 4px">
@@ -191,9 +198,11 @@ h1,h2,h3{font-family:var(--font-body)!important;letter-spacing:normal;font-size:
           <div style="padding:14px 18px 4px">
             <div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.07em">Compte &amp; Admin</div>
           </div>
-          <button style="width:100%;display:flex;align-items:center;gap:12px;padding:9px 18px;border:none;background:transparent;cursor:pointer;text-align:left" style-hover="background:#f9fafb">
-            <svg width="16" height="16" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
-            <span style="font-size:13px;color:#374151">Administration</span>
+          <!-- Équipe remplace Administration : c'est le même périmètre —
+               utilisateurs, rôles, journaux, permissions, groupes. -->
+          <button onClick="{{ goEquipe }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:9px 18px;border:none;background:transparent;cursor:pointer;text-align:left" style-hover="background:#f9fafb">
+            <svg width="16" height="16" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
+            <span style="font-size:13px;color:#374151">Équipe</span>
           </button>
           <button onClick="{{ goCompte }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:9px 18px;border:none;background:transparent;cursor:pointer;text-align:left" style-hover="background:#f9fafb">
             <svg width="16" height="16" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
@@ -225,62 +234,54 @@ h1,h2,h3{font-family:var(--font-body)!important;letter-spacing:normal;font-size:
     </sc-if>
   </nav>
 
-  <!-- PROFILE DROPDOWN (outside nav) -->
-  <!-- PROFILE DROPDOWN -->
+  <!-- SÉLECTEUR D'ENTREPRISE -->
+  <!-- Ouvert par le logo du bas. Un utilisateur peut appartenir à plusieurs
+       organisations : ce menu sert à savoir laquelle est active et à en changer. -->
   <div style="display:{{ displayProfile }}">
     <div onClick="{{ closeProfile }}" style="position:fixed;inset:0;z-index:9998"></div>
-    <div style="position:fixed;left:62px;bottom:10px;width:280px;background:#fff;z-index:9999;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.18);border:1px solid #e5e7eb;overflow:hidden">
-      <!-- User info -->
-      <div style="padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f3f4f6">
-        <div style="width:38px;height:38px;border-radius:50%;background:#16A34A;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0">HM</div>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:#111827">Hugues Mboyo</div>
-          <div style="font-size:11.5px;color:#6b7280">hugues@meltech.ci</div>
-        </div>
+    <div style="position:fixed;left:62px;bottom:10px;width:290px;background:#fff;z-index:9999;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.18);border:1px solid #e5e7eb;overflow:hidden">
+
+      <div style="padding:12px 16px 10px;border-bottom:1px solid #f3f4f6">
+        <div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em">Mes entreprises</div>
       </div>
-      <!-- MON COMPTE -->
-      <div style="padding:6px 0">
-        <div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;padding:6px 16px 4px">Mon compte</div>
-        <div style-hover="background:#f9fafb" style="display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;transition:background .12s">
-          <img src="uploads/1. Aperçu utilisateur_profil-c6f53987.png" style="width:18px;height:18px;object-fit:contain;opacity:.65"/>
-          <span style="font-size:13px;color:#374151">Aperçu du profil</span>
+
+      <div style="padding:6px 0;max-height:320px;overflow-y:auto">
+
+        <!-- Entreprise active -->
+        <div style-hover="background:#f9fafb" style="display:flex;align-items:center;gap:11px;padding:10px 16px;cursor:pointer;transition:background .12s;background:#f0fdf4;border-left:3px solid var(--color-primary)">
+          <div style="width:34px;height:34px;border-radius:7px;background:var(--color-primary);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0">MT</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;font-weight:700;color:#111827">Mel Tech</div>
+            <div style="font-size:11.5px;color:#6b7280">Administrateur</div>
+          </div>
+          <svg width="16" height="16" fill="none" stroke="var(--color-primary)" stroke-width="2.4" viewBox="0 0 24 24" style="flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
         </div>
-        <div style-hover="background:#f9fafb" style="display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;transition:background .12s">
-          <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487z"/></svg>
-          <span style="font-size:13px;color:#374151">Préférences d'interface</span>
+
+        <div style-hover="background:#f9fafb" style="display:flex;align-items:center;gap:11px;padding:10px 16px;cursor:pointer;transition:background .12s;border-left:3px solid transparent">
+          <div style="width:34px;height:34px;border-radius:7px;background:#eef2ff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#4f46e5;flex-shrink:0">AA</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;font-weight:600;color:#374151">AXA Assurances CI</div>
+            <div style="font-size:11.5px;color:#9ca3af">Utilisateur</div>
+          </div>
         </div>
+
+        <div style-hover="background:#f9fafb" style="display:flex;align-items:center;gap:11px;padding:10px 16px;cursor:pointer;transition:background .12s;border-left:3px solid transparent">
+          <div style="width:34px;height:34px;border-radius:7px;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#b45309;flex-shrink:0">ID</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;font-weight:600;color:#374151">Ivoire Digital</div>
+            <div style="font-size:11.5px;color:#9ca3af">Administrateur</div>
+          </div>
+        </div>
+
       </div>
-      <!-- VUE D'ENSEMBLE -->
+
       <div style="border-top:1px solid #f3f4f6;padding:6px 0">
-        <div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;padding:6px 16px 4px">Vue d'ensemble de l'entreprise</div>
-        <div style-hover="background:#f9fafb" style="display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;transition:background .12s">
-          <img src="uploads/12. icone Paramétres-5069fadc.png" style="width:18px;height:18px;object-fit:contain;opacity:.65"/>
-          <span style="font-size:13px;color:#374151">Paramètres</span>
-        </div>
-        <div style-hover="background:#f9fafb" style="display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;transition:background .12s">
-          <img src="uploads/26. icone Equipe-85501bb7.png" style="width:18px;height:18px;object-fit:contain;opacity:.65"/>
-          <span style="font-size:13px;color:#374151">Gérer les utilisateurs</span>
-        </div>
-        <div style-hover="background:#f9fafb" style="display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;transition:background .12s">
-          <img src="uploads/8. icone facturation-2388ce10.png" style="width:18px;height:18px;object-fit:contain;opacity:.65"/>
-          <span style="font-size:13px;color:#374151">Facturation</span>
-        </div>
-        <div style-hover="background:#f9fafb" style="display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;transition:background .12s">
-          <img src="uploads/33. icone Vooroo Academy-6aea512e.png" style="width:18px;height:18px;object-fit:contain;opacity:.65"/>
-          <span style="font-size:13px;color:#374151">Vooroo Academy</span>
+        <div onClick="{{ goCompte }}" style-hover="background:#f9fafb" style="display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;transition:background .12s">
+          <svg width="17" height="17" fill="none" stroke="#6b7280" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
+          <span style="font-size:13px;color:#374151">Gérer mes entreprises</span>
         </div>
       </div>
-      <!-- OUTILS & DÉCONNEXION -->
-      <div style="border-top:1px solid #f3f4f6;padding:6px 0">
-        <div style-hover="background:#f9fafb" style="display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;transition:background .12s">
-          <img src="uploads/25. icone outils et applis-10e2a136.png" style="width:18px;height:18px;object-fit:contain;opacity:.65"/>
-          <span style="font-size:13px;color:#374151">Outils et applis</span>
-        </div>
-        <div style-hover="background:#fff5f5" style="display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;transition:background .12s">
-          <img src="uploads/24. icone Deconnexion-a1a6b431.png" style="width:18px;height:18px;object-fit:contain;opacity:.65"/>
-          <span style="font-size:13px;color:#ef4444;font-weight:500">Déconnexion</span>
-        </div>
-      </div>
+
     </div>
   </div>
 
@@ -369,13 +370,8 @@ h1,h2,h3{font-family:var(--font-body)!important;letter-spacing:normal;font-size:
           </div>
           <div style="text-align:center">
             <div style="font-size:20px;font-weight:700;color:var(--color-text);margin-bottom:8px">{{ activeMenuLabel }}</div>
-            <div style="font-size:14px;color:var(--color-text-muted)">{{ placeholderNote }}</div>
-            <sc-if value="{{ hasMockup }}" hint-placeholder-val="{{ false }}">
-              <a href="{{ mockupHref }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 16px;margin-top:14px;border-radius:5px;background:var(--color-primary);color:#fff;font-size:13px;font-weight:600;text-decoration:none">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
-                Ouvrir la maquette
-              </a>
-            </sc-if>
+            <div style="font-size:14px;color:var(--color-text-muted)">Ce menu est en cours de conception</div>
+            <div style="font-size:13px;color:var(--color-text-muted);margin-top:4px">Bientôt disponible</div>
           </div>
         </div>
       </sc-if>
@@ -407,9 +403,6 @@ class Component extends DCLogic {
     msg:       'Messagerie de vente',
   };
 
-  // Écrans dessinés hors de la coquille CRM : on y renvoie depuis le placeholder.
-  MOCKUPS = { compte: './Mon%20Compte.dc.html' };
-
   MENUS_WITH_DESIGN = ['affaires','prospects','contacts','produits','activites','projets','devis','equipe','msg','stats','planif','guide','config','docs'];
 
   renderVals() {
@@ -420,11 +413,6 @@ class Component extends DCLogic {
     return {
       activeMenuLabel: this.MENU_LABELS[s.activeMenu] || s.activeMenu,
       showPlaceholder: !this.MENUS_WITH_DESIGN.includes(s.activeMenu),
-      hasMockup:       !!this.MOCKUPS[s.activeMenu],
-      mockupHref:      this.MOCKUPS[s.activeMenu] || '',
-      placeholderNote: this.MOCKUPS[s.activeMenu]
-        ? 'Écran livré en maquette dédiée, hors coquille CRM'
-        : 'Ce menu est en cours de conception',
       displayAffaires:  a('affaires')  ? 'block' : 'none',
       displayProspects: a('prospects') ? 'block' : 'none',
       displayContacts:  a('contacts')  ? 'block' : 'none',
